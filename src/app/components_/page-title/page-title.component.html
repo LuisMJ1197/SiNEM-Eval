@@ -1,0 +1,9 @@
+<div class="header-title">
+    <div *ngIf="hasBackAction" class="back-button" (click)="goBack()">
+        <i class="fas fa-chevron-left"></i>
+        <p>volver</p>
+    </div>
+    <i *ngIf="iconPosition == 'left'" class="title-icon left fas" [ngClass]="iclass"></i>
+    <h5 class="title-text">{{title}}</h5>
+    <i *ngIf="iconPosition == 'right'" class="title-icon right fas" [ngClass]="iclass"></i>
+</div>
