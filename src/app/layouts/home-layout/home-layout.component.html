@@ -1,0 +1,92 @@
+<header class="topbar">
+    <div class="navbar">
+        <div class="navbar-header" [ngClass]="menuExtended ? '' : 'not-extended'">
+            <div class="navbar-brand">
+                <b class="logo-icon">
+                    <img src="../../../assets/images/logo-icon.png" alt="homepage" />
+                </b>
+                <span class="logo-text" *ngIf="menuExtended">
+                    <img src="../../../assets/images/logo-text.png" alt="homepage" />
+                </span>
+            </div>
+        </div>
+        <div class="navbar-body" [ngClass]="menuExtended ? '' : 'extended'">
+            <div class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link sidebartoggler" (click)="menuExtended = !menuExtended">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </li>
+                <li class="nav-item logo-protrait">
+                    <img src="../../../assets/images/logo.png">
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link profile waves-effect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="ml-2 font-medium">Luis Molina</span>
+                        <i class="fas fa-angle-down ml-2"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                        <div class="d-flex no-block align-items-center p-3 mb-2 border-bottom">
+                            <div class="ml-2">
+                                <h5 class="mb-0">Luis Molina</h5>
+                                <p class=" mb-0 text-muted">luisfermjua@gmail.com</p>
+                                <a href="javascript:void(0)" class="close-button btn btn-sm text-white mt-2 btn-rounded">Ver perfil</a>
+                            </div>
+                        </div>
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off mr-1 ml-1"></i>Cerrar sesión</a>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </div>
+</header>
+<aside class="sidebar" [ngClass]="menuExtended ? '' : 'not-extended'">
+    <nav class="sidebar-nav">
+        <ul id="sidebarnav">
+            <li class="sidebar-item" tooltip="Gestión de cursos" flow="right"
+                [ngClass]="optionSelected == 0? 'selected' : ''" (click)="optionSelected = 0; goRoute(GESTION_CURSOS);">
+                <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd"
+                    aria-expanded="false">
+                    <span class="icon-box"><i class="fas fa-music" width="30"></i></span>
+                    <span class="sidebar-link-text" *ngIf="menuExtended">Gestión de cursos</span>
+                </a>
+            </li>
+            <li class="sidebar-item" tooltip="Gestión de usuarios" flow="right"
+                [ngClass]="optionSelected == 1? 'selected' : ''" (click)="optionSelected = 1; goRoute(GESTION_USUARIOS);">
+                <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd"
+                    aria-expanded="false">
+                    <span class="icon-box"><i class="fas fa-users" width="30"></i></span>
+                    <span class="sidebar-link-text" *ngIf="menuExtended">Gestión de usuarios</span>
+                </a>
+            </li>
+            <li class="sidebar-item" tooltip="Gestión de estudiantes" flow="right"
+                [ngClass]="optionSelected == 2? 'selected' : ''" (click)="optionSelected = 2; goRoute(GESTION_ESTUDIANTES);">
+                <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd"
+                    aria-expanded="false">
+                    <span class="icon-box"><i class="fas fa-user-graduate" width="30"></i></span>
+                    <span class="sidebar-link-text" *ngIf="menuExtended">Gestión de estudiantes</span>
+                </a>
+            </li>
+            <hr>
+            <li class="sidebar-item"  tooltip="Mis cursos" flow="right"
+                [ngClass]="optionSelected == 3? 'selected' : ''" (click)="optionSelected = 3; goRoute(MIS_CURSOS);">
+                <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd"
+                    aria-expanded="false">
+                    <span class="icon-box"><i class="flaticon-exam" width="30" style="margin: 0;"></i></span>
+                    <span class="sidebar-link-text" *ngIf="menuExtended">Mis cursos</span>
+                </a>
+            </li>
+            <li class="sidebar-item" tooltip="Mi perfil" flow="right"
+                [ngClass]="optionSelected == 4? 'selected' : ''" (click)="optionSelected = 4; goRoute(PROFILE);">
+                <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd"
+                    aria-expanded="false">
+                    <span class="icon-box"><i class="fas fa-user-alt" width="30"></i></span>
+                    <span class="sidebar-link-text" *ngIf="menuExtended">Mi perfil</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+<div id="contents" [ngClass]="menuExtended ? '' : 'extended'">
+    <router-outlet></router-outlet>
+</div>
