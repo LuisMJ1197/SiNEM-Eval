@@ -1,0 +1,60 @@
+.header-title h5 {
+    margin: 0 1rem;
+    margin-right: 0.5rem;
+}
+
+.course-info, .student-list-info {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.course-icon {
+    margin-left: 0.5rem;
+}
+
+.info-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.actions {
+    margin-top: 2rem;
+    padding: 0 4rem;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.actions .action {
+    width: 200px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 5px rgb(0 0 0 / 30%);
+    box-shadow: 0 1px 5px rgb(0 0 0 / 30%);
+    background-color: white;
+    background-size: 200%;
+    cursor: pointer;
+}
+
+.actions .action:hover {
+    -webkit-box-shadow: 0px 1px 9px 0px #000000; 
+    box-shadow: 0px 1px 9px 0px #000000;
+    transition: 0.3s ease;
+}
+
+.action i {
+    color: var(--midnight-green-eagle-green);
+    font-size: 1.2rem;
+}
+
+.action p {
+    margin-top: 1rem;
+}

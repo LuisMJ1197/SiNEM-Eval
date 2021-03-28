@@ -1,0 +1,55 @@
+<div class="container-div">
+    <div class="container-header">
+        <app-page-title [title]="'Curso'" [iclass]="'fa-nota-musical'" [hasBackAction]=true
+            [iconPosition]="'right'"></app-page-title>
+        <div class="container-actions">
+            <div>Estado: activo</div>
+            <button class="btn button button-red text-white ml-3 d-md-block" data-toggle="modal"
+                data-target="#changePassword">Finalizar curso</button>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="course-info info-container">
+            <div class="info-header">
+                <h6>Información del curso</h6>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Tipo</div>
+                <div class="row-text">Corchea</div>
+                <i class="course-icon flaticon-nota-musical"></i>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Profesor asignado</div>
+                <div class="row-text">Luis Molina Juárez</div>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Periodo</div>
+                <div class="row-text">Abril del 2020</div>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Horario</div>
+                <div class="row-text">Lunes: 15:00 - 17:00<br>Martes: 15:00 - 17:00</div>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="action s-list" (click)="goList()">
+                <div class="action-icon">
+                    <i class="fas fa-list"></i>
+                </div>
+                <p>Lista de estudiantes</p>
+            </div>
+            <div class="action asist-register" (click)="goRegistros()">
+                <div class="action-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <p>Registros de asistencia</p>
+            </div>
+            <div class="action evaluation-m"  (click)="goMatriz()">
+                <div class="action-icon">
+                    <i class="fas fa-table"></i>
+                </div>
+                <p>Matriz de evaluaciones</p>
+            </div>
+        </div>
+    </div>
+</div>
