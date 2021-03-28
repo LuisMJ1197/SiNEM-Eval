@@ -1,1 +1,31 @@
-<p>login-page works!</p>
+<div class="login-container">
+    
+    <div class="login-outbox">
+        <div class="logo-div">
+            <img src="../../../assets/images/logo.png">
+        </div>
+        <div class="divider-div">
+
+            <hr>
+        </div>
+        <div class="login-form-div">
+            <div class="col-right">
+                <div class="login-form">
+                  <h3>Inicio de sesión</h3>
+                  <form>
+                    <p>
+                      <input type="text" placeholder="Correo electrónico" required>
+                    </p>
+                    <p>
+                      <input type="password" placeholder="Contraseña" required>
+                    </p>
+                    <p>
+                      <input class="btn" type="submit" value="Iniciar sesión" (click)="login()"/>
+                    </p>
+                  </form>
+                  <p [ngClass]="error? 'shown' : 'hide'" style="margin-top: 1rem;">Datos incorrectos</p>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
