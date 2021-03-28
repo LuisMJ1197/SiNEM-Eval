@@ -12,6 +12,8 @@ import { GestionUsuariosComponent } from './pages/gestion-usuarios/gestion-usuar
 import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 import { GestionCursosComponent } from './pages/gestion-cursos/gestion-cursos.component';
 import { MisCursosComponent } from './pages/mis-cursos/mis-cursos.component';
+import { MiCursoEspecificoComponent } from './pages/mi-curso-especifico/mi-curso-especifico.component';
+import { ListaEstudiantesComponent } from './pages/lista-estudiantes/lista-estudiantes.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { MisCursosComponent } from './pages/mis-cursos/mis-cursos.component';
     GestionUsuariosComponent,
     MyProfileComponent,
     GestionCursosComponent,
-    MisCursosComponent
+    MisCursosComponent,
+    MiCursoEspecificoComponent,
+    ListaEstudiantesComponent
   ],
   imports: [
     BrowserModule,

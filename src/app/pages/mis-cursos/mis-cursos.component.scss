@@ -1,0 +1,27 @@
+.info-header {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 0rem;
+}
+
+.info-header h6 {
+    margin: 0;
+}
+
+.info-header .filter-buttons {
+    margin-left: 1rem;
+}
+
+.filter-buttons .filter-option {
+    height: 2rem;
+    float: left;
+}
+
+.filter-option ~ .filter-option {
+    margin-left: 1rem;
+}
+
+.search-option input, .search-option button {
+    height: 2rem;
+}

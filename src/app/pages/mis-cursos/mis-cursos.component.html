@@ -1,1 +1,32 @@
-<p>mis-cursos works!</p>
+<div class="container-div">
+    <div class="container-header">
+        <app-page-title [title]="'Mis cursos'" [iclass]="'fa-music'" [hasBackAction]=false
+            [iconPosition]="'left'"></app-page-title>
+    </div>
+    <div class="container-body">
+        <div class="info-header">
+            <h6>2 cursos</h6>
+            <div class="filter-buttons">
+                <button class="filter-option button btn button-yellow">Ver todos</button>
+            </div>
+        </div>
+        <div class="grid-div">
+            <div class="grid-element course" *ngFor="let curso of cursos" (click)="goCourse()">
+                <div class="element-info">
+                    <div class="info-line">
+                        <strong>{{curso.tipo}}</strong><i [ngClass]="getClass(curso.tipo)"></i>
+                    </div>
+                    <div class="info-line">
+                        {{curso.profesorAsignado}}
+                    </div>
+                    <div class="info-line">
+                        {{curso.periodo}}
+                    </div>
+                </div>
+                <div class="element-go">
+                    <a><i class="flaticon-right-arrow"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
