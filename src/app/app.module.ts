@@ -14,6 +14,7 @@ import { GestionCursosComponent } from './pages/gestion-cursos/gestion-cursos.co
 import { MisCursosComponent } from './pages/mis-cursos/mis-cursos.component';
 import { MiCursoEspecificoComponent } from './pages/mi-curso-especifico/mi-curso-especifico.component';
 import { ListaEstudiantesComponent } from './pages/lista-estudiantes/lista-estudiantes.component';
+import { GestionCursoEspecificoComponent } from './pages/gestion-curso-especifico/gestion-curso-especifico.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ListaEstudiantesComponent } from './pages/lista-estudiantes/lista-estud
     GestionCursosComponent,
     MisCursosComponent,
     MiCursoEspecificoComponent,
-    ListaEstudiantesComponent
+    ListaEstudiantesComponent,
+    GestionCursoEspecificoComponent
   ],
   imports: [
     BrowserModule,

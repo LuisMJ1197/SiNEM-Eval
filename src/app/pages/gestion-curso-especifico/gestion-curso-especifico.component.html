@@ -1,0 +1,140 @@
+<div class="container-div">
+    <div class="container-header">
+        <app-page-title [title]="'Curso'" [iclass]="'fa-nota-musical'" [hasBackAction]=true
+            [iconPosition]="'right'">
+        </app-page-title>
+        <div class="container-actions">
+            <div>Estado: activo</div>
+            <button class="btn button button-red text-white ml-3 d-md-block"
+                data-toggle="modal" data-target="#changePassword">Finalizar curso</button>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="course-info info-container">
+            <div class="info-header">
+                <h6>Información del curso</h6>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Tipo</div>
+                <div class="row-text">Corchea</div>
+                <i class="course-icon flaticon-nota-musical"></i>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Profesor asignado</div>
+                <div class="row-text">Luis Molina Juárez</div>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Periodo</div>
+                <div class="row-text">Abril del 2020</div>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Horario</div>
+                <div class="row-text">Lunes: 15:00 - 17:00<br>Martes: 15:00 - 17:00</div>
+            </div>
+        </div>
+        <div class="student-list-info info-container">
+            <div class="info-header">
+                <h6>Lista de estudiantes</h6>
+                <div class="container-actions">
+                    <button class="add-student btn button button-blue text-white ml-3 d-md-block" data-toggle="modal"
+                        data-target="#addCourse">Agregar estudiante
+                        <i style="margin-left: 0.5rem;" class="fas fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="row-element" style="margin-top: 0;">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-user-alt"></i>Nombre</th>
+                        <th><i class="fas fa-at"></i>Cédula</th>
+                        <th><i class="fas fa-phone-alt"></i>Teléfono</th>
+                        <th><i class="fas fa-user"></i>Nombre encargado</th>
+                        <th><i class="fas fa-cog"></i>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a class="name">Mauricio Murillo Briley</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
+                                <i class="fas fa-minus-circle"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Paula Wilson</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
+                                <i class="fas fa-minus-circle"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Antonio Moreno</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
+                                <i class="fas fa-minus-circle"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Mary Saveley</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="action delete" title="Dar de baja" data-toggle="tooltip">
+                                <i class="fas fa-minus-circle"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Martin Sommer</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
+                                <i class="fas fa-minus-circle"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Mauricio Murillo Briley</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
+                                <i class="fas fa-minus-circle"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade-scale" id="changePassword" tabindex="-1" role="dialog">
+    <div class="modal-dialog" cascading-modal role="document">
+      <div class="modal-content">
+        <div class="modal-header green-header">
+          <h5 class="modal-title">Cambiar contraseña</h5>
+          <button type="button" class="btn close top-dismiss-btn" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
