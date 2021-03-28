@@ -1,1 +1,348 @@
-<p>gestion-estudiantes works!</p>
+<div class="container-div">
+    <div class="container-header">
+        <app-page-title [title]="'Gestión de estudiantes'" [iclass]="'fa-user-graduate'" [hasBackAction]=false
+            [iconPosition]="'left'"></app-page-title>
+    </div>
+    <div class="container-body">
+        <div class="info-header">
+            <h6>5 usuarios</h6>
+            <div class="filter-buttons">
+                <button class="filter-option button btn button-yellow">Ver todos</button>
+            </div>
+        </div>
+        <div class="user-list info-container" style="padding: 0 1rem;">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-user-alt"></i>Nombre</th>
+                        <th><i class="fas fa-at"></i>Cédula</th>
+                        <th><i class="fas fa-phone-alt"></i>Teléfono</th>
+                        <th><i class="fas fa-user"></i>Nombre encargado</th>
+                        <th><i class="fas fa-cog"></i>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a class="name">Mauricio Murillo Briley</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Paula Wilson</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Antonio Moreno</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Mary Saveley</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="action edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="action delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Martin Sommer</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Mauricio Murillo Briley</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Paula Wilson</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Antonio Moreno</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Mary Saveley</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="action edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="action delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Martin Sommer</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Mauricio Murillo Briley</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Paula Wilson</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Antonio Moreno</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Mary Saveley</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="action edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="action delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Martin Sommer</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Mauricio Murillo Briley</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Paula Wilson</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Antonio Moreno</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Mary Saveley</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="action edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="action delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Martin Sommer</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Mauricio Murillo Briley</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Paula Wilson</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Antonio Moreno</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">Mary Saveley</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="action edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="action delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="name">jkljkl Sommer</a></td>
+                        <td>708950563</td>
+                        <td>61457896</td>
+                        <td>Nombre encargado</td>
+                        <td>
+                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                                <i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete" title="Eliminar" data-toggle="tooltip">
+                                <i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade-scale" id="addUser" tabindex="-1" role="dialog">
+    <div class="modal-dialog" cascading-modal role="document">
+      <div class="modal-content">
+        <div class="modal-header blue-header">
+          <h5 class="modal-title">Agregar estudiante</h5>
+          <button type="button" class="btn close top-dismiss-btn" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
