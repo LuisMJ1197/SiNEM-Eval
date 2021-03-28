@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+import { GestionCursoEspecificoComponent } from './pages/gestion-curso-especifico/gestion-curso-especifico.component';
 import { GestionCursosComponent } from './pages/gestion-cursos/gestion-cursos.component';
 import { GestionEstudiantesComponent } from './pages/gestion-estudiantes/gestion-estudiantes.component';
 import { GestionUsuariosComponent } from './pages/gestion-usuarios/gestion-usuarios.component';
@@ -20,6 +21,10 @@ const routes: Routes = [
       {
         path: 'courses-management',
         component: GestionCursosComponent,
+      },
+      {
+        path: 'courses-management/:curso-info',
+        component: GestionCursoEspecificoComponent
       },
       {
         path: 'users-management',
