@@ -1,0 +1,212 @@
+.header-title h5 {
+    margin: 0 1rem;
+    margin-right: 0.5rem;
+}
+
+.course-info, .student-list-info {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.course-icon {
+    margin-left: 0.5rem;
+}
+
+.info-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.info-header h6 {
+    margin: 0;
+}
+
+.info-header .info-cant {
+    margin-left: 1.5rem;
+}
+
+table.table tr th {
+    border-top: none;
+}
+
+table.table tr th, table.table tr td {
+    border-color: #e9e9e9;
+    padding: 12px 15px;
+    vertical-align: middle;
+    font-size: 0.9rem;
+}
+
+table.table tr th {
+    text-align: center;
+}
+
+table.table tr td {
+    text-align: center;
+}
+
+table.table tr th:first-child {
+    text-align: start;
+}
+
+table.table tr td:first-child {
+    text-align: start;
+}
+
+table.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #fcfcfc;
+}
+table.table-striped.table-hover tbody tr:hover {
+    background: #f5f5f5;
+}
+table.table th i {
+    font-size: 13px;
+    margin: 0 5px;
+}
+
+table.table td a.name {
+    font-weight: bolder !important;
+    color: var(--midnight-green-eagle-green);
+    display: inline-block;
+    text-decoration: none;
+}
+
+table.table td a.change {
+    color: #fd9723ff;
+}
+
+table.table td a.delete {
+    color: #ff5050;
+}
+
+table.table td a.edit {
+    color: #44b7e3ff;
+}
+
+table.table td a:hover {
+    color: grey;
+}
+
+table.table td i {
+    font-size: 18px;
+}
+
+table.table .avatar {
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.status {
+    font-size: 30px;
+    margin: 0px 5px 0 0;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 10px;
+}
+.text-admin {
+    color: var(--deep-saffron);
+}
+.text-profesor {
+    color: var(--deep-cerise);
+}
+
+table thead tr {
+    border-top: none;
+}
+
+table thead tr th {
+    padding-left: 0.5rem;
+}
+
+.title-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.title-wrapper .title {
+    display: flex;
+    flex-direction: row;
+}
+
+table.table tr th.presente {
+    border-bottom: 2px solid var(--dark-sea-green);
+}
+
+table.table tr th.ausente {
+    border-bottom: 2px solid var(--beauty-orange);
+}
+
+table.table tr th.justificado {
+    border-bottom: 2px solid var(--deep-saffron);
+}
+
+.asist-check {
+    cursor: pointer;
+}
+
+[type="radio"]:checked,
+[type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+[type="radio"]:checked + label,
+[type="radio"]:not(:checked) + label
+{
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    display: inline-block;
+    color: #666;
+}
+[type="radio"]:checked + label:before,
+[type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -7px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+}
+[type="radio"]:checked + label:after,
+[type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: -3px;
+    left: 4px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.presente [type="radio"]:checked + label:after,
+.presente [type="radio"]:not(:checked) + label:after {
+    background: var(--dark-sea-green);
+}
+
+.ausente [type="radio"]:checked + label:after,
+.ausente [type="radio"]:not(:checked) + label:after {
+    background: var(--deep-cerise);
+}
+
+.justificado [type="radio"]:checked + label:after,
+.justificado [type="radio"]:not(:checked) + label:after {
+    background: var(--deep-saffron);
+}
+
+[type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+[type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}

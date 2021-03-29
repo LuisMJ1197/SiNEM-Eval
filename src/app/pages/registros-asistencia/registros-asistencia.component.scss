@@ -1,0 +1,36 @@
+.header-title h5 {
+    margin: 0 1rem;
+    margin-right: 0.5rem;
+}
+
+.course-info, .student-list-info {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.course-icon {
+    margin-left: 0.5rem;
+}
+
+.info-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.info-header h6 {
+    margin: 0;
+}
+
+.info-header .info-cant {
+    margin-left: 1.5rem;
+}
+
+.grid-element {
+    width: 250px;
+}
+
+.grid-element .info-line:last-child{
+    text-align: start;
+}
