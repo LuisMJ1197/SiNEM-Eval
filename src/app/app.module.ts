@@ -15,6 +15,9 @@ import { MisCursosComponent } from './pages/mis-cursos/mis-cursos.component';
 import { MiCursoEspecificoComponent } from './pages/mi-curso-especifico/mi-curso-especifico.component';
 import { ListaEstudiantesComponent } from './pages/lista-estudiantes/lista-estudiantes.component';
 import { GestionCursoEspecificoComponent } from './pages/gestion-curso-especifico/gestion-curso-especifico.component';
+import { RegistrosAsistenciaComponent } from './pages/registros-asistencia/registros-asistencia.component';
+import { RegistroAsistenciaComponent } from './pages/registro-asistencia/registro-asistencia.component';
+import { RegistroAsistenciaEditComponent } from './pages/registro-asistencia-edit/registro-asistencia-edit.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { GestionCursoEspecificoComponent } from './pages/gestion-curso-especific
     MisCursosComponent,
     MiCursoEspecificoComponent,
     ListaEstudiantesComponent,
-    GestionCursoEspecificoComponent
+    GestionCursoEspecificoComponent,
+    RegistrosAsistenciaComponent,
+    RegistroAsistenciaComponent,
+    RegistroAsistenciaEditComponent
   ],
   imports: [
     BrowserModule,

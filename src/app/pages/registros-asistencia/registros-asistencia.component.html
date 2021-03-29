@@ -1,0 +1,54 @@
+<div class="container-div">
+    <div class="container-header">
+        <app-page-title [title]="'Registros de asistencia'" [iclass]="'fa-music'" [hasBackAction]=true
+            [iconPosition]="'right'"></app-page-title>
+        <div class="container-actions">
+            <button class="btn button button-blue text-white ml-3 d-md-block" data-toggle="modal"
+                data-target="#addCourse">Agregar registro
+                <i style="margin-left: 0.5rem;" class="fas fa-plus"></i></button>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="info-header">
+            <h6>Redonda - Abril 2020</h6>
+            <div class="info-cant">
+                {{registros.length}} registros
+            </div>
+        </div>
+        <div class="grid-div">
+            <div class="grid-element course" *ngFor="let registro of registros" (click)="goRegistro()">
+                <div class="element-info">
+                    <div class="info-line">
+                        <strong>Asistencia</strong>
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="info-line">
+                        <strong>{{registro.fecha}}</strong>
+                    </div>
+                </div>
+                <div class="element-go">
+                    <a><i class="flaticon-right-arrow"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade-scale" id="addCourse" tabindex="-1" role="dialog">
+    <div class="modal-dialog" cascading-modal role="document">
+        <div class="modal-content">
+            <div class="modal-header blue-header">
+                <h5 class="modal-title">Agregar registro</h5>
+                <button type="button" class="btn close top-dismiss-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
