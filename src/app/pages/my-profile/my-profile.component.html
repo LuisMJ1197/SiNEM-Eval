@@ -1,1 +1,62 @@
-<p>my-profile works!</p>
+<div class="container-div">
+    <div class="container-header">
+        <app-page-title [title]="'Mi perfil'" [iclass]="'fa-user-alt'" [hasBackAction]=false
+            [iconPosition]="'left'"></app-page-title>
+        <div class="container-actions">
+            <button class="btn button button-green text-white ml-3 d-md-block"
+                data-toggle="modal" data-target="#changePassword">Cambiar contraseña</button>
+        </div>
+    </div>
+    <div class="container-body">
+        <div class="rol-info info-container">
+            <div class="row-element">
+                <div class="row-descriptor">Rol</div>
+                <div class="row-text">Administrador</div>
+            </div>
+        </div>
+        <div class="account-info info-container">
+            <div class="info-header">
+                <h6>Información de usuario</h6>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Nombre</div>
+                <div class="row-text">Luis Fernando</div>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Apellidos</div>
+                <div class="row-text">Molina Juárez</div>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Correo electrónico</div>
+                <div class="row-text">luisfermjua@gmail.com</div>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Teléfono</div>
+                <div class="row-text">61638663</div>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Contraseña</div>
+                <div class="row-text">**********</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade-scale" id="changePassword" tabindex="-1" role="dialog">
+    <div class="modal-dialog" cascading-modal role="document">
+      <div class="modal-content">
+        <div class="modal-header green-header">
+          <h5 class="modal-title">Cambiar contraseña</h5>
+          <button type="button" class="btn close top-dismiss-btn" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
