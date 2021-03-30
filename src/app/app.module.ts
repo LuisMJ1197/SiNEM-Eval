@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { GestionCursoEspecificoComponent } from './pages/gestion-curso-especific
 import { RegistrosAsistenciaComponent } from './pages/registros-asistencia/registros-asistencia.component';
 import { RegistroAsistenciaComponent } from './pages/registro-asistencia/registro-asistencia.component';
 import { RegistroAsistenciaEditComponent } from './pages/registro-asistencia-edit/registro-asistencia-edit.component';
+import { MatrizEvaluacionComponent } from './pages/matriz-evaluacion/matriz-evaluacion.component';
 
 @NgModule({
   declarations: [
@@ -36,11 +38,13 @@ import { RegistroAsistenciaEditComponent } from './pages/registro-asistencia-edi
     GestionCursoEspecificoComponent,
     RegistrosAsistenciaComponent,
     RegistroAsistenciaComponent,
-    RegistroAsistenciaEditComponent
+    RegistroAsistenciaEditComponent,
+    MatrizEvaluacionComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

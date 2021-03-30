@@ -9,6 +9,7 @@ import { GestionEstudiantesComponent } from './pages/gestion-estudiantes/gestion
 import { GestionUsuariosComponent } from './pages/gestion-usuarios/gestion-usuarios.component';
 import { ListaEstudiantesComponent } from './pages/lista-estudiantes/lista-estudiantes.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { MatrizEvaluacionComponent } from './pages/matriz-evaluacion/matriz-evaluacion.component';
 import { MiCursoEspecificoComponent } from './pages/mi-curso-especifico/mi-curso-especifico.component';
 import { MisCursosComponent } from './pages/mis-cursos/mis-cursos.component';
 import { MyProfileComponent } from './pages/my-profile/my-profile.component';
@@ -60,6 +61,10 @@ const routes: Routes = [
       {
         path: 'my-courses/:curso-info/registros-asistencia/:registro-info',
         component: RegistroAsistenciaEditComponent
+      },
+      {
+        path: 'my-courses/:curso-info/:matriz-evaluacion',
+        component: MatrizEvaluacionComponent
       },
       {
         path: 'profile',

@@ -1,0 +1,165 @@
+.header-title h5 {
+    margin: 0 1rem;
+    margin-right: 0.5rem;
+}
+
+.info-container {
+    overflow: auto;
+    min-width: 1300px;
+    margin-right: 2rem;
+    padding-left: 0;
+    margin-right: 0;
+}
+
+.student-list-info {
+    flex-direction: column;
+    justify-content: stretch;
+}
+
+.course-icon {
+    margin-left: 0.5rem;
+}
+
+.info-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.info-header h6 {
+    margin: 0;
+}
+
+.info-header .info-cant {
+    margin-left: 1.5rem;
+}
+
+// Table
+
+table.table thead th, table.table tbody td {
+    font-size: 0.9em;
+    font-family: Rubik, sans-serif !important;
+    font-weight: bolder;
+}
+
+table.table tbody td {
+    font-weight: normal;
+}
+
+.dom-socio {
+    max-width: 100px;
+    min-width: 100px;
+}
+
+.rubro:last-child {
+    border-right: none !important;
+}
+
+.center-text {
+    text-align: center;
+    vertical-align: middle;
+}
+
+table.table th, table.table td {
+    text-align: center;
+}
+
+table.table tr.header-lvl1 th:first-child, table.table td:first-child {
+    text-align: left;
+}
+
+table.table tr.header-lvl2 {
+    font-weight: 100;
+}
+
+table.table tr.header-lvl2 th {
+    padding: 0;
+}
+
+table thead th, table thead tr {
+    border: 1px solid gray;
+}
+
+.not-total {
+    max-width: 100px;
+    min-width: 100px;
+}
+
+.total {
+    max-width: 50px;
+    min-width: 50px;
+}
+
+tbody tr {
+    height: 30px;
+    min-height: 30px;
+}
+
+tbody td {
+    height: 30px;
+    padding: 0;
+    border: 1px solid gray;
+    padding: 2px;
+}
+
+tbody tr td:first-child {
+    max-width: 200px;
+    vertical-align: middle;
+    padding-left: 4px;
+}
+
+.input-wrap {
+    height: 100%;
+    width: 100%;
+}
+
+tbody input {
+    border: none;
+    height: 100%;
+    width: 50px;
+    cursor: pointer;
+    background: transparent;
+    text-align: center;
+}
+
+.porcent {
+    vertical-align: middle;
+    width: 50px;
+}
+
+tbody tr:hover {
+    background-color: #87b37a50;
+    cursor:default;
+}
+
+table th {
+    cursor: default;
+}
+
+tbody td.entry:hover {
+    background-color: #87b37aa0;
+}
+
+.expandable:hover {
+    background-color: #87b37aa0;
+    cursor: e-resize;
+}
+
+table {
+    margin-bottom: 0;
+    background-color: #fafafa;
+}
+
+.row-element {
+    padding-bottom: 0;
+}
+
+.container-div {
+    overflow: auto;
+    max-height: calc(100% - 55px);
+}
+
+.info-container {
+    background-color: transparent;
+}
