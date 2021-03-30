@@ -1,0 +1,60 @@
+<div class="container-div">
+    <div class="container-header">
+        <app-page-title [title]="'Matriz de evaluación'" [iclass]="'fa-table'" [hasBackAction]=true
+            [iconPosition]="'right'"></app-page-title>
+    </div>
+    <div class="container-body">
+        <div class="info-header">
+            <h6>Redonda - Abril 2020: Tareas</h6>
+        </div>
+        <div class="row-element option">
+            <div class="option-wrap">
+                <i class="fas fa-plus"></i>Agregar evluación
+            </div>
+            <div class="option-wrap">
+                <i class="fas fa-balance-scale"></i>Distribución equitativa
+            </div>
+        </div>
+        <div class="student-list-info info-container">
+            <div class="row-element" style="margin-top: 0;">
+                <table id="tabla-total" class="table table-striped table-hover">
+                    <thead>
+                        <tr class="header-lvl1">
+                            <th rowspan="2" class="center-text">Nombre</th>
+                            <th [attr.colspan]="asignacionesValor.length" class="domP">{{nombreRubro}}<br>{{valorRubro}}%</th>
+                            <th rowspan="2" class="total head center-text">Total</th>
+                        </tr>
+                        <tr  class="header-lvl2">
+                            <th class="not-total" *ngFor="let asig of asignacionesValor">{{asig.nombre}}<br>{{asig.valor}}%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let std of notas">
+                            <td>{{std.estudiante}}</td>
+                            <td class="asignaciones" *ngFor="let asignacion of asignacionesValor; let i = index" style="height: 30px; padding: 0;">
+                                <div style="display: flex; flex-direction: row; height: 100%;">
+                                    <div class="entry" style="border-right: 1px solid gray; padding: 0; height: 100%;">
+                                        <div class="input-wrap">
+                                            
+                                            <input type="text" 
+                                                id="asig{{asignacion.nombre}}{{std.estudiante_id}}" 
+                                                name="asig{{asignacion.nombre}}{{std.estudiante_id}}"
+                                                [(ngModel)]="std.dominioPsicomotor.rubros[nombreRubro.toLowerCase()].asignaciones[i].nota"
+                                                onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46'>
+                                        </div>
+                                    </div>
+                                    <div class="porcent">
+                                        {{calculateGrade(std.dominioPsicomotor.rubros[nombreRubro.toLowerCase()].asignaciones[i].nota, asignacion.valor)}}%
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="porcent">
+                                {{calcularTotalRubro(std)}}%
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

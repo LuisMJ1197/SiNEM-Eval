@@ -7,82 +7,140 @@
         <div class="info-header">
             <h6>Redonda - Abril 2020</h6>
         </div>
+        <div class="row-element option" (click)="showing_fsttable = !showing_fsttable">
+            <div class="option-wrap" *ngIf="showing_fsttable">
+                <i class="fas fa-clipboard-list"></i>Ver resumen
+            </div>
+            <div class="option-wrap" *ngIf="!showing_fsttable">
+                <i class="fas fa-table"></i>Ver completo
+            </div>
+        </div>
         <div class="student-list-info info-container">
             <div class="row-element" style="margin-top: 0;">
-                <table class="table table-striped table-hover">
+                <table id="tabla-total" *ngIf="showing_fsttable" class="table table-striped table-hover">
                     <thead>
                         <tr class="header-lvl1">
                             <th rowspan="2" class="center-text">Nombre</th>
                             <th rowspan="2" colspan="2" class="dom-socio center-text">Dominio Socioafectivo<br>10%</th>
-                            <th colspan="7">Dominio Cognitivo<br>30%</th>
-                            <th colspan="7">Dominio Psicomotor<br>60%</th>
-                            <th rowspan="2" class="center-text">Total</th>
+                            <th [attr.colspan]="domC_expanded? 7 : 1" class="domC">Dominio Cognitivo<br>30%</th>
+                            <th [attr.colspan]="domP_expanded? 7 : 1" class="domP">Dominio Psicomotor<br>60%</th>
+                            <th rowspan="2" class="total head center-text">Total</th>
                         </tr>
                         <tr  class="header-lvl2">
-                            <th colspan="2" class="not-total">Portfolio<br>10%</th>
-                            <th colspan="2" class="not-total">Prueba parcial<br>10%</th>
-                            <th colspan="2" class="not-total">Prueba final<br>15%</th>
-                            <th colspan="1" class="total">Total<br>30%</th>
-                            <th colspan="1" class="not-total expandable">Tareas<br>5%</th>
-                            <th colspan="1" class="not-total expandable">Prácticas<br>15%</th>
-                            <th colspan="2" class="not-total">Prueba parcial<br>10%</th>
-                            <th colspan="2" class="not-total">Prueba final<br>30%</th>
-                            <th class="total">Total<br>60%</th>
+                            <th colspan="2" class="not-total" *ngIf="domC_expanded">Portfolio<br>10%</th>
+                            <th colspan="2" class="not-total" *ngIf="domC_expanded">Prueba parcial<br>10%</th>
+                            <th colspan="2" class="not-total" *ngIf="domC_expanded">Prueba final<br>15%</th>
+                            <th class="total expandable" (click)="domC_expanded = !domC_expanded">Total<br>30%</th>
+                            <th class="not-total expandable" *ngIf="domP_expanded">Tareas<br>5%</th>
+                            <th class="not-total expandable" *ngIf="domP_expanded">Prácticas<br>15%</th>
+                            <th colspan="2" class="not-total" *ngIf="domP_expanded">Prueba parcial<br>10%</th>
+                            <th colspan="2" class="not-total" *ngIf="domP_expanded">Prueba final<br>30%</th>
+                            <th class="total expandable" (click)="domP_expanded = !domP_expanded">Total<br>60%</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let std of notas">
                             <td>{{std.estudiante}}</td>
                             <td class="entry">
-                                <div class="input-wrap"><input type="text" id="domS{{std.estudiante_id}}" name="domS{{std.estudiante_id}}" [(ngModel)]="std.dominioSocioafectivo.nota"></div>
+                                <div class="input-wrap">
+                                    <input type="text" id="domS{{std.estudiante_id}}" name="domS{{std.estudiante_id}}" [(ngModel)]="std.dominioSocioafectivo.nota"
+                                    onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' (change)="validateGrade(std.dominioSocioafectivo)">
+                                </div>
                             </td>
                             <td class="porcent">
-                                {{std.dominioSocioafectivo.nota_porcent}}%
+                                {{calculateGrade(std.dominioSocioafectivo.nota, rubrica.dominioSocioafectivo.valor)}}%
                             </td>
-                            <td class="entry">
-                                <div class="input-wrap"><input type="text" id="domC_Portfolio{{std.estudiante_id}}" name="domC_Portfolio{{std.estudiante_id}}" [(ngModel)]="std.dominioCognitivo.rubros.portfolio.nota"></div>
+                            <td class="entry" *ngIf="domC_expanded">
+                                <div class="input-wrap">
+                                    <input type="text" id="domC_Portfolio{{std.estudiante_id}}" name="domC_Portfolio{{std.estudiante_id}}" [(ngModel)]="std.dominioCognitivo.rubros.portfolio.nota"
+                                    onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' (change)="validateGrade(std.dominioCognitivo.rubros.portfolio)">
+                                </div>
                             </td>
-                            <td class="porcent">
-                                {{std.dominioCognitivo.rubros.portfolio.nota_porcent}}%
+                            <td class="porcent" *ngIf="domC_expanded">
+                                {{calculateGrade(std.dominioCognitivo.rubros.portfolio.nota, rubrica.dominioCognitivo.rubros.portfolio.valor)}}%
                             </td>
-                            <td class="entry">
-                                <div class="input-wrap"><input type="text" id="domC_PP{{std.estudiante_id}}" name="domC_PP{{std.estudiante_id}}" [(ngModel)]="std.dominioCognitivo.rubros.prueba_parcial.nota"></div>
+                            <td class="entry" *ngIf="domC_expanded">
+                                <div class="input-wrap">
+                                    <input type="text" id="domC_PP{{std.estudiante_id}}" name="domC_PP{{std.estudiante_id}}" [(ngModel)]="std.dominioCognitivo.rubros.prueba_parcial.nota"
+                                    onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' (change)="validateGrade(std.dominioCognitivo.rubros.prueba_parcial)">
+                                </div>
                             </td>
-                            <td class="porcent">
-                                {{std.dominioCognitivo.rubros.prueba_parcial.nota_porcent}}%
+                            <td class="porcent" *ngIf="domC_expanded">
+                                {{calculateGrade(std.dominioCognitivo.rubros.prueba_parcial.nota, rubrica.dominioCognitivo.rubros.prueba_parcial.valor)}}%
                             </td>
-                            <td class="entry">
-                                <div class="input-wrap"><input type="text" id="domC_PF{{std.estudiante_id}}" name="domC_PF{{std.estudiante_id}}" [(ngModel)]="std.dominioCognitivo.rubros.prueba_final.nota"></div>
+                            <td class="entry" *ngIf="domC_expanded">
+                                <div class="input-wrap">
+                                    <input type="text" id="domC_PF{{std.estudiante_id}}" name="domC_PF{{std.estudiante_id}}" [(ngModel)]="std.dominioCognitivo.rubros.prueba_final.nota"
+                                    onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' (change)="validateGrade(std.dominioCognitivo.rubros.prueba_final)">
+                                </div>
                             </td>
-                            <td class="porcent">
-                                {{std.dominioCognitivo.rubros.prueba_final.nota_porcent}}%
-                            </td>
-                            <td class="porcent">
-                                {{std.dominioCognitivo.nota_porcent}}%
-                            </td>
-                            <td class="porcent extend">
-                                {{std.dominioPsicomotor.rubros.tareas.nota_porcent}}%
-                            </td>
-                            <td class="porcent extend">
-                                {{std.dominioPsicomotor.rubros.practicas.nota_porcent}}%
-                            </td>
-                            <td class="entry">
-                                <div class="input-wrap"><input type="text" id="domP_PP{{std.estudiante_id}}" name="domP_PP{{std.estudiante_id}}" [(ngModel)]="std.dominioPsicomotor.rubros.prueba_parcial.nota"></div>
+                            <td class="porcent" *ngIf="domC_expanded">
+                                {{calculateGrade(std.dominioCognitivo.rubros.prueba_final.nota, rubrica.dominioCognitivo.rubros.prueba_final.valor)}}%
                             </td>
                             <td class="porcent">
-                                {{std.dominioPsicomotor.rubros.prueba_parcial.nota_porcent}}%
+                                {{calcularSubtotalCognitivo(std)}}%
                             </td>
-                            <td class="entry">
-                                <div class="input-wrap"><input type="text" id="domP_PF{{std.estudiante_id}}" name="domP_PF{{std.estudiante_id}}" [(ngModel)]="std.dominioPsicomotor.rubros.prueba_final.nota"></div>
+                            <td class="porcent extend" *ngIf="domP_expanded">
+                                {{calcularTotalRubro(std, 'tareas')}}%
+                            </td>
+                            <td class="porcent extend" *ngIf="domP_expanded">
+                                {{calcularTotalRubro(std, 'practicas')}}%
+                            </td>
+                            <td class="entry" *ngIf="domP_expanded">
+                                <div class="input-wrap">
+                                    <input type="text" id="domP_PP{{std.estudiante_id}}" name="domP_PP{{std.estudiante_id}}" [(ngModel)]="std.dominioPsicomotor.rubros.prueba_parcial.nota"
+                                    onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' (change)="validateGrade(std.dominioPsicomotor.rubros.prueba_parcial)">
+                                </div>
+                            </td>
+                            <td class="porcent" *ngIf="domP_expanded">
+                                {{calculateGrade(std.dominioPsicomotor.rubros.prueba_parcial.nota, rubrica.dominioPsicomotor.rubros.prueba_parcial.valor)}}%
+                            </td>
+                            <td class="entry" *ngIf="domP_expanded">
+                                <div class="input-wrap">
+                                    <input type="text" id="domP_PF{{std.estudiante_id}}" name="domP_PF{{std.estudiante_id}}" [(ngModel)]="std.dominioPsicomotor.rubros.prueba_final.nota"
+                                    onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' (change)="validateGrade(std.dominioPsicomotor.rubros.prueba_final)">
+                                </div>
+                            </td>
+                            <td class="porcent" *ngIf="domP_expanded">
+                                {{calculateGrade(std.dominioPsicomotor.rubros.prueba_final.nota, rubrica.dominioPsicomotor.rubros.prueba_final.valor)}}%
                             </td>
                             <td class="porcent">
-                                {{std.dominioPsicomotor.rubros.prueba_final.nota_porcent}}%
+                                {{calcularSubtotalPsicomotor(std)}}%
                             </td>
                             <td class="porcent">
-                                {{std.dominioPsicomotor.nota_porcent}}%
+                                {{calcularTotal(std)}}%
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table id="tabla-resumen" *ngIf="!showing_fsttable" class="table table-striped table-hover">
+                    <thead>
+                        <tr class="header-lvl1">
+                            <th class="center-text">Nombre</th>
+                            <th class="domS center-text">Dominio Socioafectivo<br>{{valor_dominio_socioafectivo}}%</th>
+                            <th class="domC">Dominio Cognitivo<br>{{valor_dominio_cognitivo}}%</th>
+                            <th class="domP">Dominio Psicomotor<br>{{valor_dominio_psicomotor}}%</th>
+                            <th class="total head center-text">Total</th>
+                            <th class="center-text condicion">Condición</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let std of notas">
+                            <td>{{std.estudiante}}</td>
+                            <td class="porcent">
+                                {{redondear(calculateGrade(std.dominioSocioafectivo.nota, rubrica.dominioSocioafectivo.valor) * (valor_curso / 100))}}%
                             </td>
                             <td class="porcent">
-                                {{std.total}}%
+                                {{redondear(calcularSubtotalCognitivo(std) * (valor_curso / 100))}}%
+                            </td>
+                            <td class="porcent">
+                                {{redondear(calcularSubtotalPsicomotor(std) * (valor_curso / 100))}}%
+                            </td>
+                            <td class="porcent">
+                                {{redondear(calcularTotal(std) * (valor_curso / 100))}}%
+                            </td>
+                            <td class="porcent" [ngClass]="redondear(calcularTotal(std) * (valor_curso / 100)) >= (80 * (valor_curso / 100)) ? 'aprobado' : 'reprobado'">
+                                {{redondear(calcularTotal(std) * (valor_curso / 100)) >= (80 * (valor_curso / 100)) ? 'Aprobado' : 'Reprobado'}}
                             </td>
                         </tr>
                     </tbody>

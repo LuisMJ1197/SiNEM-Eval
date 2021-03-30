@@ -20,6 +20,7 @@ import { RegistrosAsistenciaComponent } from './pages/registros-asistencia/regis
 import { RegistroAsistenciaComponent } from './pages/registro-asistencia/registro-asistencia.component';
 import { RegistroAsistenciaEditComponent } from './pages/registro-asistencia-edit/registro-asistencia-edit.component';
 import { MatrizEvaluacionComponent } from './pages/matriz-evaluacion/matriz-evaluacion.component';
+import { MatrizEvaluacionRubroComponent } from './pages/matriz-evaluacion-rubro/matriz-evaluacion-rubro.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatrizEvaluacionComponent } from './pages/matriz-evaluacion/matriz-eval
     RegistrosAsistenciaComponent,
     RegistroAsistenciaComponent,
     RegistroAsistenciaEditComponent,
-    MatrizEvaluacionComponent
+    MatrizEvaluacionComponent,
+    MatrizEvaluacionRubroComponent
   ],
   imports: [
     BrowserModule,
