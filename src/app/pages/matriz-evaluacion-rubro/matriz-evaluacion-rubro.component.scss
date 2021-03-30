@@ -44,10 +44,15 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 50px;
+    height: 70px;
     cursor: pointer;
     padding: 5px;
     background-size: 100%;
+    text-align: center;
+}
+
+.option-wrap ~ .option-wrap {
+    margin-left: 1rem;
 }
 
 .option .option-wrap:hover {
@@ -220,4 +225,20 @@ table {
 
 .reprobado {
     background-color: var(--beauty-orange);
+}
+
+.asignaciones {
+    display: table-cell;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.asignaciones .entry {
+    flex: 1;
+}
+
+.asignaciones .porcent {
+    flex: 1;
+    vertical-align: middle;
+    padding-top: 4px;
 }
