@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/graphql/models';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./my-profile.component.scss']
 })
 export class MyProfileComponent implements OnInit {
+  roles = ["", "Profesor", "Administrativo"];
 
-  constructor() { }
+  userLoggedIn: User;
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.userLoggedIn = this.authService.getCurrentUser.user;
   }
 
 }
