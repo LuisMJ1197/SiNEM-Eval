@@ -21,6 +21,8 @@ import { RegistroAsistenciaComponent } from './pages/registro-asistencia/registr
 import { RegistroAsistenciaEditComponent } from './pages/registro-asistencia-edit/registro-asistencia-edit.component';
 import { MatrizEvaluacionComponent } from './pages/matriz-evaluacion/matriz-evaluacion.component';
 import { MatrizEvaluacionRubroComponent } from './pages/matriz-evaluacion-rubro/matriz-evaluacion-rubro.component';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { MatrizEvaluacionRubroComponent } from './pages/matriz-evaluacion-rubro/
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    GraphQLModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

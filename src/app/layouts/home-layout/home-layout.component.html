@@ -22,18 +22,18 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link profile waves-effect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="ml-2 font-medium username">Luis Molina</span>
+                        <span class="ml-2 font-medium username">{{userLoggedIn.nombre}} {{userLoggedIn.apellido1}}</span>
                         <i class="fas fa-angle-down ml-2 username"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                         <div class="d-flex no-block align-items-center p-3 mb-2 border-bottom">
                             <div class="ml-2">
-                                <h5 class="mb-0">Luis Molina</h5>
-                                <p class=" mb-0 text-muted">luisfermjua@gmail.com</p>
-                                <a href="javascript:void(0)" class="close-button btn btn-sm text-white mt-2 btn-rounded">Ver perfil</a>
+                                <h5 class="mb-0">{{userLoggedIn.nombre}} {{userLoggedIn.apellido1}}</h5>
+                                <p class=" mb-0 text-muted">{{userLoggedIn.email}}</p>
+                                <a href="javascript:void(0)" class="button button-yellow text-white mt-2 btn-rounded" (click)="optionSelected = 4; goRoute(PROFILE)">Ver perfil</a>
                             </div>
                         </div>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off mr-1 ml-1"></i>Cerrar sesión</a>
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="logout()"><i class="fa fa-power-off mr-1 ml-1"></i>Cerrar sesión</a>
                     </div>
                 </li>
             </div>
@@ -43,7 +43,7 @@
 <aside class="sidebar" [ngClass]="menuExtended ? '' : 'not-extended'">
     <nav class="sidebar-nav">
         <ul id="sidebarnav">
-            <li class="sidebar-item" tooltip="Gestión de cursos" flow="right"
+            <li *ngIf="userLoggedIn.rol_id == ADMINISTRATIVO" class="sidebar-item" tooltip="Gestión de cursos" flow="right"
                 [ngClass]="optionSelected == 0? 'selected' : ''" (click)="optionSelected = 0; goRoute(GESTION_CURSOS);">
                 <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd"
                     aria-expanded="false">
@@ -51,7 +51,7 @@
                     <span class="sidebar-link-text" *ngIf="menuExtended">Gestión de cursos</span>
                 </a>
             </li>
-            <li class="sidebar-item" tooltip="Gestión de usuarios" flow="right"
+            <li *ngIf="userLoggedIn.rol_id == ADMINISTRATIVO" class="sidebar-item" tooltip="Gestión de usuarios" flow="right"
                 [ngClass]="optionSelected == 1? 'selected' : ''" (click)="optionSelected = 1; goRoute(GESTION_USUARIOS);">
                 <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd"
                     aria-expanded="false">
@@ -59,7 +59,7 @@
                     <span class="sidebar-link-text" *ngIf="menuExtended">Gestión de usuarios</span>
                 </a>
             </li>
-            <li class="sidebar-item" tooltip="Gestión de estudiantes" flow="right"
+            <li *ngIf="userLoggedIn.rol_id == ADMINISTRATIVO" class="sidebar-item" tooltip="Gestión de estudiantes" flow="right"
                 [ngClass]="optionSelected == 2? 'selected' : ''" (click)="optionSelected = 2; goRoute(GESTION_ESTUDIANTES);">
                 <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd"
                     aria-expanded="false">
@@ -67,7 +67,7 @@
                     <span class="sidebar-link-text" *ngIf="menuExtended">Gestión de estudiantes</span>
                 </a>
             </li>
-            <hr>
+            <hr *ngIf="userLoggedIn.rol_id == ADMINISTRATIVO">
             <li class="sidebar-item"  tooltip="Mis cursos" flow="right"
                 [ngClass]="optionSelected == 3? 'selected' : ''" (click)="optionSelected = 3; goRoute(MIS_CURSOS);">
                 <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd"

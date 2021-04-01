@@ -22,6 +22,7 @@ const routes: Routes = [
   {
     path: '',                      
     component: HomeLayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'courses-management',
@@ -72,13 +73,18 @@ const routes: Routes = [
         component: MatrizEvaluacionRubroComponent
       },
       {
-        path: 'profile',
-        component: MyProfileComponent  
+        path: 'my-profile',
+        component: MyProfileComponent
+      },
+      {
+        path: '',
+        redirectTo: '/my-profile',
+        pathMatch: 'full'
       }
     ]
   },
   {
-    path: 'a',
+    path: '',
     component: LoginLayoutComponent,
     children: [
       {

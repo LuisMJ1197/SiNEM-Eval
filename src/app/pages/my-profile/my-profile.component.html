@@ -11,7 +11,7 @@
         <div class="rol-info info-container">
             <div class="row-element">
                 <div class="row-descriptor">Rol</div>
-                <div class="row-text">Administrador</div>
+                <div class="row-text">{{roles[userLoggedIn.rol_id]}}</div>
             </div>
         </div>
         <div class="account-info info-container">
@@ -20,19 +20,19 @@
             </div>
             <div class="row-element">
                 <div class="row-descriptor">Nombre</div>
-                <div class="row-text">Luis Fernando</div>
+                <div class="row-text">{{userLoggedIn.nombre}}</div>
             </div>
             <div class="row-element">
                 <div class="row-descriptor">Apellidos</div>
-                <div class="row-text">Molina Juárez</div>
+                <div class="row-text">{{userLoggedIn.apellido1}} {{userLoggedIn.apellido2}}</div>
             </div>
             <div class="row-element">
                 <div class="row-descriptor">Correo electrónico</div>
-                <div class="row-text">luisfermjua@gmail.com</div>
+                <div class="row-text">{{userLoggedIn.email}}</div>
             </div>
             <div class="row-element">
                 <div class="row-descriptor">Teléfono</div>
-                <div class="row-text">61638663</div>
+                <div class="row-text">{{userLoggedIn.telefono}}</div>
             </div>
             <div class="row-element">
                 <div class="row-descriptor">Contraseña</div>
