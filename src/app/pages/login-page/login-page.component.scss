@@ -8,6 +8,10 @@
     font-family: Rubik, sans-serif;
 }
 
+.login-container > * {
+  font-family: Rubik, sans-serif;
+}
+
 .login-outbox {
     width: 50%;
     height: 80%;
@@ -53,7 +57,7 @@ h3 {
     width: 250px;
   }
   
-  p {
+  .field {
     margin: 0 0 20px 0;
     font-size: 16px;
     font-weight: 500;
@@ -122,8 +126,8 @@ h3 {
     color: #ff574e;
     padding-left: 2px;
   }
-  
-  .login-form input {
+
+  .login-form input, .login-btn {
     display: block;
     width: 100%;
     height: 40px;
@@ -132,31 +136,48 @@ h3 {
     letter-spacing: 1px;
     outline: none;
     border: 1px solid #cccccc;
+    border-left: none;
     border-radius: 2px;
+  }
+
+  
+  .login-form input {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
   
   .login-form input:focus {
     border-color: gray;
   }
+
+  .field:focus-within .icon-wrapper {
+    border-color: gray;
+  }
   
-  .login-form input.btn {
+  .login-form .login-btn {
+    border: 1px solid #cccccc;
     color: #ffffff;
     background: var(--deep-saffron);
     border-color: var(--deep-saffron);
     outline: none;
     cursor: pointer;
+    border-radius: 2px;
   }
   
-  .login-form input.btn:hover {
+  .login-form .login-btn:hover {
     color: var(--deep-saffron);
     background: #ffffff;
   }
 
-  p.hide {
+  .errMsg {
+    color: #ff574e;
+  }
+
+  .errMsg.hide {
       opacity: 0;
   }
 
-  p.shown {
+  .errMsg.shown {
       opacity: 1;
   }
 
@@ -194,3 +215,20 @@ h3 {
       width: 100%;
     }
   }
+
+  .field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+  }
+
+  .field .icon-wrapper {
+    border: 1px solid #cccccc;
+    border-right: none;
+    height: 40px;
+    padding-left: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+
