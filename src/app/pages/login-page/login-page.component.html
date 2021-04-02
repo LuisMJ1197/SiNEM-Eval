@@ -4,27 +4,28 @@
             <img src="../../../assets/images/logo.png">
         </div>
         <div class="divider-div">
-
             <hr>
         </div>
         <div class="login-form-div">
             <div class="col-right">
                 <div class="login-form">
                   <h3>Inicio de sesión</h3>
-                  <form>
-                    <p>
+                  <form action="#">
+                    <div class="field">
+                      <div class="icon-wrapper"><i class="fas fa-envelope"></i></div>
                       <input type="text" name="email" placeholder="Correo electrónico" required
                         [(ngModel)]="email">
-                    </p>
-                    <p>
+                    </div>
+                    <div class="field">
+                      <div class="icon-wrapper"><i class="fas fa-lock"></i></div>
                       <input type="password" name="password" placeholder="Contraseña" required
                         [(ngModel)]="password">
-                    </p>
-                    <p>
-                      <input class="btn" type="submit" value="Iniciar sesión" (click)="login()"/>
-                    </p>
+                    </div>
+                    <div class="field">
+                      <input class="button button-yellow login-btn" type="submit" value="Iniciar sesión" (click)="login()"/>
+                    </div>
                   </form>
-                  <p [ngClass]="error? 'shown' : 'hide'" style="margin-top: 1rem;">Datos incorrectos</p>
+                  <div class="errMsg" [ngClass]="error? 'shown' : 'hide'" style="margin-top: 1rem;">Datos incorrectos</div>
                 </div>
               </div>
         </div>
