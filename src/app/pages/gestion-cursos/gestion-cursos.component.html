@@ -36,8 +36,8 @@
         </div>
     </div>
 </div>
-<div class="modal fade-scale" id="addCourse" tabindex="-1" role="dialog">
-    <div class="modal-dialog" cascading-modal role="document">
+<div class="modal fade bottom" id="addCourse" tabindex="-1" role="dialog">
+    <div class="modal-dialog cascading-modal modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header blue-header">
                 <h5 class="modal-title">Agregar curso</h5>
@@ -45,12 +45,64 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
+            <div class="modal-body row">
+                <div class="col-md-6">
+                    <h5>Información del curso</h5>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Tipo de curso</label>
+                        <select id="tipo" class="form-control">
+                            <option value="" selected>Redonda</option>
+                            <option value="">Blanca</option>
+                            <option value="">Negra</option>
+                            <option value="">Corchea</option>
+                            <option value="">Semicorchea</option>
+                            <option value="">Egresado</option>
+                        </select>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="profesorAsignado">Profesor asignado</label>
+                        <select id="profesorAsignado" class="form-control">
+                            <option value="" selected>Profesor 1</option>
+                            <option value="" >Profesor 2</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="periodo">Periodo</label>
+                        <input type="month" id="periodo" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5>Horario</h5>
+                    <div class="form-group form-sm select">
+                        <label for="dia">Día</label>
+                        <select id="dia" class="form-control">
+                            <option value="" selected>Lunes</option>
+                            <option value="">Martes</option>
+                            <option value="">Miércoles</option>
+                            <option value="">Jueves</option>
+                            <option value="">Viernes</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="horaInicio">Hora de inicio</label>
+                            <input type="time" id="horaInicio" class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="horaFin">Hora de fin</label>
+                            <input type="time" id="horaFin" class="form-control">
+                        </div>
+                    </div>
+                    <button class="button button-green" style="width: 100%;">Agregar</button>
+                    <div class="horario">
+                        <p>Lunes: 1:00 pm - 3:00 pm</p>
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="button modal-button button-grey" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="button modal-button button-blue">Agregar</button>
             </div>
         </div>
     </div>

@@ -225,6 +225,10 @@
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+.modal-button {
+  width: 25%;  
+}
+
 .button-green {
     color: #fff;
     background-color: var(--dark-sea-green);
@@ -275,6 +279,26 @@
   color: white;
 }
 
+.button-grey {
+  color: #fff;
+  background-color: grey;
+  border-color: grey;
+  box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+}
+
+.button-grey:hover {
+  background-color: #c9c9c9;
+  border-color: #c9c9c9;
+  color: white;
+}
+
+.select.form-control {
+  border: none;
+}
+
+.modal-body {
+  float: left;
+}
 
 /*Menu option*/
 .container-div {

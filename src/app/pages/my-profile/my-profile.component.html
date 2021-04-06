@@ -42,21 +42,34 @@
     </div>
 </div>
 <div class="modal fade-scale" id="changePassword" tabindex="-1" role="dialog">
-    <div class="modal-dialog" cascading-modal role="document">
-      <div class="modal-content">
-        <div class="modal-header green-header">
-          <h5 class="modal-title">Cambiar contraseña</h5>
-          <button type="button" class="btn close top-dismiss-btn" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+    <div class="modal-dialog cascading-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header green-header">
+                <h5 class="modal-title">Cambiar contraseña</h5>
+                <button type="button" class="btn close top-dismiss-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-md-12">
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Contraseña anterior</label>
+                        <input class="form-control" type="password" placeholder="Ingrese la contraseña anterior">
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Nueva contraseña</label>
+                        <input class="form-control" type="password" placeholder="Ingrese la nueva contraseña">
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Confirmar nueva contraseña</label>
+                        <input class="form-control" type="password" placeholder="Confirme la nueva contraseña">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="button modal-button button-grey" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="button modal-button button-green">Guardar</button>
+            </div>
         </div>
-        <div class="modal-body">
-          <p>Modal body text goes here.</p>
-        </div>
-        <div class="modal-footer justify-content-center">
-          <button type="button" class="btn btn-primary">Save changes</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>

@@ -5,7 +5,6 @@ export const LoginMutation = gql`
         login(email: $email, password: $password) {
             token
             user {
-                sede_id
                 usuario_id
                 email
                 nombre

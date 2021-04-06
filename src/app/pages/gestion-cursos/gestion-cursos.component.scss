@@ -25,3 +25,29 @@
 .search-option input, .search-option button {
     height: 2rem;
 }
+
+.horario {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    vertical-align: middle;
+    background-color: var(--beauty-orange);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 100px;
+    width: fit-content;
+}
+
+.horario p {
+    margin: 0;
+}
+
+.horario i {
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+.horario i:hover {
+    font-size: 1.1rem;
+}
