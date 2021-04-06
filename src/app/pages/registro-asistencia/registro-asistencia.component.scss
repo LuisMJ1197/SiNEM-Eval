@@ -109,7 +109,7 @@ table.table .avatar {
     color: var(--deep-saffron);
 }
 .text-profesor {
-    color: var(--deep-cerise);
+    color: var(--beauty-orange);
 }
 
 table thead tr {
@@ -192,7 +192,7 @@ table.table tr th.justificado {
 
 .ausente [type="radio"]:checked + label:after,
 .ausente [type="radio"]:not(:checked) + label:after {
-    background: var(--deep-cerise);
+    background: var(--beauty-orange);
 }
 
 .justificado [type="radio"]:checked + label:after,

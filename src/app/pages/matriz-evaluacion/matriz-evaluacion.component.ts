@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 class Expandable {
   public items = [];
@@ -185,7 +186,7 @@ export class MatrizEvaluacionComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
@@ -236,5 +237,9 @@ export class MatrizEvaluacionComponent implements OnInit {
       index += 1;
     });
     return Number(Number(total).toFixed(2));
+  }
+
+  goRubro(rubro) {
+    this.router.navigate([this.router.url + "/tareas"]);
   }
 }

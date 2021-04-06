@@ -2,11 +2,11 @@ $flaticon-font: "flaticon";
 
 @font-face {
     font-family: $flaticon-font;
-    src: url("./flaticon.ttf?aab32879697576bec991609492df38bd") format("truetype"),
-url("./flaticon.woff?aab32879697576bec991609492df38bd") format("woff"),
-url("./flaticon.woff2?aab32879697576bec991609492df38bd") format("woff2"),
-url("./flaticon.eot?aab32879697576bec991609492df38bd#iefix") format("embedded-opentype"),
-url("./flaticon.svg?aab32879697576bec991609492df38bd#flaticon") format("svg");
+    src: url("./flaticon.ttf?6d96961b96f2ba0b0f224548a1fe65ae") format("truetype"),
+url("./flaticon.woff?6d96961b96f2ba0b0f224548a1fe65ae") format("woff"),
+url("./flaticon.woff2?6d96961b96f2ba0b0f224548a1fe65ae") format("woff2"),
+url("./flaticon.eot?6d96961b96f2ba0b0f224548a1fe65ae#iefix") format("embedded-opentype"),
+url("./flaticon.svg?6d96961b96f2ba0b0f224548a1fe65ae#flaticon") format("svg");
 }
 
 i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
@@ -21,13 +21,41 @@ i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
 }
 
 $flaticon-map: (
-    "exam": "\f101",
-    "musical-note": "\f102",
+    "blanca": "\f101",
+    "exam": "\f102",
+    "mortarboard": "\f103",
+    "negra": "\f104",
+    "nota-musical": "\f105",
+    "right-arrow": "\f106",
+    "semibreve-1": "\f107",
+    "semibreve": "\f108",
+    "semicorchea": "\f109",
 );
 
+.flaticon-blanca:before {
+    content: map-get($flaticon-map, "blanca");
+}
 .flaticon-exam:before {
     content: map-get($flaticon-map, "exam");
 }
-.flaticon-musical-note:before {
-    content: map-get($flaticon-map, "musical-note");
+.flaticon-mortarboard:before {
+    content: map-get($flaticon-map, "mortarboard");
+}
+.flaticon-negra:before {
+    content: map-get($flaticon-map, "negra");
+}
+.flaticon-nota-musical:before {
+    content: map-get($flaticon-map, "nota-musical");
+}
+.flaticon-right-arrow:before {
+    content: map-get($flaticon-map, "right-arrow");
+}
+.flaticon-semibreve-1:before {
+    content: map-get($flaticon-map, "semibreve-1");
+}
+.flaticon-semibreve:before {
+    content: map-get($flaticon-map, "semibreve");
+}
+.flaticon-semicorchea:before {
+    content: map-get($flaticon-map, "semicorchea");
 }

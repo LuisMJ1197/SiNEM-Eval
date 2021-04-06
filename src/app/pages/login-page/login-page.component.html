@@ -10,19 +10,21 @@
             <div class="col-right">
                 <div class="login-form">
                   <h3>Inicio de sesión</h3>
-                  <form action="#">
-                    <div class="field">
-                      <div class="icon-wrapper"><i class="fas fa-envelope"></i></div>
-                      <input type="text" name="email" placeholder="Correo electrónico" required
-                        [(ngModel)]="email">
+                  <form class="needs-validation" novalidate>
+                    <div class="md-form form-sm">
+                      <mdb-icon fas icon="envelope" class="prefix"></mdb-icon>
+                      <input mdbInput type="text" name="email" required id="email" [(ngModel)]="email" class="form-control">
+                      <label for="email">Correo electrónico</label>
+                    </div>
+                    <div class="md-form form-sm">
+                      <mdb-icon fas icon="envelope" class="prefix"></mdb-icon>
+                      <input mdbInput type="password" name="password" 
+                        required id="password" [(ngModel)]="password" class="form-control">
+                      <label for="password">Contraseña</label>
+                      <div class="invalid-feedback">Ingrese su contraseña</div>
                     </div>
                     <div class="field">
-                      <div class="icon-wrapper"><i class="fas fa-lock"></i></div>
-                      <input type="password" name="password" placeholder="Contraseña" required
-                        [(ngModel)]="password">
-                    </div>
-                    <div class="field">
-                      <input class="button button-yellow login-btn" type="submit" value="Iniciar sesión" (click)="login()"/>
+                      <button class="button button-yellow login-btn" type="submit" (click)="login()">Iniciar sesión</button>
                     </div>
                   </form>
                   <div class="errMsg" [ngClass]="error? 'shown' : 'hide'" style="margin-top: 1rem;">Datos incorrectos</div>

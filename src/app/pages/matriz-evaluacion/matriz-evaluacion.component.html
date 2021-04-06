@@ -31,8 +31,8 @@
                             <th colspan="2" class="not-total" *ngIf="domC_expanded">Prueba parcial<br>10%</th>
                             <th colspan="2" class="not-total" *ngIf="domC_expanded">Prueba final<br>15%</th>
                             <th class="total expandable" (click)="domC_expanded = !domC_expanded">Total<br>30%</th>
-                            <th class="not-total expandable" *ngIf="domP_expanded">Tareas<br>5%</th>
-                            <th class="not-total expandable" *ngIf="domP_expanded">Prácticas<br>15%</th>
+                            <th class="not-total expandable" *ngIf="domP_expanded" (click)="goRubro('tareas')">Tareas<br>5%</th>
+                            <th class="not-total expandable" *ngIf="domP_expanded" (click)="goRubro('practicas')">Prácticas<br>15%</th>
                             <th colspan="2" class="not-total" *ngIf="domP_expanded">Prueba parcial<br>10%</th>
                             <th colspan="2" class="not-total" *ngIf="domP_expanded">Prueba final<br>30%</th>
                             <th class="total expandable" (click)="domP_expanded = !domP_expanded">Total<br>60%</th>

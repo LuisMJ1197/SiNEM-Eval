@@ -22,13 +22,13 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link profile waves-effect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="ml-2 font-medium username">{{userLoggedIn.nombre}} {{userLoggedIn.apellido1}}</span>
+                        <span class="ml-2 font-medium username">{{userLoggedIn.nombre.split(' ')[0]}} {{userLoggedIn.apellido1}}</span>
                         <i class="fas fa-angle-down ml-2 username"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                         <div class="d-flex no-block align-items-center p-3 mb-2 border-bottom">
                             <div class="ml-2">
-                                <h5 class="mb-0">{{userLoggedIn.nombre}} {{userLoggedIn.apellido1}}</h5>
+                                <h5 class="mb-0">{{userLoggedIn.nombre.split(' ')[0]}} {{userLoggedIn.apellido1}}</h5>
                                 <p class=" mb-0 text-muted">{{userLoggedIn.email}}</p>
                                 <a href="javascript:void(0)" class="button button-yellow text-white mt-2 btn-rounded" (click)="optionSelected = 4; goRoute(PROFILE)">Ver perfil</a>
                             </div>
