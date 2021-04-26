@@ -332,6 +332,16 @@ export const EditarRegistroDeAsistencia = gql`
     }
 `; 
 
+export const EliminarRegistroDeAsistencia = gql`
+    mutation EliminarRegistroDeAsistencia ($curso_id: Int!, $numero_registro: Int!) {
+        eliminarRegistroDeAsistencia(curso_id: $curso_id, numero_registro: $numero_registro) {
+            status
+            errorNumber
+            resultData
+        }
+    }
+`; 
+
 export const ObtenerRubrica = gql`
     query ObtenerRubrica($curso_id: Int!) {
         obtenerRubrica(curso_id: $curso_id) {

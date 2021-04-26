@@ -4,7 +4,8 @@
             [iconPosition]="'right'">
         </app-page-title>
         <div class="container-actions">
-            <button class="btn button button-red text-white ml-3 d-md-block">Eliminar registro
+            <button class="btn button button-red text-white ml-3 d-md-block" data-toggle="modal"
+                data-target="#confirmDeleting" [disabled]="deleting">Eliminar registro
                 <i style="margin-left: 0.5rem;" class="fas fa-trash-alt"></i></button>
             <button class="btn button button-green text-white ml-3 d-md-block" [disabled]="saving" (click)="guardarCambios()">Guardar cambios
                 <i style="margin-left: 0.5rem;" class="fas fa-save"></i></button>
@@ -54,6 +55,22 @@
                 </tbody>
             </table>
         </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bottom" id="confirmDeleting" tabindex="-1" role="dialog">
+    <div class="modal-dialog cascading-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header red-header">
+                <h5 class="modal-title">¿Seguro que desea eliminar el registro?</h5>
+                <button type="button" class="btn close top-dismiss-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="button modal-button button-grey" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="button modal-button button-red" data-dismiss="modal" (click)="eliminarRegistro()">Aceptar</button>
+            </div>
         </div>
     </div>
 </div>

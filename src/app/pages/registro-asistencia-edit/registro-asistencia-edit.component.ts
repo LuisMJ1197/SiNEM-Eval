@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { meses } from 'src/app/graphql/models';
-import { EditarRegistroDeAsistencia } from 'src/app/graphql/queries';
+import { EditarRegistroDeAsistencia, EliminarRegistroDeAsistencia } from 'src/app/graphql/queries';
 import { ProfesorService } from 'src/app/services/profesor.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-registro-asistencia-edit',
@@ -13,8 +14,9 @@ import { ProfesorService } from 'src/app/services/profesor.service';
 export class RegistroAsistenciaEditComponent implements OnInit {
   meses = meses;
   saving: boolean = false;
+  deleting: boolean = false;
 
-  constructor(public pService: ProfesorService, private router: Router, private apollo: Apollo) { }
+  constructor(public pService: ProfesorService, private router: Router, private apollo: Apollo, private location: Location) { }
 
   ngOnInit(): void {
     if (this.pService.miCurso.curso_id == 0) {
@@ -28,7 +30,11 @@ export class RegistroAsistenciaEditComponent implements OnInit {
       this.pService.cargarInfoRegistroDeAsistencia(Number(url[0]), Number(urlStr2));
     } else {
       // this.pService.cargarRegistrosDeAsistencia(this.pService.miCurso.curso_id);
-      this.pService.cargarInfoRegistroDeAsistencia(this.pService.miCurso.curso_id, this.pService.registroDeAsistencia.numero_registro);
+      let url2 = this.router.url.split("/");
+      let urlStr2 = url2[url2.length - 1];
+      console.log(this.pService.miCurso.curso_id);
+      console.log(Number(urlStr2));
+      this.pService.cargarInfoRegistroDeAsistencia(this.pService.miCurso.curso_id, Number(urlStr2));
     }
   }
 
@@ -69,6 +75,31 @@ export class RegistroAsistenciaEditComponent implements OnInit {
     } else {
       alert("Se tiene que indicar un estado para cada estudiante.");
     }
+  }
+
+  eliminarRegistro() {
+    this.deleting = true;
+    this.apollo.mutate({
+      mutation: EliminarRegistroDeAsistencia,
+      variables: {
+        curso_id: this.pService.registroDeAsistencia.curso_id,
+        numero_registro: this.pService.registroDeAsistencia.numero_registro
+      }
+    }).subscribe(({ data }) => {
+      if (data != null && data['eliminarRegistroDeAsistencia'] != null) {
+        if (data['eliminarRegistroDeAsistencia'].status == "error") {
+          alert("Ha ocurrido un error.");
+          this.deleting = false;
+        } else {
+          this.pService.cargarRegistrosDeAsistencia(this.pService.miCurso.curso_id);
+          this.location.back();
+          this.deleting = false;
+        }
+      } else {
+        alert("Ha ocurrido un error");
+        this.deleting = false;
+      }
+    });
   }
 
 }

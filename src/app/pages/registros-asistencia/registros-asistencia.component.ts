@@ -58,23 +58,31 @@ export class RegistrosAsistenciaComponent implements OnInit {
     }
   }
   agregarRegistro() {
-    this.apollo.mutate({
-      mutation: AgregarRegistroDeAsistencia,
-      variables: {
-        curso_id: this.pService.miCurso.curso_id,
-        anno: this.fecha.getFullYear(),
-        mes: this.fecha.getMonth() + 1,
-        dia: this.fecha.getDate()
-      }
-    }).subscribe(({data}) => {
-      if (data != null && data['agregarRegistroDeAsistencia'] != null) {
-        if (data['agregarRegistroDeAsistencia'].status == "error") {
-          alert("Ha ocurrido un error.");
+    this.validarFecha(this.fecha);
+    if (this.estado_fecha) {
+      this.apollo.mutate({
+        mutation: AgregarRegistroDeAsistencia,
+        variables: {
+          registro: {
+            curso_id: this.pService.miCurso.curso_id,
+            anno: this.fecha.getFullYear(),
+            mes: this.fecha.getMonth() + 1,
+            dia: this.fecha.getDate()
+          }
         }
-      } else {
-        let numero_registro = data['agregarRegistroDeAsistencia'].resultData;
-        this.router.navigate([this.router.url.concat("/".concat(numero_registro.toString()))]);
-      }
-    });
+      }).subscribe(({data}) => {
+        if (data != null && data['agregarRegistroDeAsistencia'] != null) {
+          if (data['agregarRegistroDeAsistencia'].status == "error") {
+            alert("Ha ocurrido un error. ");
+          } else {
+            let numero_registro = data['agregarRegistroDeAsistencia'].resultData;
+            // this.pService.cargarRegistrosDeAsistencia(this.pService.miCurso.curso_id);
+            this.router.navigate([this.router.url.concat("/".concat(numero_registro.toString()))]);
+          }
+        } else {
+          alert("Ha ocurrido un error. ");
+        }
+      });
+    }
   }
 }

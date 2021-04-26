@@ -104,8 +104,10 @@ export class ProfesorService {
       query: ObtenerRegistrosDeAsistenciaPorCurso,
       variables: {
         curso_id: curso_id 
-      }
+      },
+      fetchPolicy: 'network-only'
     }).subscribe(({data}) => {
+      console.log(data);
       if (data != null && data['obtenerRegistrosDeAsistenciaPorCurso'] != null) {
         this.registrosDeAsistencia = data['obtenerRegistrosDeAsistenciaPorCurso'] as RegistroDeAsistencia[];
       } else {
@@ -118,9 +120,11 @@ export class ProfesorService {
     this.apollo.query({
       query: ObtenerRegistrosDeAsistenciaPorCurso,
       variables: {
-        curso_id: curso_id 
-      }
+        curso_id: curso_id,
+      },
+      fetchPolicy: 'network-only'
     }).subscribe(({data}) => {
+      console.log(data);
       if (data != null && data['obtenerRegistrosDeAsistenciaPorCurso'] != null) {
         this.registrosDeAsistencia = data['obtenerRegistrosDeAsistenciaPorCurso'] as RegistroDeAsistencia[];
         this.registrosDeAsistencia.forEach(registro => {
