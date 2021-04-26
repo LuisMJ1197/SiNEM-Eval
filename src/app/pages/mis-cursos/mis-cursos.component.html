@@ -1,26 +1,26 @@
 <div class="container-div">
     <div class="container-header">
-        <app-page-title [title]="'Mis cursos'" [iclass]="'fa-music'" [hasBackAction]=false
+        <app-page-title [title]="'Mis pService.misCursos'" [iclass]="'fa-music'" [hasBackAction]=false
             [iconPosition]="'left'"></app-page-title>
     </div>
     <div class="container-body">
         <div class="info-header">
-            <h6>2 cursos</h6>
+            <h6>{{pService.misCursos.length}} {{pService.misCursos.length == 1 ? 'curso' : 'pService.misCursos'}}</h6>
             <div class="filter-buttons">
                 <button class="filter-option button btn button-yellow">Ver todos</button>
             </div>
         </div>
         <div class="grid-div">
-            <div class="grid-element course" *ngFor="let curso of cursos" (click)="goCourse()">
+            <div class="grid-element course" *ngFor="let curso of pService.misCursos" (click)="goCourse(curso)">
                 <div class="element-info">
                     <div class="info-line">
-                        <strong>{{curso.tipo}}</strong><i [ngClass]="getClass(curso.tipo)"></i>
+                        <strong>{{curso.tipo_curso.tipo_name}}</strong><i [ngClass]="getClass(curso.tipo_curso.tipo_name)"></i>
                     </div>
                     <div class="info-line">
-                        {{curso.profesorAsignado}}
+                        {{curso.profesor_asignado.profesor_name}}
                     </div>
                     <div class="info-line">
-                        {{curso.periodo}}
+                        {{meses[curso.mes_periodo - 1]}} del {{curso.anno_periodo}}
                     </div>
                 </div>
                 <div class="element-go">

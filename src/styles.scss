@@ -274,8 +274,8 @@
 }
 
 .button-red:hover {
-  background-color: #ff5040;
-  border-color: #ff5050;
+  background-color: #ff506F;
+  border-color: #ff506F;
   color: white;
 }
 
@@ -469,6 +469,10 @@
   color: white;
 }
 
+.modal .red-header.modal-header {
+  background-color: var(--beauty-orange);
+  color: white;
+}
 
 /* INPUTS */
 
@@ -566,4 +570,14 @@
 
 .grid-element.course .element-go i {
   margin: 0;
+}
+
+select {
+  cursor: pointer;
+}
+
+select option::after {
+  cursor: pointer;
+  border: none;
+  padding: 5px;
 }

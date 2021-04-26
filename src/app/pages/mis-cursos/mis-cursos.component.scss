@@ -11,10 +11,21 @@
 
 .info-header .filter-buttons {
     margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.filter-option.select {
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .filter-buttons .filter-option {
-    height: 2rem;
+    height: 2.2rem;
     float: left;
 }
 

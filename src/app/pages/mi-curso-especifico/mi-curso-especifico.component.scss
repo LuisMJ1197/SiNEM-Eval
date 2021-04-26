@@ -58,3 +58,13 @@
 .action p {
     margin-top: 1rem;
 }
+
+@media (max-width: 1060px) {
+    .actions {
+        flex-direction: column;
+    }
+
+    .action ~ .action {
+        margin-top: 1rem;
+    }
+}

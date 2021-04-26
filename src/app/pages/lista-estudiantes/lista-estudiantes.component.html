@@ -5,9 +5,9 @@
     </div>
     <div class="container-body">
         <div class="info-header">
-            <h6>Redonda - Abril 2020</h6>
+            <h6>{{pService.miCurso.tipo_curso.tipo_name}} - {{meses[pService.miCurso.mes_periodo - 1]}} {{pService.miCurso.anno_periodo}}</h6>
             <div class="info-cant">
-                6 estudiantes
+                {{pService.listaEstudiantes.length}} estudiantes
             </div>
         </div>
         <div class="student-list-info info-container">
@@ -19,69 +19,14 @@
                         <th><i class="fas fa-at"></i>Cédula</th>
                         <th><i class="fas fa-phone-alt"></i>Teléfono</th>
                         <th><i class="fas fa-user"></i>Nombre encargado</th>
-                        <th><i class="fas fa-cog"></i>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><a class="name">Mauricio Murillo Briley</a></td>
-                        <td>708950563</td>
-                        <td>61457896</td>
-                        <td>Nombre encargado</td>
-                        <td>
-                            <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
-                                <i class="fas fa-minus-circle"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Paula Wilson</a></td>
-                        <td>708950563</td>
-                        <td>61457896</td>
-                        <td>Nombre encargado</td>
-                        <td>
-                            <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
-                                <i class="fas fa-minus-circle"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Antonio Moreno</a></td>
-                        <td>708950563</td>
-                        <td>61457896</td>
-                        <td>Nombre encargado</td>
-                        <td>
-                            <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
-                                <i class="fas fa-minus-circle"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Mary Saveley</a></td>
-                        <td>708950563</td>
-                        <td>61457896</td>
-                        <td>Nombre encargado</td>
-                        <td>
-                            <a href="#" class="action delete" title="Dar de baja" data-toggle="tooltip">
-                                <i class="fas fa-minus-circle"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Martin Sommer</a></td>
-                        <td>708950563</td>
-                        <td>61457896</td>
-                        <td>Nombre encargado</td>
-                        <td>
-                            <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
-                                <i class="fas fa-minus-circle"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Mauricio Murillo Briley</a></td>
-                        <td>708950563</td>
-                        <td>61457896</td>
-                        <td>Nombre encargado</td>
-                        <td>
-                            <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
-                                <i class="fas fa-minus-circle"></i></a>
-                        </td>
+                    <tr *ngFor="let estudiante of pService.listaEstudiantes">
+                        <td><a class="name">{{estudiante.nombre + " " + estudiante.apellido1 + " " + estudiante.apellido2}}</a></td>
+                        <td>{{estudiante.cedula}}</td>
+                        <td>{{estudiante.telefono}}</td>
+                        <td>{{estudiante.nombre_encargado}}</td>
                     </tr>
                 </tbody>
             </table>

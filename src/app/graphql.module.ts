@@ -15,12 +15,12 @@ const basic = setContext((operation, context) => ({
   }
 }));
 
-const middleware = setContext((operation, forward) => {
+const middleware = setContext((_, { headers }) => {
   const user_data = JSON.parse(localStorage.getItem(CURRENT_USER)) as LoginData;
   if (user_data) {
-    return forward({
+    return {
       headers: new HttpHeaders().set('Authorization', `Bearer ${user_data.token}`)
-    });
+    };
   } else {
     return {};
   }
@@ -29,7 +29,7 @@ const middleware = setContext((operation, forward) => {
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   return {
     link: ApolloLink.from([basic, middleware, httpLink.create({uri})]),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({addTypename: false}),
   };
 }
 
