@@ -10,13 +10,13 @@
     </div>
     <div class="container-body">
         <div class="info-header">
-            <h6>Redonda - Abril 2020</h6>
+            <h6>{{pService.miCurso.tipo_curso.tipo_name}} - {{meses[pService.miCurso.mes_periodo - 1]}} {{pService.miCurso.anno_periodo}}</h6>
             <div class="info-cant">
-                {{registros.length}} registros
+                {{pService.registrosDeAsistencia.length}} registros
             </div>
         </div>
         <div class="grid-div">
-            <div class="grid-element course" *ngFor="let registro of registros" (click)="goRegistro()">
+            <div class="grid-element course" *ngFor="let registro of pService.registrosDeAsistencia" (click)="goRegistro(registro)">
                 <div class="element-info">
                     <div class="info-line">
                         <strong>Asistencia</strong>
@@ -45,12 +45,13 @@
             <div class="modal-body mb-0">
                 <div class="form-group">
                     <label for="fecha">Fecha de asistencia</label>
-                    <input type="month" id="fecha" class="form-control">
+                    <input class="datepicker" type="date" id="fecha" class="form-control" [valueAsDate]="fecha" (change)="fecha = $event.target.valueAsDate; validarFecha(fecha)">
+                    <span style="color: var(--beauty-orange);">{{!estado_fecha ? estado_msg : ''}}</span>
                 </div>
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" class="button modal-button button-grey" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="button modal-button button-blue">Aceptar</button>
+                <button type="button" class="button modal-button button-blue" (click)="agregarRegistro()">Aceptar</button>
             </div>
         </div>
     </div>

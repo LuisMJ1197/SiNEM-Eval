@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { meses } from 'src/app/graphql/models';
+import { ProfesorService } from 'src/app/services/profesor.service';
 
 @Component({
   selector: 'app-mis-cursos',
   templateUrl: './mis-cursos.component.html',
   styleUrls: ['./mis-cursos.component.scss']
 })
+
 export class MisCursosComponent implements OnInit {
   tipos = {
     negra: "Negra",
     blanca: "Blanca",
     corchea: "Corchea",
-    semicorchea: "Semicorche",
+    semicorchea: "Semicorchea",
     redonda: "Redonda",
     egresado: "Egresado"
   };
@@ -25,30 +28,30 @@ export class MisCursosComponent implements OnInit {
     Egresado: "flaticon-mortarboard"
   };
 
-  cursos = [
-    {
-      tipo: "Corchea",
-      profesorAsignado: "Luis Molina Juárez",
-      periodo: "Abril 2020"
-    },
-    {
-      tipo: "Semicorchea",
-      profesorAsignado: "Luis Molina Juárez",
-      periodo: "Abril 2020"
-    }
-  ]
+  cursos_filtrados = [];
 
-  constructor(private router: Router) { }
+  meses = meses;
+
+  constructor(private router: Router, public pService: ProfesorService) { }
 
   ngOnInit(): void {
+    if (this.pService.misCursos == []) {
+      this.pService.cargarCursosDeProfesor();
+    }
   }
 
   getClass(tipo: string) {
     return this.tiposEstilos[tipo];
   }
 
-  goCourse() {
-    this.router.navigate(["my-courses/corchea-abril2020"]);
+  goCourse(curso) {
+    this.pService.miCurso = curso;
+    this.router.navigate(["my-courses/"
+      .concat(curso.curso_id, "-", (curso.tipo_curso.tipo_name as string).toLowerCase(), "-", meses[curso.mes_periodo - 1].toLowerCase(), curso.anno_periodo)]);
+  }
+
+  filtrarTodos() {
+    // this.cursos_filtrados = JSON.parse(JSON.stringify(this.cursos));
   }
 
 }

@@ -3,9 +3,9 @@
         <app-page-title [title]="'Curso'" [iclass]="'fa-nota-musical'" [hasBackAction]=true
             [iconPosition]="'right'"></app-page-title>
         <div class="container-actions">
-            <div>Estado: activo</div>
-            <button class="btn button button-red text-white ml-3 d-md-block" data-toggle="modal"
-                data-target="#changePassword">Finalizar curso</button>
+            <div>Estado: {{pService.miCurso.isActivo ? 'activo' : 'finalizado'}}</div>
+            <button [disabled]="!pService.miCurso.isActivo" class="btn button button-red text-white ml-3 d-md-block" data-toggle="modal"
+                data-target="#confirmFinish">Finalizar curso</button>
         </div>
     </div>
     <div class="container-body">
@@ -15,20 +15,24 @@
             </div>
             <div class="row-element">
                 <div class="row-descriptor">Tipo</div>
-                <div class="row-text">Corchea</div>
-                <i class="course-icon flaticon-nota-musical"></i>
+                <div class="row-text">{{pService.miCurso.tipo_curso.tipo_name}}</div>
+                <i class="course-icon" [ngClass]="getClass(pService.miCurso.tipo_curso.tipo_name)"></i>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Modalidad</div>
+                <div class="row-text">{{pService.miCurso.modalidad.modalidad_name}}{{pService.miCurso.modalidad.modalidad_id != 1 ? " - " + pService.miCurso.modalidad.instrumento_name : ""}}</div>
             </div>
             <div class="row-element">
                 <div class="row-descriptor">Profesor asignado</div>
-                <div class="row-text">Luis Molina Juárez</div>
+                <div class="row-text">{{pService.miCurso.profesor_asignado.profesor_name}}</div>
             </div>
             <div class="row-element">
                 <div class="row-descriptor">Periodo</div>
-                <div class="row-text">Abril del 2020</div>
+                <div class="row-text">{{meses[pService.miCurso.mes_periodo - 1]}} del {{pService.miCurso.anno_periodo}}</div>
             </div>
             <div class="row-element">
                 <div class="row-descriptor">Horario</div>
-                <div class="row-text">Lunes: 15:00 - 17:00<br>Martes: 15:00 - 17:00</div>
+                <div class="row-text" [innerHtml]="getHorarios()"></div>
             </div>
         </div>
         <div class="actions">
@@ -49,6 +53,22 @@
                     <i class="fas fa-table"></i>
                 </div>
                 <p>Matriz de evaluaciones</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bottom" id="confirmFinish" tabindex="-1" role="dialog">
+    <div class="modal-dialog cascading-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header red-header">
+                <h5 class="modal-title">¿Seguro que desea finalizar el curso?</h5>
+                <button type="button" class="btn close top-dismiss-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="button modal-button button-grey" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="button modal-button button-red" (click)="finalizarCurso()">Aceptar</button>
             </div>
         </div>
     </div>

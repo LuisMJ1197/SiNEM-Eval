@@ -2,17 +2,19 @@ import gql from "graphql-tag";
 
 export const LoginMutation = gql`
     mutation LoginMutation ($email: String!, $password: String!) {
-        token
-        user {
-            usuario_id
-            email
-            nombre
-            apellido1
-            apellido2
-            telefono
-            rol {
-                rol_id
-                rol_name
+        login(email: $email, password: $password) {
+            token
+            user {
+                usuario_id
+                email
+                nombre
+                apellido1
+                apellido2
+                telefono
+                rol {
+                    rol_id
+                    rol_name
+                }
             }
         }
     }
@@ -118,6 +120,7 @@ export const ObtenerCursos = gql`
                 hora_inicio
                 hora_fin
             }
+            isActivo
         }
     }
 `;
@@ -267,6 +270,7 @@ export const ObtenerCursosDeProfesor = gql`
                 hora_inicio
                 hora_fin
             }
+            isActivo
         }
     }
 `;
@@ -319,8 +323,8 @@ export const AgregarRegistroDeAsistenciaDeEstudiante = gql`
 `;
 
 export const EditarRegistroDeAsistencia = gql`
-    mutation EditarRegistroDeAsistencia ($registro: RegistroDeAsistenciaDeEstudianteInput!) {
-        editarRegistroDeAsistencia(registro: $registro) {
+    mutation EditarRegistroDeAsistencia ($registros: [RegistroDeAsistenciaDeEstudianteInput]!) {
+        editarRegistroDeAsistencia(registros: $registros) {
             status
             errorNumber
             resultData
@@ -409,6 +413,16 @@ export const ObtenerModalidades = gql`
                     instrumento_name
                 }
             }
+        }
+    }
+`;
+
+export const FinalizarCurso = gql`
+    mutation FinalizarCurso ($curso_id: Int!) {
+        finalizarCurso(curso_id: $curso_id) {
+            status
+            errorNumber
+            resultData
         }
     }
 `;

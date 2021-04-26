@@ -4,17 +4,17 @@
             [iconPosition]="'right'">
         </app-page-title>
         <div class="container-actions">
-            <button class="btn button button-green text-white ml-3 d-md-block">Guardar cambios
-                <i style="margin-left: 0.5rem;" class="fas fa-save"></i></button>
             <button class="btn button button-red text-white ml-3 d-md-block">Eliminar registro
                 <i style="margin-left: 0.5rem;" class="fas fa-trash-alt"></i></button>
+            <button class="btn button button-green text-white ml-3 d-md-block" [disabled]="saving" (click)="guardarCambios()">Guardar cambios
+                <i style="margin-left: 0.5rem;" class="fas fa-save"></i></button>
         </div>
     </div>
     <div class="container-body">
         <div class="info-header">
-            <h6>Redonda - Abril 2020</h6>
+            <h6>{{pService.miCurso.tipo_curso.tipo_name}} - {{meses[pService.miCurso.mes_periodo - 1]}} {{pService.miCurso.anno_periodo}}</h6>
             <div class="info-cant">
-                10 de Abril del 2020
+                {{pService.registroDeAsistencia.fecha}}
             </div>
         </div>
         <div class="student-list-info info-container">
@@ -29,94 +29,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><a class="name">Mauricio Murillo Briley</a></td>
+                    <tr *ngFor="let registroEstudiante of pService.registroDeAsistencia.estado_por_estudiante; let i = index">
+                        <td><a class="name">{{registroEstudiante.estudiante_nombre}}</a></td>
                         <td class="asist-check presente">
-                            <input type="radio" id="test1" name="radio-group">
-                            <label for="test1"></label>
+                            <input type="radio" [id]="'presente' + i.toString()" 
+                                [name]="'presente' + i.toString()" [selected]="registroEstudiante.estado == 'Presente'"
+                                value = "Presente"
+                                [(ngModel)]="registroEstudiante.estado">
+                            <label [for]="'presente' + i.toString()"></label>
                         </td>
                         <td class="asist-check ausente">
-                            <input type="radio" id="test2" name="radio-group">
-                            <label for="test2"></label>
+                            <input type="radio" [id]="'ausente' + i.toString()" [name]="'ausente' + i.toString()" [selected]="registroEstudiante.estado == 'Ausente'"
+                                value = "Ausente"
+                                [(ngModel)]="registroEstudiante.estado">
+                            <label [for]="'ausente' + i.toString()"></label>
                         </td>
                         <td class="asist-check justificado">
-                            <input type="radio" id="test3" name="radio-group">
-                            <label for="test3"></label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Paula Wilson</a></td>
-                        <td class="asist-check presente">
-                            <input type="radio" id="test4" name="radio-group2">
-                            <label for="test4"></label>
-                        </td>
-                        <td class="asist-check ausente">
-                            <input type="radio" id="test5" name="radio-group2">
-                            <label for="test5"></label>
-                        </td>
-                        <td class="asist-check justificado">
-                            <input type="radio" id="test3" name="radio-group2">
-                            <label for="test3"></label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Antonio Moreno</a></td>
-                        <td class="asist-check presente">
-                            <input type="radio" id="testz" name="radio-group3">
-                            <label for="testz"></label>
-                        </td>
-                        <td class="asist-check ausente">
-                            <input type="radio" id="test2asd" name="radio-group3">
-                            <label for="test2asd"></label>
-                        </td>
-                        <td class="asist-check justificado">
-                            <input type="radio" id="test6" name="radio-group3">
-                            <label for="test6"></label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Mary Saveley</a></td>
-                        <td class="asist-check presente">
-                            <input type="radio" id="test7" name="radio-group4">
-                            <label for="test7"></label>
-                        </td>
-                        <td class="asist-check ausente">
-                            <input type="radio" id="test8" name="radio-group4">
-                            <label for="test8"></label>
-                        </td>
-                        <td class="asist-check justificado">
-                            <input type="radio" id="test9" name="radio-group4">
-                            <label for="test9"></label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Martin Sommer</a></td>
-                        <td class="asist-check presente">
-                            <input type="radio" id="test10" name="radio-group5">
-                            <label for="test10"></label>
-                        </td>
-                        <td class="asist-check ausente">
-                            <input type="radio" id="test11" name="radio-group5">
-                            <label for="test11"></label>
-                        </td>
-                        <td class="asist-check justificado">
-                            <input type="radio" id="test12" name="radio-group5">
-                            <label for="test12"></label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Mauricio Murillo Briley</a></td>
-                        <td class="asist-check presente">
-                            <input type="radio" id="test13" name="radio-group6">
-                            <label for="test13"></label>
-                        </td>
-                        <td class="asist-check ausente">
-                            <input type="radio" id="test20asd" name="radio-group6">
-                            <label for="test20asd"></label>
-                        </td>
-                        <td class="asist-check justificado">
-                            <input type="radio" id="asdads" name="radio-group6">
-                            <label for="asdads"></label>
+                            <input type="radio" [id]="'justificado' + i.toString()" [name]="'justificado' + i.toString()" [selected]="registroEstudiante.estado == 'Justificado'"
+                                value = "Justificado"
+                                [(ngModel)]="registroEstudiante.estado">
+                            <label [for]="'justificado' + i.toString()"></label>
                         </td>
                     </tr>
                 </tbody>

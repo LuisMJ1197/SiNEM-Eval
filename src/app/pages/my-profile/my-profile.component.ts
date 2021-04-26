@@ -9,13 +9,18 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class MyProfileComponent implements OnInit {
   roles = ["", "Profesor", "Administrativo"];
-
+  
   userLoggedIn: User;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.userLoggedIn = this.authService.getCurrentUser.user;
+    console.log(this.userLoggedIn);
+  }
+
+  cambiarContrasenia() {
+
   }
 
 }
