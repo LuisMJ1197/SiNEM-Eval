@@ -332,6 +332,16 @@ export const EditarRegistroDeAsistencia = gql`
     }
 `; 
 
+export const EliminarRegistroDeAsistencia = gql`
+    mutation EliminarRegistroDeAsistencia ($curso_id: Int!, $numero_registro: Int!) {
+        eliminarRegistroDeAsistencia(curso_id: $curso_id, numero_registro: $numero_registro) {
+            status
+            errorNumber
+            resultData
+        }
+    }
+`; 
+
 export const ObtenerRubrica = gql`
     query ObtenerRubrica($curso_id: Int!) {
         obtenerRubrica(curso_id: $curso_id) {
@@ -420,6 +430,24 @@ export const ObtenerModalidades = gql`
 export const FinalizarCurso = gql`
     mutation FinalizarCurso ($curso_id: Int!) {
         finalizarCurso(curso_id: $curso_id) {
+            status
+            errorNumber
+            resultData
+        }
+    }
+`;
+
+export const ConfirmarContraseniaAnterior = gql`
+    query ConfirmarContraseniaAnterior ($usuario_id: Int!, $contrasenia: String!) {
+        confirmarContraseniaAnterior(usuario_id: $usuario_id, contrasenia: $contrasenia) {
+           res
+        }
+    }
+`;
+
+export const CambiarContrasenia = gql`
+    mutation CambiarContrasenia($usuario_id: Int!, $new_password: String!) {
+        cambiarContrasenia(usuario_id: $usuario_id, new_password: $new_password) {
             status
             errorNumber
             resultData

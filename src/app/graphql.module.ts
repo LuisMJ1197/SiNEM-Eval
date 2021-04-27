@@ -1,13 +1,14 @@
 import {NgModule} from '@angular/core';
 import {APOLLO_OPTIONS} from 'apollo-angular';
-import {ApolloClientOptions, ApolloLink, InMemoryCache} from '@apollo/client/core';
+import {ApolloClientOptions, ApolloLink, FetchPolicy, InMemoryCache} from '@apollo/client/core';
 import {HttpLink} from 'apollo-angular/http';
 import { HttpHeaders } from '@angular/common/http';
 import { CURRENT_USER } from './constants/constants';
 import { setContext } from '@apollo/client/link/context';
 import { LoginData } from './graphql/models';
 
-const uri = 'https://sinem-eval.herokuapp.com/sinem-eval'; // <-- add the URL of the GraphQL server here
+// const uri = 'https://sinem-eval.herokuapp.com/sinem-eval'; // <-- add the URL of the GraphQL server here
+const uri = 'http://localhost:4000/sinem-eval'; // <-- add the URL of the GraphQL server here
 
 const basic = setContext((operation, context) => ({
   headers: {
@@ -29,7 +30,7 @@ const middleware = setContext((_, { headers }) => {
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   return {
     link: ApolloLink.from([basic, middleware, httpLink.create({uri})]),
-    cache: new InMemoryCache({addTypename: false}),
+    cache: new InMemoryCache({addTypename: false})
   };
 }
 

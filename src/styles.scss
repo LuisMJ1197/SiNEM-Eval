@@ -231,14 +231,14 @@
 
 .button-green {
     color: #fff;
-    background-color: var(--dark-sea-green);
-    border-color: var(--dark-sea-green);
+    background-color: #87b360;
+    border-color: #87b360;
     box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
 }
 
 .button-green:hover {
-  background-color: #87b360;
-  border-color: #87b360;
+  background-color: var(--dark-sea-green);
+  border-color: var(--dark-sea-green);
 }
 
 .button-blue {
@@ -274,8 +274,8 @@
 }
 
 .button-red:hover {
-  background-color: #ff506F;
-  border-color: #ff506F;
+  background-color: #ff7070;
+  border-color: #ff7070;
   color: white;
 }
 
