@@ -436,3 +436,21 @@ export const FinalizarCurso = gql`
         }
     }
 `;
+
+export const ConfirmarContraseniaAnterior = gql`
+    query ConfirmarContraseniaAnterior ($usuario_id: Int!, $contrasenia: String!) {
+        confirmarContraseniaAnterior(usuario_id: $usuario_id, contrasenia: $contrasenia) {
+           res
+        }
+    }
+`;
+
+export const CambiarContrasenia = gql`
+    mutation CambiarContrasenia($usuario_id: Int!, $new_password: String!) {
+        cambiarContrasenia(usuario_id: $usuario_id, new_password: $new_password) {
+            status
+            errorNumber
+            resultData
+        }
+    }
+`;
