@@ -56,7 +56,7 @@ export class MiCursoEspecificoComponent implements OnInit {
   }
 
   goMatriz() {
-    this.router.navigate(["my-courses/redonda-abril2020/matriz-evaluacion"]);
+    this.router.navigate([this.router.url.concat("/matriz-evaluacion")]);
   }
 
   getHorarios() {

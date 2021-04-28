@@ -1,43 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-
-class Expandable {
-  public items = [];
-  constructor() {
-  }
-}
-
-class Rubrica extends Expandable {
-  constructor() {
-    super();
-  }
-
-  addDominio(dominio_nombre, dominio_valor) {
-    this.items.push(new Dominio(dominio_nombre, dominio_valor));
-  }
-}
-
-class Dominio extends Expandable {
-  constructor(public dominio_nombre, public dominio_valor) {
-    super();
-  }
-
-  addRubro(rubro_nombre, rubro_valor, is_expandable) {
-    this.items.push(new Rubro(rubro_nombre, rubro_valor, is_expandable));
-  }
-}
-
-class Rubro extends Expandable {
-  constructor(public rubro_nombre, public rubro_valor, public is_expandable) {
-    super();
-  }
-
-  addAsignacion(asignacion_nombre, asignacion_valor) {
-    if (this.is_expandable) {
-      this.items.push({asignacion_nombre: asignacion_nombre, asignacion_valor: asignacion_valor});
-    }
-  }
-}
+import { Router } from '@angular/router';
+import { Dominio, meses, Rubro } from 'src/app/graphql/models';
+import { ProfesorService } from 'src/app/services/profesor.service';
 
 @Component({
   selector: 'app-matriz-evaluacion',
@@ -45,167 +9,77 @@ class Rubro extends Expandable {
   styleUrls: ['./matriz-evaluacion.component.scss']
 })
 export class MatrizEvaluacionComponent implements OnInit {
+  GUARDAR_NOTA_RUBRO = 0;
+
+  meses = meses;
+  PORTAFOLIO = 2;
+  PRUEBA_PARCIAL_C = 3;
+  PRUEBA_FINAL_C = 4;
+  TAREAS = 5;
+  PRUEBA_PARCIAL_P = 6;
+  PRUEBA_FINAL_P = 7;
+  PRACTICAS = 8;
+
   domC_expanded: boolean = false;
   domP_expanded: boolean = false;
   showing_fsttable: boolean = true;
-  valor_curso: number = 15;
-  valor_dominio_socioafectivo = 10 * ((this.valor_curso / 100));
-  valor_dominio_cognitivo = 30 * ((this.valor_curso / 100));
-  valor_dominio_psicomotor = 60 * ((this.valor_curso / 100));
 
-  rubrica = {
-    dominioSocioafectivo: {
-      valor: 10
-    },
-    dominioCognitivo: {
-      valor: 30,
-      rubros: {
-        portfolio: {
-          valor: 5
-        },
-        prueba_parcial: {
-          valor: 10
-        },
-        prueba_final: {
-          valor: 15
-        }
-      }
-    },
-    dominioPsicomotor: {
-      valor: 60,
-      rubros: {
-        tareas: {
-          valor: 5,
-          asignaciones: [
-            {
-              nombre: "Tarea 1",
-              valor: 2
-            },
-            {
-              nombre: "Tarea 2",
-              valor: 1.5
-            },
-            {
-              nombre: "Tarea 3",
-              valor: 1.5
-            }
-          ]
-        },
-        practicas: {
-          valor: 15,
-          asignaciones: [
-            {
-              nombre: "Tarea 1",
-              valor: 5
-            },
-            {
-              nombre: "Tarea 2",
-              valor: 5
-            },
-            {
-              nombre: "Tarea 3",
-              valor: 5
-            }
-          ]
-        },
-        prueba_parcial: {
-          valor: 10
-        },
-        prueba_final: {
-          valor: 30
-        }
-      }
+  constructor(private router: Router, public pService: ProfesorService) {
+  }
+
+  ngOnInit(): void {
+    if (this.pService.miCurso.curso_id == 0) {
+      let url = this.router.url.split("/");
+      let urlStr = url[url.length - 2];
+      url = urlStr.split("-");
+      this.pService.cargarCurso(Number(url[0]));
+      this.pService.cargarEvaluacionDeCurso(Number(url[0]));
+    } else {
+      this.pService.cargarEvaluacionDeCurso(this.pService.miCurso.curso_id);
     }
   }
 
-  notas = [
-    {
-      estudiante_id: 1,
-      estudiante: "Mauricio Murillo Brayley",
-      dominioSocioafectivo: {
-        nota: 100,
-      },
-      dominioCognitivo: {
-        rubros: 
-          {
-            portfolio: {
-              nota: 80,
-            },
-            prueba_parcial: {
-              nota: 70.5,
-            },
-            prueba_final: {
-              nota: 90,
-            }
-          }
-      },
-      dominioPsicomotor: {
-        nota_percent: 60,
-        rubros:
-          {
-            tareas: {
-              asignaciones: [
-                {
-                  nombre: "Tarea 1",
-                  nota: 100
-                },
-                {
-                  nombre: "Tarea 2",
-                  nota: 100
-                },
-                {
-                  nombre: "Tarea 3",
-                  nota: 100
-                }
-              ]
-            },
-            practicas: {
-              asignaciones: [
-                {
-                  nombre: "Tarea 1",
-                  nota: 100
-                },
-                {
-                  nombre: "Tarea 2",
-                  nota: 100
-                },
-                {
-                  nombre: "Tarea 3",
-                  nota: 100
-                }
-              ]
-            },
-            prueba_parcial: {
-              nota: 100,
-            },
-            prueba_final: {
-              nota: 100,
-            }
-          }
-      }
-    }
-  ];
+  getValorDominio(dominio_id: number) {
+    return this.getDominio(dominio_id).valor * ((this.pService.miCurso.valor_general) / 100);
+  }
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  getDominio(dominio_id: number):Dominio {
+    let res: any[] = this.pService.rubricaCurso.dominios.filter(dominio => dominio.dominio_id == dominio_id);
+    return res.length > 0 ? res[0] : null;
+  }
+  
+  getDominioSocioafectivo(): Dominio {
+    return this.getDominio(1);
+  }
 
-  ngOnInit(): void {
+  getDominioCognitivo(): Dominio {
+    return this.getDominio(2);
+  }
+
+  getDominioPsicomotor(): Dominio {
+    return this.getDominio(3);
+  }
+
+  getRubro(dominio: Dominio, rubro_id: number): Rubro {
+    let res: any[] = dominio.rubros.filter(rubro => rubro_id == rubro.rubro_id);
+    return res.length > 0 ? res[0] : null;
   }
 
   calculateGrade(grade, value){
     return Number(Number((Number(grade) * (Number(value) / 100))).toFixed(2));
   }
 
-  calcularSubtotalCognitivo(std) {
-    return Number(Number(this.calculateGrade(std.dominioCognitivo.rubros.portfolio.nota, this.rubrica.dominioCognitivo.rubros.portfolio.valor)
-      + this.calculateGrade(std.dominioCognitivo.rubros.prueba_parcial.nota, this.rubrica.dominioCognitivo.rubros.prueba_parcial.valor)
-      + this.calculateGrade(std.dominioCognitivo.rubros.prueba_final.nota, this.rubrica.dominioCognitivo.rubros.prueba_final.valor)).toFixed(2))
+  calcularSubtotalCognitivo(std) {    
+    return Number(Number(this.calculateGrade(std.dominioCognitivo.portafolio.nota, this.getRubro(this.getDominioCognitivo(), this.PORTAFOLIO).valor)
+      + this.calcularTotalRubro(this.getDominioCognitivo(), this.PRUEBA_PARCIAL_C, std.dominioCognitivo.prueba_parcial)
+      + this.calculateGrade(std.dominioCognitivo.prueba_final.nota, this.getRubro(this.getDominioCognitivo(), this.PRUEBA_FINAL_C).valor)).toFixed(2))
   }
 
   calcularSubtotalPsicomotor(std) {
-    return Number(Number(this.calcularTotalRubro(std, "tareas")
-      + this.calcularTotalRubro(std, "practicas")
-      + this.calculateGrade(std.dominioPsicomotor.rubros.prueba_parcial.nota, this.rubrica.dominioPsicomotor.rubros.prueba_parcial.valor)
-      + this.calculateGrade(std.dominioPsicomotor.rubros.prueba_final.nota, this.rubrica.dominioPsicomotor.rubros.prueba_final.valor)).toFixed(2))
+    return Number(Number(this.calcularTotalRubro(this.getDominioPsicomotor(), this.TAREAS, std.dominioPsicomotor.tareas)
+      + this.calcularTotalRubro(this.getDominioPsicomotor(), this.PRACTICAS, std.dominioPsicomotor.practicas)
+      + this.calcularTotalRubro(this.getDominioPsicomotor(), this.PRUEBA_PARCIAL_P, std.dominioPsicomotor.prueba_parcial)
+      + this.calculateGrade(std.dominioPsicomotor.prueba_final.nota, this.getRubro(this.getDominioPsicomotor(), this.PRUEBA_FINAL_P).valor)).toFixed(2))
   }
 
   calcularSubtotal(asignaciones, valor) {
@@ -215,7 +89,7 @@ export class MatrizEvaluacionComponent implements OnInit {
   }
 
   calcularTotal(std) {
-    return this.calculateGrade(std.dominioSocioafectivo.nota, this.rubrica.dominioSocioafectivo.valor) +
+    return this.calculateGrade(std.dominioSocioafectivo.nota, this.getDominioSocioafectivo().valor) +
       this.calcularSubtotalCognitivo(std) + this.calcularSubtotalPsicomotor(std);
   }
 
@@ -223,23 +97,42 @@ export class MatrizEvaluacionComponent implements OnInit {
     if (Number(obj.nota) > 100) {
       obj.nota = 100;
     }
+    if (obj.nota == "") {
+      obj.nota = 0;
+    }
+  }
+
+  guardarNotaRubro(std, rubro: Rubro, nota: number) {
+    this.pService.guardarNotaRubro(std.estudiante_id, this.pService.miCurso.curso_id, rubro.rubro_id, nota, this, this.GUARDAR_NOTA_RUBRO);
   }
 
   redondear(num) {
     return Number(Number(num).toFixed(2));
   }
 
-  calcularTotalRubro(std, nombreRubro) {
+  calcularTotalRubro(dominio, rubro_id: number, rubro) {
     let total = 0;
     let index = 0;
-    std.dominioPsicomotor.rubros[nombreRubro.toLowerCase()].asignaciones.forEach(asignacion => {
-      total += this.calculateGrade(asignacion.nota, this.rubrica.dominioPsicomotor.rubros[nombreRubro.toLowerCase()].asignaciones[index].valor);
+    rubro.forEach(asignacion => {
+      total += this.calculateGrade(asignacion.nota, this.getRubro(dominio, rubro_id).asignaciones[index].valor);
       index += 1;
     });
     return Number(Number(total).toFixed(2));
   }
 
   goRubro(rubro) {
-    this.router.navigate([this.router.url + "/tareas"]);
+    if (rubro == this.PRUEBA_PARCIAL_C) {
+      this.pService.rubroActual = this.getRubro(this.getDominioCognitivo(), rubro);
+      this.router.navigate([this.router.url + "/" + 'prueba-parcial-cognitivo']);
+    } else if (rubro == this.PRUEBA_PARCIAL_P) {
+      this.pService.rubroActual = this.getRubro(this.getDominioPsicomotor(), rubro);
+      this.router.navigate([this.router.url + "/" + 'prueba-parcial-psicomotor']);
+    } else if (rubro == this.TAREAS) {
+      this.pService.rubroActual = this.getRubro(this.getDominioPsicomotor(), rubro);
+      this.router.navigate([this.router.url + "/" + 'tareas-psicomotor']);
+    } else if (rubro == this.PRACTICAS) {
+      this.pService.rubroActual = this.getRubro(this.getDominioPsicomotor(), rubro);
+      this.router.navigate([this.router.url + "/" + 'practicas-psicomotor']);
+    } 
   }
 }
