@@ -47,7 +47,7 @@ export type Curso = {
     curso_id: number,
     valor_general: number,
     tipo_curso: TipoCurso,
-    modalidad: ModalidadCurso
+    modalidad: ModalidadCurso,
     profesor_asignado: ProfesorCursoInfo,
     rubrica_id: number,
     anno_periodo: string,
@@ -122,7 +122,7 @@ export type Dominio = {
 
 export type Rubro = {
     rubro_id: number,
-    nombre: string
+    nombre: string,
     valor: number,
     asignaciones: Asignacion[]
 }
@@ -131,4 +131,14 @@ export type Asignacion = {
     numero_asignacion: number,
     nombre: string,
     valor: number
+}
+
+export type UsuarioInput = {
+    sede_id: number,
+    nombre: String,
+    apellido1: String,
+    apellido2: String,
+    email: String,
+    telefono: String,
+    rol_id: number
 }

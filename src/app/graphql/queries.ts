@@ -23,20 +23,20 @@ export const LoginMutation = gql`
 export const ObtenerUsuarios= gql`
     query ObtenerUsuarios {
         obtenerUsuarios {
-        usuario_id
-        sede {
-            sede_id
-            sede_name
-        }
-        nombre
-        apellido1
-        apellido2
-        email
-        telefono
-        rol {
-            rol_id
-            rol_name
-        }
+            usuario_id
+            sede {
+                sede_id
+                sede_name
+            }
+            nombre
+            apellido1
+            apellido2
+            email
+            telefono
+            rol {
+                rol_id
+                rol_name
+            }
         }
     }
 `;
@@ -164,7 +164,7 @@ export const ObtenerEstudiantes = gql`
 `;
 
 export const RegistrarUsuario = gql`
-    mutation RegistrarUsuario ($usuario: UsuarioInput!) {
+    mutation RegistrarUsuario ($usuario: UserInput!) {
         registrarUsuario(usuario: $usuario) {
             status
             errorNumber
@@ -212,7 +212,7 @@ export const EditarEstudiante = gql`
 `;
 
 export const EditarUsuario = gql`
-    mutation EditarUsuario ($usuario: UsuarioEdit!) {
+    mutation EditarUsuario ($usuario: UserEdit!) {
         editarUsuario(usuario: $usuario) {
             status
             errorNumber
