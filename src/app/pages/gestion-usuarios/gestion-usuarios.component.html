@@ -10,11 +10,11 @@
     </div>
     <div class="container-body">
         <div class="info-header">
-            <h6>5 usuarios</h6>
+            <h6>{{uService.usuarios_filtrados.length}} usuarios</h6>
             <div class="filter-buttons">
-                <button class="button btn button-yellow">Ver todos</button>
-                <button class="button btn button-yellow">Ver profesores</button>
-                <button class="button btn button-yellow">Ver administrativos</button>
+                <button class="button btn button-yellow" (click)="filtrarTodos()">Ver todos</button>
+                <button class="button btn button-yellow" (click)="filtrarProfesor()">Ver profesores</button>
+                <button class="button btn button-yellow" (click)="filtrarAdministrativos()">Ver administrativos</button>
             </div>
         </div>
         <div class="user-list info-container" style="padding: 0 1rem;">
@@ -29,303 +29,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><a class="name">Mauricio Murillo Briley</a></td>
-                        <td>michael.holz@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-admin">&bull;</span>Administrativo</td>
+                    <tr *ngFor="let usuario of uService.usuarios_filtrados">
+                        <td><a class="name">{{usuario.nombre}} {{usuario.apellido1}} {{usuario.apellido2}}</a></td>
+                        <td>{{usuario.email}}</td>
+                        <td>{{usuario.telefono}}</td>
+                        <td><span class="status text-admin">&bull;</span>{{usuario.rol.rol_name}}</td>
                         <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
+                            <a class="change" title="Cambiar rol" data-toggle="modal" data-target="#cambiarRol" (click)="usuario_cambiar = usuario">
                                 <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Paula Wilson</a></td>
-                        <td>paula.wilson@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-admin">&bull;</span>Administrativo</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Antonio Moreno</a></td>
-                        <td>antonio.moreno@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Mary Saveley</a></td>
-                        <td>mary.saveley@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="action change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="action edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Martin Sommer</a></td>
-                        <td>martin.sommer@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Mauricio Murillo Briley</a></td>
-                        <td>michael.holz@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-admin">&bull;</span>Administrativo</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Paula Wilson</a></td>
-                        <td>paula.wilson@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-admin">&bull;</span>Administrativo</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Antonio Moreno</a></td>
-                        <td>antonio.moreno@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Mary Saveley</a></td>
-                        <td>mary.saveley@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="action change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="action edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Martin Sommer</a></td>
-                        <td>martin.sommer@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Mauricio Murillo Briley</a></td>
-                        <td>michael.holz@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-admin">&bull;</span>Administrativo</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Paula Wilson</a></td>
-                        <td>paula.wilson@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-admin">&bull;</span>Administrativo</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Antonio Moreno</a></td>
-                        <td>antonio.moreno@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Mary Saveley</a></td>
-                        <td>mary.saveley@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="action change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="action edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Martin Sommer</a></td>
-                        <td>martin.sommer@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Mauricio Murillo Briley</a></td>
-                        <td>michael.holz@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-admin">&bull;</span>Administrativo</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Paula Wilson</a></td>
-                        <td>paula.wilson@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-admin">&bull;</span>Administrativo</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Antonio Moreno</a></td>
-                        <td>antonio.moreno@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Mary Saveley</a></td>
-                        <td>mary.saveley@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="action change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="action edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Martin Sommer</a></td>
-                        <td>martin.sommer@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Mauricio Murillo Briley</a></td>
-                        <td>michael.holz@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-admin">&bull;</span>Administrativo</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Paula Wilson</a></td>
-                        <td>paula.wilson@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-admin">&bull;</span>Administrativo</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Antonio Moreno</a></td>
-                        <td>antonio.moreno@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">Mary Saveley</a></td>
-                        <td>mary.saveley@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="action change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="action edit" title="Editar" data-toggle="tooltip">
-                                <i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="name">jkljkl Sommer</a></td>
-                        <td>martin.sommer@sinem.go.cr</td>
-                        <td>61457896</td>
-                        <td><span class="status text-profesor">&bull;</span>Profesor</td>
-                        <td>
-                            <a href="#" class="change" title="Cambiar rol" data-toggle="tooltip">
-                                <i class="fas fa-sync-alt"></i></a>
-                            <a href="#" class="edit" title="Editar" data-toggle="tooltip">
+                            <a class="edit" title="Editar" data-toggle="tooltip" (click)="usuario_edit = usuario" data-toggle="modal"
+                            data-target="#editUsuario">
                                 <i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
@@ -334,54 +47,147 @@
         </div>
     </div>
 </div>
-<div class="modal fade bottom" id="addUsuario" tabindex="-1" role="dialog">
+<div class="modal fade bottom" id="addUsuario" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog cascading-modal modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header blue-header">
                 <h5 class="modal-title">Agregar usuario</h5>
+                <button (click)="dismissAddForm()" type="button" class="btn close top-dismiss-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="modal-body row needs-validation" id="addUsuarioForm" novalidate>
+                <div class="col-md-6">
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Nombre</label>
+                        <input id="addUserNombre" name="addUserNombre" class="form-control" type="text" placeholder="Ingrese el nombre" [(ngModel)]="usuario_nuevo.nombre" required>
+                        <div class="invalid-feedback">
+                            Ingrese el nombre
+                        </div>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Primer apellido</label>
+                        <input id="addUserApellido1" name="addUserApellido1" class="form-control" type="text" placeholder="Ingrese el apellido" [(ngModel)]="usuario_nuevo.apellido1" required>
+                        <div class="invalid-feedback">
+                            Ingrese el apellido
+                        </div>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Segundo apellido</label>
+                        <input id="addUserApellido2" name="addUserApellido2" class="form-control" type="text" placeholder="Ingrese el apellido" [(ngModel)]="usuario_nuevo.apellido2" required>
+                        <div class="invalid-feedback">
+                            Ingrese el apellido
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Email</label>
+                        <input id="addUserEmail" name="addUerEmail" class="form-control" type="email" placeholder="Ingrese el correo" [(ngModel)]="usuario_nuevo.email" (onchange)="email_repeated = ''" required>
+                        <div class="invalid-feedback">
+                            Ingrese un correo válido
+                        </div>
+                        <span style="color: var(--beauty-orange);">{{email_repeated}}</span>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Teléfono</label>
+                        <input id="addUserTel" name="addUserTel" class="form-control" type="tel" pattern="[0-9]{8}" placeholder="Ingrese el teléfono" [(ngModel)]="usuario_nuevo.telefono" required>
+                        <div class="invalid-feedback">
+                            Ingrese un teléfono válido
+                        </div>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Rol</label>
+                        <select id="addUserRol" name="addUserRol" class="form-control" [(ngModel)]="usuario_nuevo.rol_id">
+                            <option value="1" [selected]="usuario_nuevo.rol_id == 1">Profesor</option>
+                            <option value="2" [selected]="usuario_nuevo.rol_id == 2">Administrativo</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer justify-content-center">
+                <button #dissmissAddBtn (click)="dismissAddForm()" data-dismiss="modal" style="display: none;"></button>
+                <button type="button" class="button modal-button button-grey" data-dismiss="modal" (click)="dismissAddForm()">Cancelar</button>
+                <button type="button" class="button modal-button button-blue" (click)="validateAddForm()">Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bottom" id="editUsuario" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog cascading-modal modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header blue-header">
+                <h5 class="modal-title">Editar usuario</h5>
+                <button (click)="dismissEditForm()" type="button" class="btn close top-dismiss-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="modal-body row needs-validation" id="editUsuarioForm" novalidate>
+                <div class="col-md-6">
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Nombre</label>
+                        <input id="editUserNombre" name="editUserNombre" class="form-control" type="text" placeholder="Ingrese el nombre" [(ngModel)]="usuario_edit.nombre" required>
+                        <div class="invalid-feedback">
+                            Ingrese el nombre
+                        </div>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Primer apellido</label>
+                        <input id="editUserApellido1" name="editUserApellido1" class="form-control" type="text" placeholder="Ingrese el apellido" [(ngModel)]="usuario_edit.apellido1" required>
+                        <div class="invalid-feedback">
+                            Ingrese el apellido
+                        </div>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Segundo apellido</label>
+                        <input id="editUserApellido2" name="editUserApellido2" class="form-control" type="text" placeholder="Ingrese el apellido" [(ngModel)]="usuario_edit.apellido2" required>
+                        <div class="invalid-feedback">
+                            Ingrese el apellido
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Email</label>
+                        <input id="editUserEmail" name="editUserEmail" class="form-control" type="email" placeholder="Ingrese el correo" [(ngModel)]="usuario_edit.email" (onchange)="email_repeated = ''" disabled>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Teléfono</label>
+                        <input id="editUserTel" name="editUserTel" class="form-control" type="tel" pattern="[0-9]{8}" placeholder="Ingrese el teléfono" [(ngModel)]="usuario_edit.telefono" required>
+                        <div class="invalid-feedback">
+                            Ingrese un teléfono válido
+                        </div>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Rol</label>
+                        <select id="editUserRol" disabled name="editUserRol" class="form-control" [(ngModel)]="usuario_edit.rol.rol_id">
+                            <option value="1" [selected]="usuario_nuevo.rol_id == 1">Profesor</option>
+                            <option value="2" [selected]="usuario_nuevo.rol_id == 2">Administrativo</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer justify-content-center">
+                <!--button #dissmissEditBtn (click)="dismissEditForm()" data-dismiss="modal" style="display: none;"></button-->
+                <button type="button" class="button modal-button button-grey" data-dismiss="modal" (click)="dismissEditForm()">Cancelar</button>
+                <button type="button" class="button modal-button button-blue" (click)="validateEditForm()"  data-dismiss="modal">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bottom" id="cambiarRol" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog cascading-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header red-header">
+                <h5 class="modal-title">¿Está seguro de cambiar el rol de este usuario?</h5>
                 <button type="button" class="btn close top-dismiss-btn" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body row">
-                <div class="col-md-6">
-                    <div class="form-group form-sm select">
-                        <label for="tipo">Nombre</label>
-                        <input class="form-control" type="text" placeholder="Ingrese el nombre">
-                    </div>
-                    <div class="form-group form-sm select">
-                        <label for="tipo">Primer apellido</label>
-                        <input class="form-control" type="text" placeholder="Ingrese el apellido">
-                    </div>
-                    <div class="form-group form-sm select">
-                        <label for="tipo">Segundo apellido</label>
-                        <input class="form-control" type="text" placeholder="Ingrese el apellido">
-                    </div>
-                        
-                </div>
-                <div class="col-md-6">
-                    
-                    <div class="form-group form-sm select">
-                        <label for="tipo">Email</label>
-                        <input class="form-control" required type="email" pattern="[0-9]{8}" placeholder="Ingrese el correo">
-                    </div>
-                    <div class="form-group form-sm select">
-                        <label for="tipo">Teléfono</label>
-                        <input class="form-control" required type="tel" pattern="[0-9]{8}" placeholder="Ingrese el teléfono">
-                    </div>
-                    <div class="form-group form-sm select">
-                        <label for="tipo">Rol</label>
-                        <select id="tipo" class="form-control">
-                            <option value="" selected>Profesor</option>
-                            <option value="">Administrativo</option>
-                        </select>
-                    </div>
-                </div>
-                
-            </div>
             <div class="modal-footer justify-content-center">
+                <!--button #dissmissEditBtn (click)="dismissEditForm()" data-dismiss="modal" style="display: none;"></button-->
                 <button type="button" class="button modal-button button-grey" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="button modal-button button-blue">Agregar</button>
+                <button type="button" class="button modal-button button-red" (click)="cambiarRol(usuario_cambiar)"  data-dismiss="modal">Aceptar</button>
             </div>
         </div>
     </div>

@@ -105,3 +105,13 @@ export type RegistroDeAsistenciaDeEstudiante = {
     estudiante_nombre: string,
     estado: string
 }
+
+export type UsuarioInput = {
+    sede_id: number,
+    nombre: String,
+    apellido1: String,
+    apellido2: String,
+    email: String,
+    telefono: String,
+    rol_id: number
+}

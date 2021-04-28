@@ -1,0 +1,98 @@
+import { Injectable } from '@angular/core';
+import { Apollo } from 'apollo-angular';
+import { User, UsuarioInput } from '../graphql/models';
+import { CambiarRol, EditarUsuario, ObtenerUsuarios, RegistrarUsuario } from '../graphql/queries';
+import { GestionUsuariosComponent } from '../pages/gestion-usuarios/gestion-usuarios.component';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UsersService {
+  usuarios: User[] = [];
+  usuarios_filtrados: User[] = [];
+
+  constructor(private apollo: Apollo) {
+
+  }
+
+  cargarUsuarios() {
+    this.apollo.query({
+      query: ObtenerUsuarios,
+      fetchPolicy: 'network-only'
+    }).subscribe(({data}) => {
+      console.log(data)
+      if (data != null && data['obtenerUsuarios'] != null) {
+        this.usuarios = data['obtenerUsuarios'];
+        this.usuarios_filtrados = JSON.parse(JSON.stringify(this.usuarios));
+      } else {
+        this.usuarios = [];
+        this.usuarios_filtrados = [];
+      }
+    });
+  }
+
+  agregarUsuario(usuario: UsuarioInput, caller: GestionUsuariosComponent) {
+    this.apollo.mutate({
+      mutation: RegistrarUsuario,
+      variables: {
+        usuario: usuario
+      }
+    }).subscribe(({data}) => {
+      if (data != null && data['registrarUsuario'] != null) {
+        if (data['registrarUsuario'].status == "ok") {
+          caller.terminarAgregarUsuario(true, "");
+        } else {
+          caller.terminarAgregarUsuario(false, "Ha ocurrido un error.");
+        }
+       } else {
+        caller.terminarAgregarUsuario(false, "Ha ocurrido un error.");
+      }
+    });
+  }
+
+  cambiarRol(usuario_id: number, rol_id: number, caller: GestionUsuariosComponent) {
+    this.apollo.mutate({
+      mutation: CambiarRol,
+      variables: {
+        usuario_id: usuario_id,
+        rol_id: rol_id
+      }
+    }).subscribe(({data}) => {
+      if (data != null && data['cambiarRol'] != null) {
+        if (data['cambiarRol'].status == "ok") {
+          caller.terminarCambiarRol(true, "");
+        } else {
+          caller.terminarCambiarRol(false, "Ha ocurrido un error.");
+        }
+       } else {
+        caller.terminarCambiarRol(false, "Ha ocurrido un error.");
+      }
+    });
+  }
+
+  editarUsuario(usuario: User, caller: GestionUsuariosComponent) {
+    this.apollo.mutate({
+      mutation: EditarUsuario,
+      variables: {
+        usuario: {
+          usuario_id: usuario.usuario_id,
+          nombre: usuario.nombre,
+          apellido1: usuario.apellido1,
+          apellido2: usuario.apellido2,
+          telefono: usuario.telefono,
+          rol_id: usuario.rol.rol_id
+        }
+      }
+    }).subscribe(({data}) => {
+      if (data != null && data['editarUsuario'] != null) {
+        if (data['editarUsuario'].status == "ok") {
+          caller.terminarEditarUsuario(true, "");
+        } else {
+          caller.terminarEditarUsuario(false, "Ha ocurrido un error.");
+        }
+       } else {
+        caller.terminarEditarUsuario(false, "Ha ocurrido un error.");
+      }
+    });
+  }
+}
