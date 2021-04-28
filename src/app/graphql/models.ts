@@ -45,6 +45,7 @@ export type Instrumento = {
 export type Curso = {
     sede: Sede,
     curso_id: number,
+    valor_general: number,
     tipo_curso: TipoCurso,
     modalidad: ModalidadCurso
     profesor_asignado: ProfesorCursoInfo,
@@ -104,4 +105,30 @@ export type RegistroDeAsistenciaDeEstudiante = {
     estudiante_id: number,
     estudiante_nombre: string,
     estado: string
+}
+
+export type Rubrica = {
+    rubrica_id: number,
+    rubrica_name: string,
+    dominios: Dominio[]
+}
+
+export type Dominio = {
+    dominio_id: number,
+    nombre_dominio: string,
+    valor: number,
+    rubros: Rubro[]
+}
+
+export type Rubro = {
+    rubro_id: number,
+    nombre: string
+    valor: number,
+    asignaciones: Asignacion[]
+}
+
+export type Asignacion = {
+    numero_asignacion: number,
+    nombre: string,
+    valor: number
 }

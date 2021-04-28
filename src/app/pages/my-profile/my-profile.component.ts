@@ -27,7 +27,6 @@ export class MyProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.userLoggedIn = this.authService.getCurrentUser.user;
-    console.log(this.succesChange);
   }
 
   cambiarContrasenia() {

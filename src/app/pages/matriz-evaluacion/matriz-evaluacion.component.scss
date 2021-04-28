@@ -184,6 +184,11 @@ tbody td.entry:hover {
     min-width: 70px;
 }
 
+.not-total.expandable.parcial {
+    max-width: 120px;
+    min-width: 120px;
+}
+
 .expandable:hover {
     background-color: #87b37aa0;
     cursor: e-resize;

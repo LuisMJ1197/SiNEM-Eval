@@ -242,3 +242,26 @@ table {
     vertical-align: middle;
     padding-top: 4px;
 }
+
+.asig-modal {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    min-width: 80%;
+    align-items: center;
+}
+
+.asig-modal span {
+    min-width: 85px;
+}
+
+.asig-modal input {
+    border-radius: 2px;
+    padding: 2px;
+    border: 1px solid gray;
+    width: 50px;
+}
+
+.asig-modal ~ .asig-modal{
+    margin-top: 1rem;
+}

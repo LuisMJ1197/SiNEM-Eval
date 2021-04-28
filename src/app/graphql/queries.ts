@@ -98,6 +98,7 @@ export const ObtenerCursos = gql`
                 sede_name
             }
             curso_id
+            valor_general
             tipo_curso {
                 tipo_id
                 tipo_name
@@ -248,6 +249,7 @@ export const ObtenerCursosDeProfesor = gql`
                 sede_name
             }
             curso_id
+            valor_general
             tipo_curso {
                 tipo_id
                 tipo_name
@@ -375,7 +377,7 @@ export const ObtenerNotas = gql`
                 nota
             }
             dominioCognitivo {
-                portfolio {
+                portafolio {
                 nota
                 }
                 prueba_parcial {
@@ -451,6 +453,57 @@ export const CambiarContrasenia = gql`
             status
             errorNumber
             resultData
+        }
+    }
+`;
+
+
+export const ModificarValorDeAsignaciones = gql`
+    mutation ModificarValorDeAsignaciones($asignaciones: [AsignacionMod]!) {
+        modificarValorDeAsignaciones(asignaciones: $asignaciones) {
+            resultData
+            status
+            errorNumber
+        }
+    }
+`;
+
+export const EliminarAsignaciones = gql`
+    mutation eliminarAsignaciones($asignaciones: [AsignacionInput]!) {
+        eliminarAsignaciones(asignaciones: $asignaciones) {
+            resultData
+            status
+            errorNumber
+        }
+    }
+`;
+
+export const AgregarAsignacionARubro = gql`
+    mutation AgregarAsignacionARubro($curso_id: Int!, $rubro_id: Int!, $nombre_asignacion: String!) {
+        agregarAsignacionARubro(curso_id: $curso_id, rubro_id: $rubro_id, nombre_asignacion: $nombre_asignacion) {
+            status
+            resultData
+            errorNumber
+        }
+    }
+`;
+
+export const AgregarRegistroDeNotaPorAsignacion = gql`
+    mutation AgregarRegistroDeNotaPorAsignacion ($registro: RegistroDeNotaInput!) {
+        agregarRegistroDeNotaPorAsignacion (registro: $registro) {
+            status
+            resultData
+            errorNumber
+        }
+    }
+`;
+
+export const AgregarRegistroDeNotaPorRubro = gql`
+    mutation AgregarRegistroDeNotaPorRubro ($registro: RegistroDeNotaInput!) {
+        agregarRegistroDeNotaPorRubro (registro: $registro) {
+            status
+            resultData
+            errorNumber
         }
     }
 `;
