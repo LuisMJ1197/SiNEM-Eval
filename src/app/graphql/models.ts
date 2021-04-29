@@ -1,5 +1,8 @@
 export const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 export const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+export const tipos = {negra: "Negra", blanca: "Blanca", corchea: "Corchea", semicorchea: "Semicorchea", redonda: "Redonda", egresado: "Egresado"};
+export const tiposEstilos = { Negra: "flaticon-negra", Blanca: "flaticon-blanca", Semicorchea: "flaticon-semicorchea", Corchea: "flaticon-nota-musical", Redonda: "flaticon-semibreve", Egresado: "flaticon-mortarboard"};
+
 export type User = {
     usuario_id: number,
     sede: Sede,

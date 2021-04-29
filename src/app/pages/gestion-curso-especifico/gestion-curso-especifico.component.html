@@ -3,9 +3,10 @@
         <app-page-title [title]="'Curso'" [iclass]="'fa-nota-musical'" [hasBackAction]=true [iconPosition]="'right'">
         </app-page-title>
         <div class="container-actions">
-            <div>Estado: activo</div>
-            <button class="btn button button-red text-white ml-3 d-md-block" data-toggle="modal"
-                data-target="#addStudent">Finalizar curso</button>
+            <div>Estado: {{gcService.cursoEspecifico.isActivo ? 'activo' : 'finalizado'}}</div>
+            <button [disabled]="!gcService.cursoEspecifico.isActivo"
+                class="btn button button-red text-white ml-3 d-md-block" data-toggle="modal"
+                data-target="#confirmFinish">Finalizar curso</button>
         </div>
     </div>
     <div class="container-body">
@@ -15,20 +16,27 @@
             </div>
             <div class="row-element">
                 <div class="row-descriptor">Tipo</div>
-                <div class="row-text">Corchea</div>
-                <i class="course-icon flaticon-nota-musical"></i>
+                <div class="row-text">{{gcService.cursoEspecifico.tipo_curso.tipo_name}}</div>
+                <i class="course-icon" [ngClass]="getClass(gcService.cursoEspecifico.tipo_curso.tipo_name)"></i>
+            </div>
+            <div class="row-element">
+                <div class="row-descriptor">Modalidad</div>
+                <div class="row-text">
+                    {{gcService.cursoEspecifico.modalidad.modalidad_name}}{{gcService.cursoEspecifico.modalidad.modalidad_id
+                    != 1 ? " - " + gcService.cursoEspecifico.modalidad.instrumento_name : ""}}</div>
             </div>
             <div class="row-element">
                 <div class="row-descriptor">Profesor asignado</div>
-                <div class="row-text">Luis Molina Juárez</div>
+                <div class="row-text">{{gcService.cursoEspecifico.profesor_asignado.profesor_name}}</div>
             </div>
             <div class="row-element">
-                <div class="row-descriptor">Periodo</div>
-                <div class="row-text">Abril del 2020</div>
+                <div class="row-descriptor">Período</div>
+                <div class="row-text">{{meses[gcService.cursoEspecifico.mes_periodo - 1]}} del
+                    {{gcService.cursoEspecifico.anno_periodo}}</div>
             </div>
             <div class="row-element">
                 <div class="row-descriptor">Horario</div>
-                <div class="row-text">Lunes: 15:00 - 17:00<br>Martes: 15:00 - 17:00</div>
+                <div class="row-text" [innerHtml]="getHorarios()"></div>
             </div>
         </div>
         <div class="student-list-info info-container">
@@ -36,7 +44,7 @@
                 <h6>Lista de estudiantes</h6>
                 <div class="container-actions">
                     <button class="add-student btn button button-blue text-white ml-3 d-md-block" data-toggle="modal"
-                        data-target="#addStudent">Agregar estudiantes
+                        data-target="#addStudent" (click)="gcService.cargarTodosLosEstudiantes();">Agregar estudiantes
                         <i style="margin-left: 0.5rem;" class="fas fa-plus"></i></button>
                 </div>
             </div>
@@ -52,61 +60,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><a class="name">Mauricio Murillo Briley</a></td>
-                            <td>708950563</td>
-                            <td>61457896</td>
-                            <td>Nombre encargado</td>
-                            <td>
-                                <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
-                                    <i class="fas fa-minus-circle"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><a class="name">Paula Wilson</a></td>
-                            <td>708950563</td>
-                            <td>61457896</td>
-                            <td>Nombre encargado</td>
-                            <td>
-                                <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
-                                    <i class="fas fa-minus-circle"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><a class="name">Antonio Moreno</a></td>
-                            <td>708950563</td>
-                            <td>61457896</td>
-                            <td>Nombre encargado</td>
-                            <td>
-                                <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
-                                    <i class="fas fa-minus-circle"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><a class="name">Mary Saveley</a></td>
-                            <td>708950563</td>
-                            <td>61457896</td>
-                            <td>Nombre encargado</td>
-                            <td>
-                                <a href="#" class="action delete" title="Dar de baja" data-toggle="tooltip">
-                                    <i class="fas fa-minus-circle"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><a class="name">Martin Sommer</a></td>
-                            <td>708950563</td>
-                            <td>61457896</td>
-                            <td>Nombre encargado</td>
-                            <td>
-                                <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
-                                    <i class="fas fa-minus-circle"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><a class="name">Mauricio Murillo Briley</a></td>
-                            <td>708950563</td>
-                            <td>61457896</td>
-                            <td>Nombre encargado</td>
+                        <tr *ngFor="let estudiante of sortByName(gcService.listaEstudiantes)">
+                            <td><a class="name">{{estudiante.nombre}} {{estudiante.apellido1}}
+                                    {{estudiante.apellido2}}</a></td>
+                            <td>{{estudiante.cedula}}</td>
+                            <td>{{estudiante.telefono}}</td>
+                            <td>{{estudiante.nombre_encargado}}</td>
                             <td>
                                 <a href="#" class="delete" title="Dar de baja" data-toggle="tooltip">
                                     <i class="fas fa-minus-circle"></i></a>
@@ -118,6 +77,24 @@
         </div>
     </div>
 </div>
+<div class="modal fade bottom" id="confirmFinish" tabindex="-1" role="dialog">
+    <div class="modal-dialog cascading-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header red-header">
+                <h5 class="modal-title">¿Seguro que desea finalizar el curso?</h5>
+                <button type="button" class="btn close top-dismiss-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button data-dismiss="modal" #dismissConfirm style="display: none;"></button>
+                <button type="button" class="button modal-button button-grey" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="button modal-button button-red" (click)="finalizarCurso()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade bottom" id="addStudent" tabindex="-1" role="dialog">
     <div class="modal-dialog cascading-modal" role="document">
         <div class="modal-content">
@@ -131,38 +108,29 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th style="width: 50px;"><input type="checkbox" id="select-all"></th>
+                            <th style="width: 50px;"><input type="checkbox" id="select-all" 
+                                (change)="selectAll($event.target.checked)" [(ngModel)]="selected_all"></th>
                             <th><i class="fas fa-user-alt"></i>Nombre</th>
                             <th><i class="fas fa-at"></i>Cédula</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td style="width: 50px;"><input type="checkbox"></td>
-                            <td><a class="name">Mauricio Murillo Briley</a></td>
-                            <td>708950563</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50px;"><input type="checkbox"></td>
-                            <td><a class="name">Paula Wilson</a></td>
-                            <td>708950563</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50px;"><input type="checkbox"></td>
-                            <td><a class="name">Antonio Moreno</a></td>
-                            <td>708950563</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50px;"><input type="checkbox"></td>
-                            <td><a class="name">Mary Saveley</a></td>
-                            <td>708950563</td>
+                        <tr *ngFor="let estudiante of sortByName(gcService.todosEstudiantes)">
+                            <td style="width: 50px;">
+                                <input type="checkbox" (change)="select(estudiante.estudiante_id, $event.target.checked)" 
+                                    [checked]="isSelected(estudiante.estudiante_id) || alreadyInCourse(estudiante_id)"
+                                    [disabled]="alreadyInCourse(estudiante_id)">
+                            </td>
+                            <td><a class="name">{{estudiante.nombre}} {{estudiante.apellido1}} {{estudiante.apellido2}}</a></td>
+                            <td>{{estudiante.cedula}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer justify-content-center">
+                <button data-dismiss="modal" #dismissAddEstudiantes (click)="selected_ids = []; selected_all = false;" style="display: none;"></button>
                 <button type="button" class="button modal-button button-grey" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="button modal-button button-blue">Agregar</button>
+                <button type="button" class="button modal-button button-blue" (click)="agregarEstudiantes()">Agregar</button>
             </div>
         </div>
     </div>
