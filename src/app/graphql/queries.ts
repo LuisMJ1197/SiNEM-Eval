@@ -125,21 +125,11 @@ export const ObtenerCursos = gql`
     }
 `;
 
-export const ObtenerInstrumentos = gql`
-    query ObtenerModalidades {
-        obtenerInstrumentos {
-            instrumento_id
-            instrumento_name
-            categoria
-        }
-    }
-`;
-
 export const AgregarCurso = gql`
     mutation AgregarCurso ($curso: CursoInput!) {
         agregarCurso (curso: $curso) {
             status
-            errorCode
+            errorNumber
             resultData
         }
     }
@@ -158,6 +148,7 @@ export const ObtenerEstudiantes = gql`
             apellido2
             telefono
             nombre_encargado
+            estudiante_id
         }
     }
 `;
@@ -220,9 +211,9 @@ export const EditarUsuario = gql`
     }
 `;
 
-export const AgregarEstudianteACurso = gql`
-    mutation AgregarEstudianteACurso($curso_id: Int!, $estudiante_id: Int!) {
-        agregarEstudianteACurso(curso_id: $curso_id, estudiante_id: $estudiante_id) {
+export const AgregarEstudiantesACurso = gql`
+    mutation AgregarEstudiantesACurso($estudiantes: [EstudianteInputCurso]!) {
+        agregarEstudiantesACurso(estudiantes: $estudiantes) {
             status
             errorNumber
             resultData

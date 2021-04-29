@@ -11,22 +11,22 @@
     </div>
     <div class="container-body">
         <div class="info-header">
-            <h6>{{cursos.length}} cursos</h6>
+            <h6>{{gcService.cursos.length}} cursos</h6>
             <div class="filter-buttons">
-                <button class="filter-option button btn button-yellow">Ver todos</button>
+                <button class="filter-option button btn button-yellow" (click)="gcService.cargarCursos()">Ver todos</button>
             </div>
         </div>
         <div class="grid-div">
-            <div class="grid-element course" *ngFor="let curso of cursos" (click)="goCourse()">
+            <div class="grid-element course" *ngFor="let curso of gcService.cursos" (click)="goCourse(curso)">
                 <div class="element-info">
                     <div class="info-line">
-                        <strong>{{curso.tipo}}</strong><i [ngClass]="getClass(curso.tipo)"></i>
+                        <strong>{{curso.tipo_curso.tipo_name}}</strong><i [ngClass]="getClass(curso.tipo_curso.tipo_name)"></i>
                     </div>
                     <div class="info-line">
-                        {{curso.profesorAsignado}}
+                        {{curso.profesor_asignado.profesor_name}}
                     </div>
                     <div class="info-line">
-                        {{curso.periodo}}
+                        {{meses[curso.mes_periodo - 1]}} del {{curso.anno_periodo}}
                     </div>
                 </div>
                 <div class="element-go">
@@ -36,7 +36,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade bottom" id="addCourse" tabindex="-1" role="dialog">
+<div class="modal fade bottom" id="addCourse" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog cascading-modal modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header blue-header">
@@ -50,59 +50,92 @@
                     <h5>Información del curso</h5>
                     <div class="form-group form-sm select">
                         <label for="tipo">Tipo de curso</label>
-                        <select id="tipo" class="form-control">
-                            <option value="" selected>Redonda</option>
-                            <option value="">Blanca</option>
-                            <option value="">Negra</option>
-                            <option value="">Corchea</option>
-                            <option value="">Semicorchea</option>
-                            <option value="">Egresado</option>
+                        <select id="tipo" class="form-control" [(ngModel)]="tipoSelected">
+                            <option value="1">Redonda</option>
+                            <option value="2">Blanca</option>
+                            <option value="3">Negra</option>
+                            <option value="4">Corchea</option>
+                            <option value="5">Semicorchea</option>
+                            <option value="6">Egresado</option>
                         </select>
                     </div>
                     <div class="form-group form-sm select">
-                        <label for="profesorAsignado">Profesor asignado</label>
-                        <select id="profesorAsignado" class="form-control">
-                            <option value="" selected>Profesor 1</option>
-                            <option value="" >Profesor 2</option>
+                        <label for="modalidad">Modalidad</label>
+                        <select id="modalidad" class="form-control" [(ngModel)]="modalidadSelected">
+                            <option *ngFor="let modalidad of uService.modalidades" [value]="modalidad.modalidad_id">
+                                {{modalidad.modalidad_name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="instrumento">Instrumento</label>
+                        <select [disabled]="modalidadSelected == 1" id="instrumento" class="form-control" [(ngModel)]="instrumentoSelected">
+                            <optgroup *ngFor = "let categoria of uService.categorias_instrumento" value="" label="{{categoria.categoria}}">
+                                <option [value]="instrumento.instrumento_id" *ngFor="let instrumento of categoria.instrumentos">{{instrumento.instrumento_name}}</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="profesor">Profesor asignado</label>
+                        <select id="profesor" class="form-control" [(ngModel)]="profesorAsignado">
+                            <option [value]="profesor.usuario_id" *ngFor="let profesor of uService.profesores">
+                                {{profesor.nombre}} {{profesor.apellido1}} {{profesor.apellido2}}
+                            </option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="periodo">Periodo</label>
-                        <input type="month" id="periodo" class="form-control">
+                        <label for="periodo">Período</label>
+                        <input type="month" id="periodo" name="periodo" class="form-control" [(ngModel)]="periodoSelected">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <h5>Horario</h5>
                     <div class="form-group form-sm select">
                         <label for="dia">Día</label>
-                        <select id="dia" class="form-control">
-                            <option value="" selected>Lunes</option>
-                            <option value="">Martes</option>
-                            <option value="">Miércoles</option>
-                            <option value="">Jueves</option>
-                            <option value="">Viernes</option>
+                        <select id="dia" name="dia" class="form-control" [(ngModel)]="nuevoHorario.dia">
+                            <option value="2" selected>Lunes</option>
+                            <option value="3">Martes</option>
+                            <option value="4">Miércoles</option>
+                            <option value="5">Jueves</option>
+                            <option value="6">Viernes</option>
                         </select>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="horaInicio">Hora de inicio</label>
-                            <input type="time" id="horaInicio" class="form-control">
+                            <input type="time" id="horaInicio" name="horaInicio" class="form-control" [(ngModel)]="nuevoHorario.hora_inicio">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="horaFin">Hora de fin</label>
-                            <input type="time" id="horaFin" class="form-control">
+                            <input type="time" id="horaFin" name="horaFin" class="form-control" [(ngModel)]="nuevoHorario.hora_fin">
                         </div>
                     </div>
-                    <button class="button button-green" style="width: 100%;">Agregar</button>
-                    <div class="horario">
-                        <p>Lunes: 1:00 pm - 3:00 pm</p>
-                        <i class="fas fa-times"></i>
+                    <button class="button button-green" style="width: 100%;" (click)="agregarHorario()">Agregar</button>
+                    <div class="horario" *ngFor="let horario of horarios">
+                        <p>{{dias[horario.dia - 1]}}: {{horario.hora_inicio}} - {{horario.hora_fin}}</p>
+                        <i class="fas fa-times" (click)="eliminarHorario(horario)"></i>
                     </div>
                 </div>
             </div>
             <div class="modal-footer justify-content-center">
+                <button data-toggle="modal" data-target="#errorHorario" #displayErrorHorario style="display: none;"></button>
+                <button data-dismiss="modal" #dismissAgregarCurso style="display: none;"></button>
                 <button type="button" class="button modal-button button-grey" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="button modal-button button-blue">Agregar</button>
+                <button type="button" class="button modal-button button-blue" (click)="agregarCurso()">Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bottom" id="errorHorario" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog cascading-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header red-header">
+                <h5 class="modal-title">{{errorHorarioMsg}}</h5>
+                <button type="button" class="btn close top-dismiss-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="button modal-button button-red" data-dismiss="modal">Aceptar</button>
             </div>
         </div>
     </div>
