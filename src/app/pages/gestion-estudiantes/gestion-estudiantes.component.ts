@@ -71,6 +71,7 @@ export class GestionEstudiantesComponent implements OnInit {
       alert(msg);
     }
   }
+  
 
   validateAddForm() {
     var form = document.getElementById('addEstudianteForm') as HTMLFormElement;

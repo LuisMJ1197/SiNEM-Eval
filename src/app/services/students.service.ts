@@ -30,6 +30,7 @@ export class StudentsService {
     });
   }
 
+
   agregarEstudiante(estudiante: EstudianteInput, caller: GestionEstudiantesComponent) {
     this.apollo.mutate({
       mutation: RegistrarEstudiante,
