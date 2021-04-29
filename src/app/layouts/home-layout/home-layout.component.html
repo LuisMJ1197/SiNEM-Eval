@@ -40,7 +40,7 @@
         </div>
     </div>
 </header>
-<aside class="sidebar" [ngClass]="menuExtended ? '' : 'not-extended'">
+<aside class="sidebar" id="sidebar" [ngClass]="menuExtended ? '' : 'not-extended'">
     <nav class="sidebar-nav">
         <ul id="sidebarnav">
             <li *ngIf="userLoggedIn.rol.rol_id == ADMINISTRATIVO" class="sidebar-item" tooltip="Gestión de cursos" flow="right"
@@ -82,6 +82,13 @@
                     aria-expanded="false">
                     <span class="icon-box"><i class="fas fa-user-alt" width="30"></i></span>
                     <span class="sidebar-link-text" *ngIf="menuExtended">Mi perfil</span>
+                </a>
+            </li>
+            <li class="sidebar-item cerrar-sesion" tooltip="Cerrar Sesión" flow="right" (click)="logout()">
+                <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd"
+                    aria-expanded="false">
+                    <span class="icon-box"><i class="fas fa-power-off" width="30"></i></span>
+                    <span class="sidebar-link-text" *ngIf="menuExtended">Cerrar Sesión</span>
                 </a>
             </li>
         </ul>

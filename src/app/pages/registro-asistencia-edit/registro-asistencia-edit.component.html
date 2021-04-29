@@ -56,6 +56,13 @@
             </table>
         </div>
         </div>
+        <div class="container-actions-portrait" style="margin-top: 1rem;">
+            <button class="btn button button-red text-white ml-3 d-md-block" data-toggle="modal"
+                data-target="#confirmDeleting" [disabled]="deleting">Eliminar registro
+                <i style="margin-left: 0.5rem;" class="fas fa-trash-alt"></i></button>
+            <button class="btn button button-green text-white ml-3 d-md-block" [disabled]="saving" (click)="guardarCambios()">Guardar cambios
+                <i style="margin-left: 0.5rem;" class="fas fa-save"></i></button>
+        </div>
     </div>
 </div>
 <div class="modal fade bottom" id="confirmDeleting" tabindex="-1" role="dialog">

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { meses } from 'src/app/graphql/models';
+import { Curso, meses } from 'src/app/graphql/models';
 import { ProfesorService } from 'src/app/services/profesor.service';
 
 @Component({
@@ -27,8 +27,7 @@ export class MisCursosComponent implements OnInit {
     Redonda: "flaticon-semibreve",
     Egresado: "flaticon-mortarboard"
   };
-
-  cursos_filtrados = [];
+  tipo_selec: string = "Todos";
 
   meses = meses;
 
@@ -51,7 +50,15 @@ export class MisCursosComponent implements OnInit {
   }
 
   filtrarTodos() {
-    // this.cursos_filtrados = JSON.parse(JSON.stringify(this.cursos));
+    this.pService.cursos_filtrados = JSON.parse(JSON.stringify(this.pService.misCursos));
+  }
+
+  filtrarPorTipo(tipo) {
+    if (tipo == "Todos") {
+      this.filtrarTodos();
+    } else {
+      this.pService.cursos_filtrados = this.pService.misCursos.filter(curso => curso.tipo_curso.tipo_name == tipo);
+    }
   }
 
 }

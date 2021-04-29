@@ -1,17 +1,35 @@
 <div class="container-div">
     <div class="container-header">
-        <app-page-title [title]="'Mis pService.misCursos'" [iclass]="'fa-music'" [hasBackAction]=false
+        <app-page-title [title]="'Mis cursos'" [iclass]="'fa-music'" [hasBackAction]=false
             [iconPosition]="'left'"></app-page-title>
     </div>
     <div class="container-body">
         <div class="info-header">
-            <h6>{{pService.misCursos.length}} {{pService.misCursos.length == 1 ? 'curso' : 'pService.misCursos'}}</h6>
+            <h6 style="margin-right: 1rem;">{{pService.cursos_filtrados.length}} {{pService.cursos_filtrados.length == 1 ? 'curso' : 'cursos'}}</h6>
+            <p style="text-align: center; vertical-align: middle; margin: 0;" class="separator">|</p>
             <div class="filter-buttons">
-                <button class="filter-option button btn button-yellow">Ver todos</button>
+                <!--button class="filter-option button btn button-yellow">Ver todos</button-->
+                <div class="filter-option select">
+                    <label for="tipoSelec">Filtrar por tipo:</label>
+                    <select id="tipoSelec" class="form-control" [(ngModel)]="tipo_selec" name="tipoSelec"
+                        (change)="filtrarPorTipo(tipo_selec);">
+                        <option value="Todos" selected>Todos</option>
+                        <option value="Redonda">Redonda</option>
+                        <option value="Blanca">Blanca</option>
+                        <option value="Negra">Negra</option>
+                        <option value="Corchea">Corchea</option>
+                        <option value="Semicorchea">Semicorchea</option>
+                        <option value="Egresado">Egresado</option>
+                    </select>
+                </div>
+                <!--div class="filter-option select" style="display: flex; flex-direction: row; align-items: center; width: fit-content;">
+                    <label for="periodo" style="min-width: fit-content; margin: 0 1rem; margin-left: 0;">Filtrar por periodo:</label>
+                    <input type="month" id="periodo" class="form-control" style="cursor: pointer;">
+                </div-->
             </div>
         </div>
         <div class="grid-div">
-            <div class="grid-element course" *ngFor="let curso of pService.misCursos" (click)="goCourse(curso)">
+            <div class="grid-element course" *ngFor="let curso of pService.cursos_filtrados" (click)="goCourse(curso)">
                 <div class="element-info">
                     <div class="info-line">
                         <strong>{{curso.tipo_curso.tipo_name}}</strong><i [ngClass]="getClass(curso.tipo_curso.tipo_name)"></i>

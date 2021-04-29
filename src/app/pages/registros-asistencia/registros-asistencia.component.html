@@ -1,6 +1,6 @@
 <div class="container-div">
     <div class="container-header">
-        <app-page-title [title]="'Registros de asistencia'" [iclass]="'fa-music'" [hasBackAction]=true
+        <app-page-title [title]="'Registros de asistencia'" [iclass]="'fa-check'" [hasBackAction]=true
             [iconPosition]="'right'"></app-page-title>
         <div class="container-actions">
             <button class="btn button button-blue text-white ml-3 d-md-block" data-toggle="modal"
@@ -10,26 +10,39 @@
     </div>
     <div class="container-body">
         <div class="info-header">
-            <h6>{{pService.miCurso.tipo_curso.tipo_name}} - {{meses[pService.miCurso.mes_periodo - 1]}} {{pService.miCurso.anno_periodo}}</h6>
-            <div class="info-cant">
-                {{pService.registrosDeAsistencia.length}} registros
+            <div class="info-cant" style="margin-right: 0.5rem; display: flex; flex-direction: row;">
+                <h6>{{pService.miCurso.tipo_curso.tipo_name}} - {{meses[pService.miCurso.mes_periodo - 1]}} {{pService.miCurso.anno_periodo}}</h6>
+                <h6 style="margin-left: 1rem;">{{pService.registrosDeAsistencia.length}} registros</h6>
+            </div>
+            <p style="text-align: center; vertical-align: middle; margin: 0;" class="separator">|</p>
+            <div class="filter-buttons">
+                <div class="filter-option">
+                    <label for="fechaFiltro">Filtrar por periodo:</label>
+                    <input class="datepicker" name="fechaFiltro" type="date" id="fechaFiltro" class="form-control"
+                        [valueAsDate]="fechaFiltro" (change)="fechaFiltro = $event.target.valueAsDate; filtrarPorFecha(fechaFiltro);">
+                </div>
+                <button class="filter-option button btn button-yellow" (click)="filtrarTodos()">Ver todos</button>
             </div>
         </div>
         <div class="grid-div">
-            <div class="grid-element course" *ngFor="let registro of pService.registrosDeAsistencia" (click)="goRegistro(registro)">
+            <div class="grid-element course" *ngFor="let registro of pService.registrosFiltrados" (click)="goRegistro(registro)">
                 <div class="element-info">
                     <div class="info-line">
                         <strong>Asistencia</strong>
                         <i class="fas fa-user-check"></i>
                     </div>
                     <div class="info-line">
-                        <strong>{{registro.fecha}}</strong>
+                        <strong>{{getFecha(registro.fecha)}}</strong>
                     </div>
                 </div>
                 <div class="element-go">
                     <a><i class="flaticon-right-arrow"></i></a>
                 </div>
             </div>
+        </div>
+        <div class="grid-element course add" data-toggle="modal"
+            data-target="#addCourse">
+            <p>+</p>
         </div>
     </div>
 </div>

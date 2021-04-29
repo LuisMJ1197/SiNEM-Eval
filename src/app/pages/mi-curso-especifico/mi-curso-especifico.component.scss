@@ -68,3 +68,9 @@
         margin-top: 1rem;
     }
 }
+
+@media (max-width: 470px) {
+    .estado-curso-1 {
+        display: none;
+    }
+}

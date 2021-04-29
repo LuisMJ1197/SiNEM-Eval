@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { diasSemana, meses } from 'src/app/graphql/models';
@@ -11,6 +11,8 @@ import { ProfesorService } from 'src/app/services/profesor.service';
   styleUrls: ['./mi-curso-especifico.component.scss']
 })
 export class MiCursoEspecificoComponent implements OnInit {
+  @ViewChild("confirmFinalizar", {static: true}) private confirmFinalizar: any;
+
   tipos = {
     negra: "Negra",
     blanca: "Blanca",
@@ -74,6 +76,8 @@ export class MiCursoEspecificoComponent implements OnInit {
       .subscribe(({data}) => {
         if (data != null && data['finalizarCurso'] != null) {
           if (data['finalizarCurso'].status == "ok") {
+            this.pService.miCurso.isActivo = false;
+            this.confirmFinalizar.nativeElement.click();
             alert("El curso ha sido finalizado.");
           }
         } else {

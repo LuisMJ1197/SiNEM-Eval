@@ -38,6 +38,7 @@ export class ProfesorService {
       instrumento_name: ""
     }
   };
+  cursos_filtrados: Curso[] = [];
   listaEstudiantes: Estudiante[] = [];
   registrosDeAsistencia: RegistroDeAsistencia[] = [];
   registroDeAsistencia: RegistroDeAsistencia = {
@@ -46,6 +47,7 @@ export class ProfesorService {
     fecha: "",
     estado_por_estudiante: []
   };
+  registrosFiltrados: RegistroDeAsistencia[] = [];
   rubricaCurso: Rubrica = null;
   notasCurso: any = null;
   rubroActual: Rubro = null;
@@ -59,12 +61,15 @@ export class ProfesorService {
       query: ObtenerCursosDeProfesor,
       variables: {
         profesor_id: this.authService.currentUserValue.user.usuario_id
-      }
+      },
+      fetchPolicy: 'network-only'
     }).subscribe(({data}) => {
       if (data != null && data['obtenerCursosDeProfesor'] != null) {
-        this.misCursos = data['obtenerCursosDeProfesor'];
+        this.misCursos = JSON.parse(JSON.stringify(data['obtenerCursosDeProfesor']));
+        this.cursos_filtrados = JSON.parse(JSON.stringify(this.misCursos));
       } else {
         this.misCursos = [];
+        this.cursos_filtrados = [];
       }
     });
   }
@@ -77,7 +82,8 @@ export class ProfesorService {
       }
     }).subscribe(({data}) => {
       if (data != null && data['obtenerCursosDeProfesor'] != null) {
-        this.misCursos = data['obtenerCursosDeProfesor'] as Curso[];
+        this.misCursos = JSON.parse(JSON.stringify(data['obtenerCursosDeProfesor']));
+        this.cursos_filtrados = JSON.parse(JSON.stringify(this.misCursos));
         this.misCursos.forEach(curso => {
           if (curso.curso_id == curso_id) {
             this.miCurso = curso;
@@ -114,8 +120,10 @@ export class ProfesorService {
     }).subscribe(({data}) => {
       if (data != null && data['obtenerRegistrosDeAsistenciaPorCurso'] != null) {
         this.registrosDeAsistencia = data['obtenerRegistrosDeAsistenciaPorCurso'] as RegistroDeAsistencia[];
+        this.registrosFiltrados = JSON.parse(JSON.stringify(this.registrosDeAsistencia));
       } else {
         this.registrosDeAsistencia = [];
+        this.registrosFiltrados = [];
       }
     });
   }
@@ -142,8 +150,8 @@ export class ProfesorService {
   }
 
   finalizarCurso(curso_id: number) {
-    return this.apollo.query({
-      query: FinalizarCurso,
+    return this.apollo.mutate({
+      mutation: FinalizarCurso,
       variables: {
         curso_id: curso_id 
       }
