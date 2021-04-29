@@ -119,3 +119,54 @@ table thead tr {
 table thead tr th {
     padding-left: 0.5rem;
 }
+
+.filter-option label {
+    min-width: fit-content;
+    margin: 0 1rem;
+    margin-left: 0;
+}
+.filter-buttons {
+    margin-left: 0.5rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.filter-option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
+    margin-right: 1rem;
+}
+
+
+@media (max-width: 1028px) {
+    .separator {
+        display: none;
+    }
+
+    .info-header {
+        flex-direction: column;
+        justify-content: start;
+        align-items: flex-start;
+        margin-left: 0.5rem;
+    }
+
+    .filter-buttons {
+        margin-left: 0.5;
+    }
+
+    .filter-buttons {
+        margin-top: 1rem;
+        flex-direction: column;
+    }
+
+    .container-actions {
+        display: none;
+    }
+
+    .filter-option ~ .filter-option {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+}

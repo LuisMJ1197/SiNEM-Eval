@@ -19,7 +19,7 @@ export class UsersService {
     this.apollo.query({
       query: ObtenerUsuarios,
       fetchPolicy: 'network-only'
-    }).subscribe(({data}) => {
+    }).subscribe(({data}) => { 
       console.log(data)
       if (data != null && data['obtenerUsuarios'] != null) {
         this.usuarios = data['obtenerUsuarios'];

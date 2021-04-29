@@ -145,3 +145,13 @@ export type UsuarioInput = {
     telefono: String,
     rol_id: number
 }
+
+export type EstudianteInput = {
+    sede_id: number,
+    cedula: String,
+    nombre: String,
+    apellido1: String,
+    apellido2: String,
+    telefono: String,
+    nombre_encargado: String
+}
