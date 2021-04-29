@@ -3,7 +3,7 @@
         <app-page-title [title]="'Curso'" [iclass]="'fa-nota-musical'" [hasBackAction]=true
             [iconPosition]="'right'"></app-page-title>
         <div class="container-actions">
-            <div>Estado: {{pService.miCurso.isActivo ? 'activo' : 'finalizado'}}</div>
+            <div class="estado-curso-1">Estado: {{pService.miCurso.isActivo ? 'activo' : 'finalizado'}}</div>
             <button [disabled]="!pService.miCurso.isActivo" class="btn button button-red text-white ml-3 d-md-block" data-toggle="modal"
                 data-target="#confirmFinish">Finalizar curso</button>
         </div>
@@ -67,6 +67,7 @@
                 </button>
             </div>
             <div class="modal-footer justify-content-center">
+                <button data-dismiss="modal" #confirmFinalizar style="display: none;"></button>
                 <button type="button" class="button modal-button button-grey" data-dismiss="modal">Cancelar</button>
                 <button type="button" class="button modal-button button-red" (click)="finalizarCurso()">Aceptar</button>
             </div>

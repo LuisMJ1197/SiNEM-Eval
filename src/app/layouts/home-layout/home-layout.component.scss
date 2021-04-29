@@ -53,6 +53,16 @@
     .nav-link.profile {
         display: none;
     }
+
+    .topbar .navbar .navbar-body {
+        width: calc(100% - 55px);
+    }
+}
+
+@media (orientation: landscape) {
+    .cerrar-sesion {
+        display: none;
+    }
 }
 
 .navbar-header .navbar-brand {
@@ -253,14 +263,13 @@
     .sidebar.not-extended > * {
         display: none;
     }
-    
+
     .logo-protrait {
         width: 100%;
         height: 55px;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: auto;
     }
 }
 
