@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Estudiante, EstudianteInput } from '../graphql/models';
-import { RegistrarEstudiante, ObtenerEstudiantesPorCurso, EditarEstudiante, AgregarEstudianteACurso, ObtenerEstudiantes } from '../graphql/queries';
+import { RegistrarEstudiante, EditarEstudiante, ObtenerEstudiantes } from '../graphql/queries';
 import { GestionEstudiantesComponent } from '../pages/gestion-estudiantes/gestion-estudiantes.component';
 
 @Injectable({

@@ -16,6 +16,7 @@ export class GestionCursosService {
       tipo_id: 0,
       tipo_name: ""
     },
+    valor_general: 0,
     sede: {
       sede_id: 0,
       sede_name: ""
