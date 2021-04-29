@@ -11,7 +11,6 @@ export class StudentsService {
   estudiantes: Estudiante[] = [];
   estudiantes_filtrados: Estudiante[] = [];
 
-
   constructor(private apollo: Apollo) { }
 
   cargarEstudiantes() {
@@ -21,7 +20,7 @@ export class StudentsService {
     }).subscribe(({data}) => { 
       console.log(data)
       if (data != null && data['obtenerEstudiantes'] != null) {
-        this.estudiantes = data['obtenerEstudiantes'];
+        this.estudiantes = JSON.parse(JSON.stringify(data['obtenerEstudiantes']));
         this.estudiantes_filtrados = JSON.parse(JSON.stringify(this.estudiantes));
       } else {
         this.estudiantes = [];
@@ -35,7 +34,7 @@ export class StudentsService {
     this.apollo.mutate({
       mutation: RegistrarEstudiante,
       variables: {
-        usuario: estudiante
+        estudiante: estudiante
       }
     }).subscribe(({data}) => {
       if (data != null && data['registrarEstudiante'] != null) {
@@ -54,13 +53,13 @@ export class StudentsService {
     this.apollo.mutate({
       mutation: EditarEstudiante,
       variables: {
-        usuario: {
-          cedula: estudiante.cedula,
+        estudiante: {
+          estudiante_id: estudiante.estudiante_id,
           nombre: estudiante.nombre,
           apellido1: estudiante.apellido1,
           apellido2: estudiante.apellido2,
           telefono: estudiante.telefono,
-          nombreE: estudiante.nombre_encargado
+          nombre_encargado: estudiante.nombre_encargado
         }
       }
     }).subscribe(({data}) => {

@@ -153,6 +153,7 @@ export const ObtenerEstudiantes = gql`
                 sede_name
             }
             cedula
+            estudiante_id
             nombre
             apellido1
             apellido2

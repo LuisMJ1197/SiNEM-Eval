@@ -10,7 +10,7 @@ import { StudentsService } from 'src/app/services/students.service';
 })
 export class GestionEstudiantesComponent implements OnInit {
   @ViewChild ('dissmissAddBtn', {static: true}) public dissmissAddBtn: any;
-
+  @ViewChild ('dissmissEditBtn', {static: true}) public dissmissEditBtn: any;
   estudiante_nuevo: EstudianteInput = {
     sede_id: 1,
     cedula: "",
@@ -34,10 +34,12 @@ export class GestionEstudiantesComponent implements OnInit {
     telefono: "",
     nombre_encargado: ""
   };
+  filtroNombre = "";
 
   constructor(public eService: StudentsService, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.eService.cargarEstudiantes();
   }
 
   filtrarTodos() {
@@ -123,8 +125,13 @@ export class GestionEstudiantesComponent implements OnInit {
   terminarEditarEstudiante(result: boolean, msg: string) {
     if (result) {
       this.eService.cargarEstudiantes();
+      this.dissmissEditBtn.nativeElement.click();
     } else {
       alert(msg);
     }
+  }
+
+  filtrarPorNombre(nombre) {
+    this.eService.estudiantes_filtrados = this.eService.estudiantes.filter(est => est.nombre.concat(" ", est.apellido1, " ", est.apellido2).toLowerCase().includes(nombre.toLowerCase() || nombre == ""));
   }
 }

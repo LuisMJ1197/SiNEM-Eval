@@ -11,8 +11,13 @@
     <div class="container-body">
         <div class="info-header">
             <h6>{{eService.estudiantes_filtrados.length}} estudiantes</h6>
+            <p style="text-align: center; vertical-align: middle; margin: 0; margin-left: 1rem;" class="separator">|</p>
             <div class="filter-buttons">
-                <button class="filter-option button btn button-yellow">Ver todos</button>
+                <div class="filter-option">
+                    <label for="nombreFiltro">Filtrar por nombre:</label>
+                    <input name="nombreFiltro" type="text" id="nombreFiltro" [(ngModel)]="filtroNombre" class="form-control" (change)="filtrarPorNombre(filtroNombre)">
+                </div>
+                <button class="filter-option button btn button-yellow" (click)="filtrarTodos()">Ver todos</button>
             </div>
         </div>
         <div class="user-list info-container" style="padding: 0 1rem;">
@@ -30,10 +35,10 @@
                     <tr *ngFor="let estudiante of eService.estudiantes_filtrados">
                         <td><a class="name">{{estudiante.nombre}} {{estudiante.apellido1}} {{estudiante.apellido2}}</a></td>
                         <td>{{estudiante.cedula}}</td>
-                        <td>{{estudiante.telefono}}}</td>
-                        <td>{{estudiante.nombre_encargado}}}</td>
+                        <td>{{estudiante.telefono}}</td>
+                        <td>{{estudiante.nombre_encargado}}</td>
                         <td>
-                            <a href="#" class="edit" title="Editar" data-toggle="modal" (click)="estudiante_edit = estudiante">
+                            <a href="#" class="edit" title="Editar" data-target="#editStudent" data-toggle="modal" (click)="estudiante_edit = estudiante">
                                 <i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
@@ -78,16 +83,22 @@
                 <div class="col-md-6">
                     <div class="form-group form-sm select">
                         <label for="tipo">Cédula</label>
-                        <input id="addStudentCedula" name="addStudentCedula" class="form-control" type="text" placeholder="Ingrese la cédula" [(ngModel)]="estudiante_nuevo.cedula" required>
+                        <input id="addStudentCedula" 
+                            onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' name="addStudentCedula" 
+                            class="form-control" type="text" placeholder="Ingrese la cédula" pattern="[0-9]{9}"
+                            [(ngModel)]="estudiante_nuevo.cedula" required>
                         <div class="invalid-feedback">
-                            Ingrese la cédula
+                            Ingrese un número de cédula válido
                         </div>
                     </div>
                     <div class="form-group form-sm select">
                         <label for="tipo">Teléfono</label>
-                        <input id="addStudentTelefono" name="addStudentTelefono" class="form-control" type="text" placeholder="Ingrese el teléfono" [(ngModel)]="estudiante_nuevo.telefono" required>
+                        <input id="addStudentTelefono" name="addStudentTelefono" 
+                            onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' pattern="[0-9]{8}"
+                            class="form-control" type="text" placeholder="Ingrese el teléfono" 
+                            [(ngModel)]="estudiante_nuevo.telefono" required>
                         <div class="invalid-feedback">
-                            Ingrese el teléfono
+                            Ingrese un número de teléfono válido
                         </div>
                     </div>
                     <div class="form-group form-sm select">
@@ -104,6 +115,78 @@
                 <button #dissmissAddBtn (click)="dismissAddForm()" data-dismiss="modal" style="display: none;"></button>
                 <button type="button" class="button modal-button button-grey" data-dismiss="modal" (click)="dismissAddForm()">Cancelar</button>
                 <button type="button" class="button modal-button button-blue" (click)="validateAddForm()">Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bottom" id="editStudent" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog cascading-modal modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header blue-header">
+                <h5 class="modal-title">Editar estudiante</h5>
+                <button (click)="dismissEditForm()" type="button" class="btn close top-dismiss-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="modal-body row needs-validation" id="editEstudianteForm" novalidate>
+                <div class="col-md-6">
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Nombre</label>
+                        <input id="editStudentNombre" name="editStudentNombre" class="form-control" type="text" placeholder="Ingrese el nombre" [(ngModel)]="estudiante_edit.nombre" required>
+                        <div class="invalid-feedback">
+                            Ingrese el nombre
+                        </div>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Primer apellido</label>
+                        <input id="editStudentApellido1" name="editStudentApellido1" class="form-control" type="text" placeholder="Ingrese el apellido" [(ngModel)]="estudiante_edit.apellido1" required>
+                        <div class="invalid-feedback">
+                            Ingrese el apellido
+                        </div>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Segundo apellido</label>
+                        <input id="editStudentApellido2" name="editStudentApellido2" class="form-control" type="text" placeholder="Ingrese el apellido" [(ngModel)]="estudiante_edit.apellido2" required>
+                        <div class="invalid-feedback">
+                            Ingrese el apellido
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Cédula</label>
+                        <input id="editStudentCedula" 
+                            onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' name="editStudentCedula" 
+                            class="form-control" type="text" placeholder="Ingrese la cédula" pattern="[0-9]{9}"
+                            [(ngModel)]="estudiante_edit.cedula" required>
+                        <div class="invalid-feedback">
+                            Ingrese un número de cédula válido
+                        </div>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Teléfono</label>
+                        <input id="editStudentTelefono" name="editStudentTelefono" 
+                            onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' pattern="[0-9]{8}"
+                            class="form-control" type="text" placeholder="Ingrese el teléfono" 
+                            [(ngModel)]="estudiante_edit.telefono" required>
+                        <div class="invalid-feedback">
+                            Ingrese un número de teléfono válido
+                        </div>
+                    </div>
+                    <div class="form-group form-sm select">
+                        <label for="tipo">Nombre del encargado</label>
+                        <input id="editStudentNEncargado" name="editStudentNEncargado" class="form-control" type="text" placeholder="Ingrese el nombre del encargado" [(ngModel)]="estudiante_edit.nombre_encargado" required>
+                        <div class="invalid-feedback">
+                            Ingrese el nombre del encargado
+                        </div>
+                    </div>
+                </div>
+                
+            </form>
+            <div class="modal-footer justify-content-center">
+                <button #dissmissEditBtn (click)="dismissEditForm()" data-dismiss="modal" style="display: none;"></button>
+                <button type="button" class="button modal-button button-grey" data-dismiss="modal" (click)="dismissEditForm()">Cancelar</button>
+                <button type="button" class="button modal-button button-blue" (click)="validateEditForm()">Guardar</button>
             </div>
         </div>
     </div>
