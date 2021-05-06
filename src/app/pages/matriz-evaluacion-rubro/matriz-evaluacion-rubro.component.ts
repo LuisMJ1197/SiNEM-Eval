@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
+import { ToastrService } from 'ngx-toastr';
 import { meses } from 'src/app/graphql/models';
 import { AgregarAsignacionARubro, EliminarAsignaciones, ModificarValorDeAsignaciones } from 'src/app/graphql/queries';
 import { ResultHandler } from 'src/app/interfaces/result-handler';
@@ -25,7 +26,7 @@ export class MatrizEvaluacionRubroComponent implements OnInit, ResultHandler {
   asignaciones = [];
   nuevaAsig = "";
 
-  constructor(private router: Router, private apollo: Apollo, public pService: ProfesorService) {
+  constructor(private router: Router, private apollo: Apollo, public pService: ProfesorService, private toast: ToastrService) {
     
   }
 
@@ -137,12 +138,12 @@ export class MatrizEvaluacionRubroComponent implements OnInit, ResultHandler {
     switch(action) {
       case this.GUARDAR_DISTRIBUCION: {
         if (!result) {
-          alert(msg);
+          this.toast.error(msg, "", {positionClass: "toast-top-center"});
         }
       }
       case this.AGREGAR_ASIGNACION: {
         if (!result) {
-          alert(msg);
+          this.toast.error(msg, "", {positionClass: "toast-top-center"});
         }
       }
     }
@@ -198,4 +199,5 @@ export class MatrizEvaluacionRubroComponent implements OnInit, ResultHandler {
   guardarNotaAsignacion(std, numero_asignacion, nota) {
     this.pService.guardarNotaAsignacion(std.estudiante_id, this.pService.miCurso.curso_id, numero_asignacion, nota, this, this.GUARDAR_NOTA_ASIGNACION);
   }
+  
 }

@@ -287,8 +287,8 @@
 }
 
 .button-grey:hover {
-  background-color: #c9c9c9;
-  border-color: #c9c9c9;
+  background-color: #a9a9a9;
+  border-color: #a9a9a9;
   color: white;
 }
 
@@ -632,4 +632,21 @@ select option::after {
   color: black;
   cursor: pointer !important;
   font-weight: 100;
+}
+
+.toast-top-center {
+  top: 30px !important;
+}
+
+.toast-container.toast-top-center .ngx-toastr,
+.toast-container.toast-bottom-center .ngx-toastr {
+  width: fit-content !important;
+  max-width: 400px !important;
+}
+
+.toast-success {
+  background-color: var(--dark-sea-green);
+}
+.toast-error {
+  background-color: var(--beauty-orange);
 }

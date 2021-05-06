@@ -24,6 +24,8 @@ import { MatrizEvaluacionComponent } from './pages/matriz-evaluacion/matriz-eval
 import { MatrizEvaluacionRubroComponent } from './pages/matriz-evaluacion-rubro/matriz-evaluacion-rubro.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     GraphQLModule,
     HttpClientModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

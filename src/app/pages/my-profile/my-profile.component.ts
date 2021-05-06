@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'angular-bootstrap-md';
 import { Apollo } from 'apollo-angular';
+import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/graphql/models';
 import { CambiarContrasenia, ConfirmarContraseniaAnterior } from 'src/app/graphql/queries';
 import { AuthService } from 'src/app/services/auth.service';
@@ -23,7 +24,7 @@ export class MyProfileComponent implements OnInit {
   nuevaErr = "";
   confirmErr = "";
 
-  constructor(private authService: AuthService, private apollo: Apollo) { }
+  constructor(private authService: AuthService, private apollo: Apollo, private toast: ToastrService) { }
 
   ngOnInit(): void {
     this.userLoggedIn = this.authService.getCurrentUser.user;
@@ -62,9 +63,12 @@ export class MyProfileComponent implements OnInit {
                     this.confirmErr = "";
                     this.nuevaErr = "";
                     this.antErr = "";
+                    this.toast.success("La contraseña ha sido actualizada.", "" , {positionClass: "toast-top-center"});
                   } else {
-                    alert("Ha ocurrido un error.");
+                    this.toast.error("Hubo un error al cambiar la contraseña.", "" , {positionClass: "toast-top-center"});
                   }
+                }, ( error ) => {
+                  this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "" , {positionClass: "toast-top-center"});
                 });
               } else {
                 this.confirmErr = "Las contraseñas no coinciden.";
@@ -75,7 +79,7 @@ export class MyProfileComponent implements OnInit {
           this.antErr = "La contraseña actual no es correcta.";
         }
       } else {
-        alert("Ha ocurrido un error.");
+        this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "" , {positionClass: "toast-top-center"});
       }
     });
   }

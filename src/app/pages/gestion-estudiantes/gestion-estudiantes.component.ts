@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Estudiante, EstudianteInput } from 'src/app/graphql/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { StudentsService } from 'src/app/services/students.service';
@@ -36,7 +37,7 @@ export class GestionEstudiantesComponent implements OnInit {
   };
   filtroNombre = "";
 
-  constructor(public eService: StudentsService, private authService: AuthService) { }
+  constructor(public eService: StudentsService, private authService: AuthService, private toast: ToastrService) { }
 
   ngOnInit(): void {
     this.eService.cargarEstudiantes();
@@ -69,8 +70,9 @@ export class GestionEstudiantesComponent implements OnInit {
       this.cedula_repeated = "";
       this.dissmissAddBtn.nativeElement.click();
       this.eService.cargarEstudiantes();
+      this.toast.success("Estudiante agregado exitosamente.", "", {positionClass: "toast-top-center"});
     } else {
-      alert(msg);
+      this.toast.error(msg, "", {positionClass: "toast-top-center"});
     }
   }
   
@@ -126,12 +128,21 @@ export class GestionEstudiantesComponent implements OnInit {
     if (result) {
       this.eService.cargarEstudiantes();
       this.dissmissEditBtn.nativeElement.click();
+      this.toast.success("Información actualizada.", "", {positionClass: "toast-top-center"});
     } else {
-      alert(msg);
+      this.toast.error(msg, "", {positionClass: "toast-top-center"});
     }
   }
 
   filtrarPorNombre(nombre) {
     this.eService.estudiantes_filtrados = this.eService.estudiantes.filter(est => est.nombre.concat(" ", est.apellido1, " ", est.apellido2).toLowerCase().includes(nombre.toLowerCase() || nombre == ""));
+  }
+
+  sortByName(lista) {
+    return lista.sort((a, b) => {
+      let nombreA = "".concat(" ", a.apellido1, " ", a.apellido2);
+      let nombreB = "".concat(" ", b.apellido1, " ", b.apellido2);
+      return nombreA > nombreB ? 1 : nombreA === nombreB ? 0 : -1;
+    });
   }
 }

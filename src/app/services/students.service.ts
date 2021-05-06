@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
+import { ToastrService } from 'ngx-toastr';
 import { Estudiante, EstudianteInput } from '../graphql/models';
 import { RegistrarEstudiante, EditarEstudiante, ObtenerEstudiantes } from '../graphql/queries';
 import { GestionEstudiantesComponent } from '../pages/gestion-estudiantes/gestion-estudiantes.component';
@@ -11,7 +12,7 @@ export class StudentsService {
   estudiantes: Estudiante[] = [];
   estudiantes_filtrados: Estudiante[] = [];
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo, private toast: ToastrService) { }
 
   cargarEstudiantes() {
     this.apollo.query({
@@ -23,6 +24,7 @@ export class StudentsService {
         this.estudiantes = JSON.parse(JSON.stringify(data['obtenerEstudiantes']));
         this.estudiantes_filtrados = JSON.parse(JSON.stringify(this.estudiantes));
       } else {
+        this.toast.error("Hubo un error al cargar la información de los estudiantes. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.estudiantes = [];
         this.estudiantes_filtrados = [];
       }

@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
+import { ToastrService } from 'ngx-toastr';
 import { diasSemana, meses } from 'src/app/graphql/models';
 import { ProfesorService } from 'src/app/services/profesor.service';
 
@@ -32,7 +33,7 @@ export class MiCursoEspecificoComponent implements OnInit {
   };
   meses = meses;
 
-  constructor(private router: Router, public pService: ProfesorService) {
+  constructor(private router: Router, public pService: ProfesorService, private toast: ToastrService) {
 
   }
 
@@ -78,11 +79,12 @@ export class MiCursoEspecificoComponent implements OnInit {
           if (data['finalizarCurso'].status == "ok") {
             this.pService.miCurso.isActivo = false;
             this.confirmFinalizar.nativeElement.click();
-            alert("El curso ha sido finalizado.");
+            this.toast.success("El curso ha sido finalizado.", "", {positionClass: "toast-top-center"});
           }
         } else {
-            alert("Ha ocurrido un error");
+          this.toast.error("Ha ocurrido un error", "", {positionClass: "toast-top-center"});
         }
       });
   }
+  
 }

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
+import { ToastrService } from 'ngx-toastr';
 import { Curso, Estudiante, RegistroDeAsistencia, Rubrica, Rubro } from '../graphql/models';
-import { AgregarAsignacionARubro, AgregarRegistroDeNotaPorAsignacion, AgregarRegistroDeNotaPorRubro, EliminarAsignaciones, FinalizarCurso, ModificarValorDeAsignaciones, ObtenerCursosDeProfesor, ObtenerEstudiantesPorCurso, ObtenerInfoRegistroDeAsistencia, ObtenerNotas, ObtenerRegistrosDeAsistenciaPorCurso, ObtenerRubrica } from '../graphql/queries';
+import { AgregarAsignacionARubro, AgregarRegistroDeNotaPorAsignacion, AgregarRegistroDeNotaPorRubro, EditarRegistroDeAsistencia, EliminarAsignaciones, EliminarRegistroDeAsistencia, FinalizarCurso, ModificarValorDeAsignaciones, ObtenerCursosDeProfesor, ObtenerEstudiantesPorCurso, ObtenerInfoRegistroDeAsistencia, ObtenerNotas, ObtenerRegistrosDeAsistenciaPorCurso, ObtenerRubrica } from '../graphql/queries';
 import { ResultHandler } from '../interfaces/result-handler';
 import { AuthService } from './auth.service';
 
@@ -52,7 +53,7 @@ export class ProfesorService {
   notasCurso: any = null;
   rubroActual: Rubro = null;
 
-  constructor(private apollo: Apollo, private authService: AuthService) {
+  constructor(private apollo: Apollo, private authService: AuthService, private toast: ToastrService) {
     this.cargarCursosDeProfesor();
   }
 
@@ -68,6 +69,7 @@ export class ProfesorService {
         this.misCursos = JSON.parse(JSON.stringify(data['obtenerCursosDeProfesor']));
         this.cursos_filtrados = JSON.parse(JSON.stringify(this.misCursos));
       } else {
+        this.toast.error("Hubo un error al cargar la información de los cursos. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.misCursos = [];
         this.cursos_filtrados = [];
       }
@@ -90,6 +92,7 @@ export class ProfesorService {
           }
         })
       } else {
+        this.toast.error("Hubo un error al cargar la información del curso. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.misCursos = [];
       }
     });
@@ -103,8 +106,9 @@ export class ProfesorService {
       }
     }).subscribe(({data}) => {
       if (data != null && data['obtenerEstudiantesPorCurso'] != null) {
-        this.listaEstudiantes = data['obtenerEstudiantesPorCurso'] as Estudiante[];
+        this.listaEstudiantes = JSON.parse(JSON.stringify(data['obtenerEstudiantesPorCurso'])) as Estudiante[];
       } else {
+        this.toast.error("Hubo un error al cargar la lista de estudiantes. Recargue la página", "" , {positionClass: "toast-top-center"});
         this.listaEstudiantes = [];
       }
     });
@@ -122,6 +126,7 @@ export class ProfesorService {
         this.registrosDeAsistencia = data['obtenerRegistrosDeAsistenciaPorCurso'] as RegistroDeAsistencia[];
         this.registrosFiltrados = JSON.parse(JSON.stringify(this.registrosDeAsistencia));
       } else {
+        this.toast.error("Hubo un error al cargar los registros de asistencia del curso. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.registrosDeAsistencia = [];
         this.registrosFiltrados = [];
       }
@@ -145,6 +150,7 @@ export class ProfesorService {
         });
       } else {
         this.registrosDeAsistencia = [];
+        this.toast.error("Hubo un error al cargar la información del registro de asistencia. Recargue la página.", "" , {positionClass: "toast-top-center"});
       }
     });
   }
@@ -172,6 +178,7 @@ export class ProfesorService {
         this.rubricaCurso = data['obtenerRubrica'];
         this.obtenerNotas(curso_id);
       } else {
+        this.toast.error("Hubo un error al obtener la rúbrica del curso. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.rubricaCurso = null;
       }
     });
@@ -196,6 +203,7 @@ export class ProfesorService {
           })
         });
       } else {
+        this.toast.error("Hubo un error al obtener las notas del curso. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.rubricaCurso = null;
       }
     });
@@ -212,6 +220,7 @@ export class ProfesorService {
       if (data != null && data['obtenerNotas'] != null) {
         this.notasCurso = JSON.parse(JSON.stringify(data['obtenerNotas']));
       } else {
+        this.toast.error("Hubo un error al obtener las notas del curso. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.notasCurso = null;
       }
     });
@@ -299,7 +308,7 @@ export class ProfesorService {
     });
   }
 
-  guardarNotaRubro(estudiante_id, curso_id, rubro_id, nota, caller, action) {
+  guardarNotaRubro(estudiante_id, curso_id, rubro_id, nota, caller: ResultHandler, action) {
     this.apollo.mutate({
       mutation: AgregarRegistroDeNotaPorRubro,
       variables: {
@@ -317,6 +326,47 @@ export class ProfesorService {
         }
       } else {
         caller.handleResult(false, "Ha ocurrido un error.", action, -1);
+      }
+    });
+  }
+
+  guardarCambiosRegistroDeAsistencia(registros_input: any[], caller: ResultHandler, action: number) {
+    this.apollo.mutate({
+      mutation: EditarRegistroDeAsistencia,
+      variables: {
+        registros: registros_input
+      }
+    }).subscribe(({data}) => {
+      if (data != null && data['editarRegistroDeAsistencia'] != null) {
+        if (data['editarRegistroDeAsistencia'].status == "error") {
+          caller.handleResult(false, "Ha ocurrido un error.", action, null);
+          // alert("Ha ocurrido un error" + data['editarRegistroDeAsistencia'].errorNumber);
+        } else {
+          caller.handleResult(true, "", action, null);
+        }
+      } else {
+        caller.handleResult(false, "Ha ocurrido un error.", action, null);
+      }
+    });
+  }
+  
+  eliminarRegistroDeAsistencia(caller: ResultHandler, action: number) {
+    this.apollo.mutate({
+      mutation: EliminarRegistroDeAsistencia,
+      variables: {
+        curso_id: this.registroDeAsistencia.curso_id,
+        numero_registro: this.registroDeAsistencia.numero_registro
+      }
+    }).subscribe(({ data }) => {
+      if (data != null && data['eliminarRegistroDeAsistencia'] != null) {
+        if (data['eliminarRegistroDeAsistencia'].status == "error") {
+          caller.handleResult(false, "Ha ocurrido un error.", action, null);
+        } else {
+          this.cargarRegistrosDeAsistencia(this.miCurso.curso_id);
+          caller.handleResult(true, "", action, null);
+        }
+      } else {
+        caller.handleResult(false, "Ha ocurrido un error.", action, null);
       }
     });
   }

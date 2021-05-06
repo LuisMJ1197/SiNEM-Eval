@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
+import { ToastrService } from 'ngx-toastr';
 import { User, UsuarioInput } from '../graphql/models';
 import { CambiarRol, EditarUsuario, ObtenerUsuarios, RegistrarUsuario } from '../graphql/queries';
 import { GestionUsuariosComponent } from '../pages/gestion-usuarios/gestion-usuarios.component';
@@ -11,7 +12,7 @@ export class UsersService {
   usuarios: User[] = [];
   usuarios_filtrados: User[] = [];
 
-  constructor(private apollo: Apollo) {
+  constructor(private apollo: Apollo, private toast: ToastrService) {
 
   }
 
@@ -25,6 +26,7 @@ export class UsersService {
         this.usuarios = data['obtenerUsuarios'];
         this.usuarios_filtrados = JSON.parse(JSON.stringify(this.usuarios));
       } else {
+        this.toast.error("Hubo un error al cargar la información de los usuarios. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.usuarios = [];
         this.usuarios_filtrados = [];
       }

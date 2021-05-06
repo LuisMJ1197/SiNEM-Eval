@@ -31,7 +31,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let std of pService.notasCurso">
+                        <tr *ngFor="let std of sortByName(pService.notasCurso)">
                             <td>{{std.estudiante_nombre}}</td>
                             <td *ngIf="pService.rubroActual.asignaciones.length == 0">No hay asignaciones</td>
                             <td class="asignaciones" *ngFor="let asignacion of pService.rubroActual.asignaciones; let i = index" style="height: 30px; padding: 0;">

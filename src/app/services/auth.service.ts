@@ -6,10 +6,15 @@ import { LoginData } from '../graphql/models';
 import { Apollo } from 'apollo-angular';
 import { LoginMutation } from '../graphql/queries';
 import { LoginPageComponent } from '../pages/login-page/login-page.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * Se encarga de las acciones relacionadas con el login y la comunicación con la API.
+ */
 export class AuthService {
 
   private currentUserSubject: BehaviorSubject<LoginData>;
@@ -27,7 +32,7 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  constructor(private http: HttpClient, private apollo: Apollo) {
+  constructor(private http: HttpClient, private apollo: Apollo, private toast: ToastrService) {
     this.currentUserSubject = new BehaviorSubject<LoginData>(JSON.parse(localStorage.getItem(CURRENT_USER)));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -47,7 +52,7 @@ export class AuthService {
         callback(null, caller);
       }
     }, (error) => {
-      callback(null, caller);
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 

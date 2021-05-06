@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Dominio, meses, Rubro } from 'src/app/graphql/models';
+import { ResultHandler } from 'src/app/interfaces/result-handler';
 import { ProfesorService } from 'src/app/services/profesor.service';
 
 @Component({
@@ -8,7 +10,7 @@ import { ProfesorService } from 'src/app/services/profesor.service';
   templateUrl: './matriz-evaluacion.component.html',
   styleUrls: ['./matriz-evaluacion.component.scss']
 })
-export class MatrizEvaluacionComponent implements OnInit {
+export class MatrizEvaluacionComponent implements OnInit, ResultHandler {
   GUARDAR_NOTA_RUBRO = 0;
 
   meses = meses;
@@ -24,7 +26,7 @@ export class MatrizEvaluacionComponent implements OnInit {
   domP_expanded: boolean = false;
   showing_fsttable: boolean = true;
 
-  constructor(private router: Router, public pService: ProfesorService) {
+  constructor(private router: Router, public pService: ProfesorService, private toast: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -134,5 +136,24 @@ export class MatrizEvaluacionComponent implements OnInit {
       this.pService.rubroActual = this.getRubro(this.getDominioPsicomotor(), rubro);
       this.router.navigate([this.router.url + "/" + 'practicas-psicomotor']);
     } 
+  }
+
+  sortByName(lista) {
+    return lista.sort((a, b) => {
+      let nombreA = a.estudiante_nombre;
+      let nombreB = a.estudiante_nombre;
+      return nombreA > nombreB ? 1 : nombreA === nombreB ? 0 : -1;
+    });
+  }
+
+  
+  handleResult(result: boolean, msg: string, action: number, resultData: number) {
+    switch(action) {
+      case this.GUARDAR_NOTA_RUBRO: {
+        if (!result) {
+          this.toast.error("Hubo un error al guardar la información.", "" , {positionClass: "toast-top-center"});
+        }
+      }
+    }
   }
 }

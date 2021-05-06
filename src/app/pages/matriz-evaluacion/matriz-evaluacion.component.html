@@ -117,7 +117,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let std of pService.notasCurso">
+                        <tr *ngFor="let std of sortByName(pService.notasCurso)">
                             <td>{{std.estudiante_nombre}}</td>
                             <td class="porcent">
                                 {{redondear(calculateGrade(std.dominioSocioafectivo.nota, getDominioSocioafectivo().valor) * (pService.miCurso.valor_general / 100))}}%

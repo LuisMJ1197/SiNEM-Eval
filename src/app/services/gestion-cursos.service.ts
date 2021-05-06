@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
+import { ToastrService } from 'ngx-toastr';
 import { Curso, Estudiante, RegistroDeAsistencia } from '../graphql/models';
-import { AgregarCurso, AgregarEstudiantesACurso, FinalizarCurso, ObtenerCursos, ObtenerEstudiantes, ObtenerEstudiantesPorCurso } from '../graphql/queries';
+import { AgregarCurso, AgregarEstudiantesACurso, DarDeBaja, FinalizarCurso, ObtenerCursos, ObtenerEstudiantes, ObtenerEstudiantesPorCurso } from '../graphql/queries';
+import { ResultHandler } from '../interfaces/result-handler';
 import { GestionCursoEspecificoComponent } from '../pages/gestion-curso-especifico/gestion-curso-especifico.component';
 import { GestionCursosComponent } from '../pages/gestion-cursos/gestion-cursos.component';
 
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * Se encarga de la gestión de los cursos y la comunicación con la API.
+ */
 export class GestionCursosService {
   cursos: Curso[] = [];
   cursoEspecifico: Curso = {
@@ -42,7 +48,7 @@ export class GestionCursosService {
 
   todosEstudiantes: Estudiante[] = [];
 
-  constructor(private apollo: Apollo) { 
+  constructor(private apollo: Apollo, private toast: ToastrService) { 
     this.cargarCursos();
   }
 
@@ -54,6 +60,7 @@ export class GestionCursosService {
       if (data != null && data['obtenerCursos'] != null) {
         this.cursos = data['obtenerCursos'];
       } else {
+        this.toast.error("Hubo un error al cargar la información de los cursos. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.cursos = [];
       }
     });
@@ -62,6 +69,7 @@ export class GestionCursosService {
   cargarCurso(curso_id: number){
     this.apollo.query({
       query: ObtenerCursos,
+      fetchPolicy: "network-only"
     }).subscribe(({data}) => {
       if (data != null && data['obtenerCursos'] != null) {
         this.cursos = JSON.parse(JSON.stringify(data['obtenerCursos']));
@@ -73,6 +81,7 @@ export class GestionCursosService {
           }
         });
       } else {
+        this.toast.error("Hubo un error al cargar la información del curso. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.cursos = [];
       }
     });
@@ -86,6 +95,7 @@ export class GestionCursosService {
       if (data != null && data['obtenerEstudiantes'] != null) {
         this.todosEstudiantes = JSON.parse(JSON.stringify(data['obtenerEstudiantes'])) as Estudiante[];
       } else {
+        this.toast.error("Hubo un error al cargar la lista de estudiantes. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.todosEstudiantes = [];
       }
     });
@@ -96,22 +106,25 @@ export class GestionCursosService {
       query: ObtenerEstudiantesPorCurso,
       variables: {
         curso_id: curso_id 
-      }
+      },
+      fetchPolicy: "network-only"
     }).subscribe(({data}) => {
       if (data != null && data['obtenerEstudiantesPorCurso'] != null) {
         this.listaEstudiantes = JSON.parse(JSON.stringify(data['obtenerEstudiantesPorCurso'])) as Estudiante[];
       } else {
+        this.toast.error("Hubo un error al cargar la lista de estudiantes del curso. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.listaEstudiantes = [];
       }
     });
   }
 
   finalizarCurso(curso_id: number) {
-    return this.apollo.query({
-      query: FinalizarCurso,
+    return this.apollo.mutate({
+      mutation: FinalizarCurso,
       variables: {
         curso_id: curso_id 
-      }
+      },
+      fetchPolicy: "no-cache"
     });
   }
 
@@ -120,7 +133,8 @@ export class GestionCursosService {
       mutation: AgregarCurso,
       variables: {
         curso: curso
-      }
+      },
+      fetchPolicy: "no-cache"
     }).subscribe(({data}) => {
       if (data != null && data['agregarCurso'] != null) {
         if(data['agregarCurso'].status == "ok") {
@@ -139,7 +153,8 @@ export class GestionCursosService {
       mutation: AgregarEstudiantesACurso,
       variables: {
         estudiantes: estudiantes_agregar
-      }
+      },
+      fetchPolicy: "no-cache"
     }).subscribe(({data}) => {
       if (data != null && data['agregarEstudiantesACurso'] != null) {
         if(data['agregarEstudiantesACurso'].status == "ok") {
@@ -149,6 +164,27 @@ export class GestionCursosService {
         }
       } else {
         caller.terminarAgregarEstudiantesACurso(false, "Ha ocurrido un error.");
+      }
+    });
+  }
+
+  darDeBaja(estudiante_id: number, curso_id: number, caller: GestionCursoEspecificoComponent) {
+    this.apollo.mutate({
+      mutation: DarDeBaja,
+      variables: {
+        estudiante_id: estudiante_id,
+        curso_id: curso_id
+      },
+      fetchPolicy: "no-cache"
+    }).subscribe(({data}) => {
+      if (data != null && data['darDeBaja'] != null) {
+        if(data['darDeBaja'].status == "ok") {
+          caller.terminarDarDebaja(true, "");
+        } else {
+          caller.terminarDarDebaja(false, "Ha ocurrido un error.");
+        }
+      } else {
+        caller.terminarDarDebaja(false, "Ha ocurrido un error.");
       }
     });
   }

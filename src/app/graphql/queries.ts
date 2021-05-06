@@ -499,3 +499,13 @@ export const AgregarRegistroDeNotaPorRubro = gql`
         }
     }
 `;
+
+export const DarDeBaja = gql`
+    mutation DarDebaja ($estudiante_id: Int!, $curso_id: Int!) {
+        darDeBaja(estudiante_id: $estudiante_id, curso_id: $curso_id) {
+            status
+            resultData
+            errorNumber
+        }
+    }
+`;

@@ -5,18 +5,23 @@ import { meses } from 'src/app/graphql/models';
 import { EditarRegistroDeAsistencia, EliminarRegistroDeAsistencia } from 'src/app/graphql/queries';
 import { ProfesorService } from 'src/app/services/profesor.service';
 import { Location } from '@angular/common';
+import { ResultHandler } from 'src/app/interfaces/result-handler';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registro-asistencia-edit',
   templateUrl: './registro-asistencia-edit.component.html',
   styleUrls: ['./registro-asistencia-edit.component.scss']
 })
-export class RegistroAsistenciaEditComponent implements OnInit {
+export class RegistroAsistenciaEditComponent implements OnInit, ResultHandler {
+  GUARDAR_CAMBIOS = 0;
+  ELIMINAR_REGISTRO = 1;
+
   meses = meses;
   saving: boolean = false;
   deleting: boolean = false;
 
-  constructor(public pService: ProfesorService, private router: Router, private apollo: Apollo, private location: Location) { }
+  constructor(public pService: ProfesorService, private router: Router, private apollo: Apollo, private location: Location, private toast: ToastrService) { }
 
   ngOnInit(): void {
     if (this.pService.miCurso.curso_id == 0) {
@@ -32,8 +37,6 @@ export class RegistroAsistenciaEditComponent implements OnInit {
       // this.pService.cargarRegistrosDeAsistencia(this.pService.miCurso.curso_id);
       let url2 = this.router.url.split("/");
       let urlStr2 = url2[url2.length - 1];
-      console.log(this.pService.miCurso.curso_id);
-      console.log(Number(urlStr2));
       this.pService.cargarInfoRegistroDeAsistencia(this.pService.miCurso.curso_id, Number(urlStr2));
     }
   }
@@ -54,52 +57,36 @@ export class RegistroAsistenciaEditComponent implements OnInit {
     });
     if (state) {      
       this.saving = true;
-      this.apollo.mutate({
-        mutation: EditarRegistroDeAsistencia,
-        variables: {
-          registros: registros_input
-        }
-      }).subscribe(({data}) => {
-        if (data != null && data['editarRegistroDeAsistencia'] != null) {
-          if (data['editarRegistroDeAsistencia'].status == "error") {
-            alert("Ha ocurrido un error" + data['editarRegistroDeAsistencia'].errorNumber);
-            this.saving = false;
-          } else {
-            this.saving = false;
-          }
-        } else {
-          alert("Ha ocurrido un error");
-          this.saving = false;
-        }
-      });
+      this.pService.guardarCambiosRegistroDeAsistencia(registros_input, this, this.GUARDAR_CAMBIOS);
     } else {
-      alert("Se tiene que indicar un estado para cada estudiante.");
+      this.toast.error("Se tiene que indicar un estado para cada estudiante.", "", {positionClass: "toast-top-center"});
     }
   }
 
   eliminarRegistro() {
     this.deleting = true;
-    this.apollo.mutate({
-      mutation: EliminarRegistroDeAsistencia,
-      variables: {
-        curso_id: this.pService.registroDeAsistencia.curso_id,
-        numero_registro: this.pService.registroDeAsistencia.numero_registro
-      }
-    }).subscribe(({ data }) => {
-      if (data != null && data['eliminarRegistroDeAsistencia'] != null) {
-        if (data['eliminarRegistroDeAsistencia'].status == "error") {
-          alert("Ha ocurrido un error.");
-          this.deleting = false;
-        } else {
-          this.pService.cargarRegistrosDeAsistencia(this.pService.miCurso.curso_id);
-          this.location.back();
-          this.deleting = false;
-        }
-      } else {
-        alert("Ha ocurrido un error");
-        this.deleting = false;
-      }
-    });
+    
   }
 
+  handleResult(result: boolean, msg: string, action: number, resultData: number) {
+    switch(action) {
+      case this.GUARDAR_CAMBIOS: {
+        if (result) {
+          this.toast.success("Información de registro actualizada.", "", {positionClass: "toast-top-center"});
+        } else {
+          this.toast.error(msg, "", {positionClass: "toast-top-center"});
+        }
+        this.saving = false;
+      }
+      case this.ELIMINAR_REGISTRO: {
+        if (result) {
+          this.toast.success("Registro eliminado.", "", {positionClass: "toast-top-center"});
+          this.location.back();
+        } else {
+          this.toast.error(msg, "", {positionClass: "toast-top-center"});
+        }
+        this.deleting = false;
+      }
+    }
+  }
 }

@@ -25,4 +25,11 @@ export class ListaEstudiantesComponent implements OnInit {
     }
   }
 
+  sortByName(lista) {
+    return lista.sort((a, b) => {
+      let nombreA = "".concat(" ", a.apellido1, " ", a.apellido2);
+      let nombreB = "".concat(" ", b.apellido1, " ", b.apellido2);
+      return nombreA > nombreB ? 1 : nombreA === nombreB ? 0 : -1;
+    });
+  }
 }

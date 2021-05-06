@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { User, UsuarioInput } from 'src/app/graphql/models';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -39,7 +40,7 @@ export class GestionUsuariosComponent implements OnInit {
   };
   usuario_cambiar: User = null;
 
-  constructor(public uService: UsersService, private authService: AuthService) { }
+  constructor(public uService: UsersService, private authService: AuthService, private toast: ToastrService) { }
 
   ngOnInit(): void {
     this.uService.cargarUsuarios();
@@ -107,8 +108,9 @@ export class GestionUsuariosComponent implements OnInit {
       this.email_repeated = "";
       this.dissmissAddBtn.nativeElement.click();
       this.uService.cargarUsuarios();
+      this.toast.success("Usuario agregado con éxito.", "", {positionClass: "toast-top-center"});
     } else {
-      alert(msg);
+      this.toast.error(msg, "", {positionClass: "toast-top-center"});
     }
   }
 
@@ -136,14 +138,15 @@ export class GestionUsuariosComponent implements OnInit {
   terminarEditarUsuario(result: boolean, msg: string) {
     if (result) {
       this.uService.cargarUsuarios();
+      this.toast.success("Información actualizada.", "", {positionClass: "toast-top-center"});
     } else {
-      alert(msg);
+      this.toast.error(msg, "", {positionClass: "toast-top-center"});
     }
   }
 
   cambiarRol(usuario: User) {
     if (usuario.usuario_id == this.authService.currentUserValue.user.usuario_id) {
-      alert("No puede cambiar el rol a sí mismo.");
+      this.toast.error("No puede cambiar el rol a sí mismo.", "", {positionClass: "toast-top-center"});
     } else {
       this.uService.cambiarRol(usuario.usuario_id, usuario.rol.rol_id == 1 ? 2 : 1, this);
     }
@@ -152,8 +155,9 @@ export class GestionUsuariosComponent implements OnInit {
   terminarCambiarRol(result: boolean, msg: string) {
     if (result) {
       this.uService.cargarUsuarios();
+      this.toast.success("Rol de usuario modificado.", "", {positionClass: "toast-top-center"});
     } else {
-      alert(msg);
+      this.toast.error(msg, "", {positionClass: "toast-top-center"});
     }
   }
 }
