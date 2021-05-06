@@ -43,7 +43,7 @@
 <aside class="sidebar" id="sidebar" [ngClass]="menuExtended ? '' : 'not-extended'">
     <nav class="sidebar-nav">
         <ul id="sidebarnav">
-            <li *ngIf="userLoggedIn.rol.rol_id == ADMINISTRATIVO" class="sidebar-item" tooltip="Gestión de cursos" flow="right"
+            <li *ngIf="userLoggedIn.rol.rol_id == ADMINISTRATIVO || userLoggedIn.rol.rol_id == ADMIN_SISTEMA" class="sidebar-item" tooltip="Gestión de cursos" flow="right"
                 [ngClass]="optionSelected == 0? 'selected' : ''" (click)="optionSelected = 0; goRoute(GESTION_CURSOS);">
                 <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd"
                     aria-expanded="false">
@@ -51,7 +51,7 @@
                     <span class="sidebar-link-text" *ngIf="menuExtended">Gestión de cursos</span>
                 </a>
             </li>
-            <li *ngIf="userLoggedIn.rol.rol_id == ADMINISTRATIVO" class="sidebar-item" tooltip="Gestión de usuarios" flow="right"
+            <li *ngIf="userLoggedIn.rol.rol_id == ADMINISTRATIVO || userLoggedIn.rol.rol_id == ADMIN_SISTEMA" class="sidebar-item" tooltip="Gestión de usuarios" flow="right"
                 [ngClass]="optionSelected == 1? 'selected' : ''" (click)="optionSelected = 1; goRoute(GESTION_USUARIOS);">
                 <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd"
                     aria-expanded="false">
@@ -59,7 +59,7 @@
                     <span class="sidebar-link-text" *ngIf="menuExtended">Gestión de usuarios</span>
                 </a>
             </li>
-            <li *ngIf="userLoggedIn.rol.rol_id == ADMINISTRATIVO" class="sidebar-item" tooltip="Gestión de estudiantes" flow="right"
+            <li *ngIf="userLoggedIn.rol.rol_id == ADMINISTRATIVO || userLoggedIn.rol.rol_id == ADMIN_SISTEMA" class="sidebar-item" tooltip="Gestión de estudiantes" flow="right"
                 [ngClass]="optionSelected == 2? 'selected' : ''" (click)="optionSelected = 2; goRoute(GESTION_ESTUDIANTES);">
                 <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd"
                     aria-expanded="false">

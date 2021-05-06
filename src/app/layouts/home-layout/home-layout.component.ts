@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class HomeLayoutComponent implements OnInit {
   ADMINISTRATIVO = 2;
   PROFESOR = 1;
+  ADMIN_SISTEMA = 3;
   roles = ["", "Profesor", "Administrativo"];
   GESTION_CURSOS: string = "courses-management";
   GESTION_USUARIOS: string = "users-management";
