@@ -7,7 +7,7 @@ import { CURRENT_USER } from './constants/constants';
 import { setContext } from '@apollo/client/link/context';
 import { LoginData } from './graphql/models';
 
-const uri = 'https://sinem-eval.herokuapp.com/sinem-eval'; // <-- add the URL of the GraphQL server here
+const uri = 'https://sinem-eval-api.herokuapp.com/sinem-eval'; // <-- add the URL of the GraphQL server here
 // const uri = 'http://localhost:4000/sinem-eval'; // <-- add the URL of the GraphQL server here
 
 const basic = setContext((operation, context) => ({
