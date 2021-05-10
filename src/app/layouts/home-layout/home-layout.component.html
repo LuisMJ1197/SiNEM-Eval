@@ -67,7 +67,7 @@
                     <span class="sidebar-link-text" *ngIf="menuExtended">Gestión de estudiantes</span>
                 </a>
             </li>
-            <hr *ngIf="userLoggedIn.rol.rol_id == ADMINISTRATIVO">
+            <hr *ngIf="userLoggedIn.rol.rol_id == ADMINISTRATIVO || userLoggedIn.rol.rol_id == ADMIN_SISTEMA">
             <li class="sidebar-item"  tooltip="Mis cursos" flow="right"
                 [ngClass]="optionSelected == 3? 'selected' : ''" (click)="optionSelected = 3; goRoute(MIS_CURSOS);">
                 <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd"
