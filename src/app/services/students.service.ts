@@ -28,6 +28,8 @@ export class StudentsService {
         this.estudiantes = [];
         this.estudiantes_filtrados = [];
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
@@ -48,6 +50,8 @@ export class StudentsService {
        } else {
         caller.terminarAgregarEstudiante(false, "Ha ocurrido un error.");
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }  
 
@@ -74,6 +78,8 @@ export class StudentsService {
        } else {
         caller.terminarEditarEstudiante(false, "Ha ocurrido un error.");
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 }

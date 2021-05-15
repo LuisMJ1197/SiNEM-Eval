@@ -5,8 +5,8 @@ import { CURRENT_USER } from '../constants/constants';
 import { LoginData } from '../graphql/models';
 import { Apollo } from 'apollo-angular';
 import { LoginMutation } from '../graphql/queries';
-import { LoginPageComponent } from '../pages/login-page/login-page.component';
 import { ToastrService } from 'ngx-toastr';
+import { ResultListener } from '../interfaces/result-listener';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +37,7 @@ export class AuthService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  login(email, password, callback, caller: LoginPageComponent) {
+  login(email, password, action: number, listener: ResultListener) {
     this.apollo.mutate({
       mutation: LoginMutation,
       variables: {
@@ -47,9 +47,9 @@ export class AuthService {
     }).subscribe(({data}) => {
       if (data != null && data['login'] != null) {
         this.saveUserData(data['login'] as LoginData);
-        callback(data['login'] as LoginData, caller);
+        listener.handleResult(true, "", action, 0);
       } else {
-        callback(null, caller);
+        listener.handleResult(false, "", action, 0);
       }
     }, (error) => {
       this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});

@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { meses } from 'src/app/graphql/models';
-import { EditarRegistroDeAsistencia, EliminarRegistroDeAsistencia } from 'src/app/graphql/queries';
 import { ProfesorService } from 'src/app/services/profesor.service';
 import { Location } from '@angular/common';
-import { ResultHandler } from 'src/app/interfaces/result-handler';
+import { ResultListener } from 'src/app/interfaces/result-listener';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -13,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './registro-asistencia-edit.component.html',
   styleUrls: ['./registro-asistencia-edit.component.scss']
 })
-export class RegistroAsistenciaEditComponent implements OnInit, ResultHandler {
+export class RegistroAsistenciaEditComponent implements OnInit, ResultListener {
   GUARDAR_CAMBIOS = 0;
   ELIMINAR_REGISTRO = 1;
 

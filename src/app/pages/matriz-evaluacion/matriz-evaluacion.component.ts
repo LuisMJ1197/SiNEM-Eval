@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Dominio, meses, Rubro } from 'src/app/graphql/models';
-import { ResultHandler } from 'src/app/interfaces/result-handler';
+import { ResultListener } from 'src/app/interfaces/result-listener';
 import { ProfesorService } from 'src/app/services/profesor.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { ProfesorService } from 'src/app/services/profesor.service';
   templateUrl: './matriz-evaluacion.component.html',
   styleUrls: ['./matriz-evaluacion.component.scss']
 })
-export class MatrizEvaluacionComponent implements OnInit, ResultHandler {
+export class MatrizEvaluacionComponent implements OnInit, ResultListener {
   GUARDAR_NOTA_RUBRO = 0;
 
   meses = meses;

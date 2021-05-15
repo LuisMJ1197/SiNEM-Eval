@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { ToastrService } from 'ngx-toastr';
 import { diasSemana, meses } from 'src/app/graphql/models';
+import { ResultListener } from 'src/app/interfaces/result-listener';
 import { ProfesorService } from 'src/app/services/profesor.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { ProfesorService } from 'src/app/services/profesor.service';
   templateUrl: './mi-curso-especifico.component.html',
   styleUrls: ['./mi-curso-especifico.component.scss']
 })
-export class MiCursoEspecificoComponent implements OnInit {
+export class MiCursoEspecificoComponent implements OnInit, ResultListener {
   @ViewChild("confirmFinalizar", {static: true}) private confirmFinalizar: any;
 
   tipos = {
@@ -73,18 +74,17 @@ export class MiCursoEspecificoComponent implements OnInit {
   }
 
   finalizarCurso() {
-    this.pService.finalizarCurso(this.pService.miCurso.curso_id)
-      .subscribe(({data}) => {
-        if (data != null && data['finalizarCurso'] != null) {
-          if (data['finalizarCurso'].status == "ok") {
-            this.pService.miCurso.isActivo = false;
-            this.confirmFinalizar.nativeElement.click();
-            this.toast.success("El curso ha sido finalizado.", "", {positionClass: "toast-top-center"});
-          }
-        } else {
-          this.toast.error("Ha ocurrido un error", "", {positionClass: "toast-top-center"});
-        }
-      });
+    this.pService.finalizarCurso(this.pService.miCurso.curso_id, 0, this);
+  }
+
+  handleResult(result: boolean, msg: string, action: number, resultData: number) {
+    switch(action) {
+      case 0: {
+        this.pService.miCurso.isActivo = false;
+        this.confirmFinalizar.nativeElement.click();
+        this.toast.success("El curso ha sido finalizado.", "", {positionClass: "toast-top-center"});
+      }
+    }
   }
   
 }

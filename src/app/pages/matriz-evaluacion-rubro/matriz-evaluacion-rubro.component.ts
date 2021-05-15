@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { ToastrService } from 'ngx-toastr';
 import { meses } from 'src/app/graphql/models';
-import { AgregarAsignacionARubro, EliminarAsignaciones, ModificarValorDeAsignaciones } from 'src/app/graphql/queries';
-import { ResultHandler } from 'src/app/interfaces/result-handler';
+import { ResultListener } from 'src/app/interfaces/result-listener';
 import { ProfesorService } from 'src/app/services/profesor.service';
 
 @Component({
@@ -12,7 +11,7 @@ import { ProfesorService } from 'src/app/services/profesor.service';
   templateUrl: './matriz-evaluacion-rubro.component.html',
   styleUrls: ['./matriz-evaluacion-rubro.component.scss']
 })
-export class MatrizEvaluacionRubroComponent implements OnInit, ResultHandler {
+export class MatrizEvaluacionRubroComponent implements OnInit, ResultListener {
   GUARDAR_DISTRIBUCION = 0;
   AGREGAR_ASIGNACION = 1;
   GUARDAR_NOTA_ASIGNACION = 2;

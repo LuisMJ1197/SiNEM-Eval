@@ -30,6 +30,8 @@ export class UsersService {
         this.usuarios = [];
         this.usuarios_filtrados = [];
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
@@ -49,6 +51,8 @@ export class UsersService {
        } else {
         caller.terminarAgregarUsuario(false, "Ha ocurrido un error.");
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
@@ -69,6 +73,8 @@ export class UsersService {
        } else {
         caller.terminarCambiarRol(false, "Ha ocurrido un error.");
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
@@ -95,6 +101,8 @@ export class UsersService {
        } else {
         caller.terminarEditarUsuario(false, "Ha ocurrido un error.");
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 }
