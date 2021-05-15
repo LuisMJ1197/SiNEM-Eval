@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { User, UsuarioInput } from 'src/app/graphql/models';
+import { ResultListener } from 'src/app/interfaces/result-listener';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -9,8 +10,11 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './gestion-usuarios.component.html',
   styleUrls: ['./gestion-usuarios.component.scss']
 })
-export class GestionUsuariosComponent implements OnInit {
+export class GestionUsuariosComponent implements OnInit, ResultListener {
   @ViewChild ('dissmissAddBtn', {static: true}) public dissmissAddBtn: any;
+  private AGREGAR_USUARIO = 0;
+  private EDITAR_USUARIO = 1;
+  private CAMBIAR_ROL = 2;
 
   usuario_nuevo: UsuarioInput = {
     sede_id: 1,
@@ -41,7 +45,7 @@ export class GestionUsuariosComponent implements OnInit {
   usuario_cambiar: User = null;
 
   constructor(public uService: UsersService, private authService: AuthService, private toast: ToastrService) { }
-
+  
   ngOnInit(): void {
     this.uService.cargarUsuarios();
   }
@@ -90,7 +94,7 @@ export class GestionUsuariosComponent implements OnInit {
       this.email_repeated = "Ya hay un usuario registrado con este correo."
     } else {
       this.usuario_nuevo.email = this.usuario_nuevo.email.toLowerCase();
-      this.uService.agregarUsuario(this.usuario_nuevo, this);
+      this.uService.agregarUsuario(this.usuario_nuevo, this.AGREGAR_USUARIO, this);
     } 
   }
 
@@ -132,7 +136,7 @@ export class GestionUsuariosComponent implements OnInit {
   }
 
   editarUsuario() {
-    this.uService.editarUsuario(this.usuario_edit, this);
+    this.uService.editarUsuario(this.usuario_edit, this.EDITAR_USUARIO, this);
   }
 
   terminarEditarUsuario(result: boolean, msg: string) {
@@ -148,7 +152,7 @@ export class GestionUsuariosComponent implements OnInit {
     if (usuario.usuario_id == this.authService.currentUserValue.user.usuario_id) {
       this.toast.error("No puede cambiar el rol a sí mismo.", "", {positionClass: "toast-top-center"});
     } else {
-      this.uService.cambiarRol(usuario.usuario_id, usuario.rol.rol_id == 1 ? 2 : 1, this);
+      this.uService.cambiarRol(usuario.usuario_id, usuario.rol.rol_id == 1 ? 2 : 1, this.CAMBIAR_ROL, this);
     }
   }
 
@@ -160,4 +164,19 @@ export class GestionUsuariosComponent implements OnInit {
       this.toast.error(msg, "", {positionClass: "toast-top-center"});
     }
   }
+
+  handleResult(result: boolean, msg: string, action: number, resultData: number) {
+    switch(action) {
+      case this.AGREGAR_USUARIO: {
+        this.terminarAgregarUsuario(result, msg);
+      }
+      case this.EDITAR_USUARIO: {
+        this.terminarEditarUsuario(result, msg);
+      }
+      case this.CAMBIAR_ROL: {
+        this.terminarCambiarRol(result, msg);
+      }
+    }
+  }
+
 }

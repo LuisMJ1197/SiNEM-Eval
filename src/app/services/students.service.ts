@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { ToastrService } from 'ngx-toastr';
 import { Estudiante, EstudianteInput } from '../graphql/models';
 import { RegistrarEstudiante, EditarEstudiante, ObtenerEstudiantes } from '../graphql/queries';
-import { GestionEstudiantesComponent } from '../pages/gestion-estudiantes/gestion-estudiantes.component';
+import { ResultListener } from '../interfaces/result-listener';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class StudentsService {
   }
 
 
-  agregarEstudiante(estudiante: EstudianteInput, caller: GestionEstudiantesComponent) {
+  agregarEstudiante(estudiante: EstudianteInput, action: number, listener: ResultListener) {
     this.apollo.mutate({
       mutation: RegistrarEstudiante,
       variables: {
@@ -43,19 +43,19 @@ export class StudentsService {
     }).subscribe(({data}) => {
       if (data != null && data['registrarEstudiante'] != null) {
         if (data['registrarEstudiante'].status == "ok") {
-          caller.terminarAgregarEstudiante(true, "");
+          listener.handleResult(true, "", action, 0);
         } else {
-          caller.terminarAgregarEstudiante(false, "Ha ocurrido un error.");
+          listener.handleResult(false, "Ha ocurrido un error.", action, 0);
         }
        } else {
-        caller.terminarAgregarEstudiante(false, "Ha ocurrido un error.");
+        listener.handleResult(false, "Ha ocurrido un error.", action, 0);
       }
     }, (error) => {
       this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }  
 
-  editarEstudiante(estudiante: Estudiante, caller: GestionEstudiantesComponent) {
+  editarEstudiante(estudiante: Estudiante, action: number, listener: ResultListener) {
     this.apollo.mutate({
       mutation: EditarEstudiante,
       variables: {
@@ -71,12 +71,12 @@ export class StudentsService {
     }).subscribe(({data}) => {
       if (data != null && data['editarEstudiante'] != null) {
         if (data['editarEstudiante'].status == "ok") {
-          caller.terminarEditarEstudiante(true, "");
+          listener.handleResult(true, "", action, 0);
         } else {
-          caller.terminarEditarEstudiante(false, "Ha ocurrido un error.");
+          listener.handleResult(false, "Ha ocurrido un error.", action, 0);
         }
        } else {
-        caller.terminarEditarEstudiante(false, "Ha ocurrido un error.");
+        listener.handleResult(false, "Ha ocurrido un error.", action, 0);
       }
     }, (error) => {
       this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});

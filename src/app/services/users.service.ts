@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { ToastrService } from 'ngx-toastr';
 import { User, UsuarioInput } from '../graphql/models';
 import { CambiarRol, EditarUsuario, ObtenerUsuarios, RegistrarUsuario } from '../graphql/queries';
-import { GestionUsuariosComponent } from '../pages/gestion-usuarios/gestion-usuarios.component';
+import { ResultListener } from '../interfaces/result-listener';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ export class UsersService {
     });
   }
 
-  agregarUsuario(usuario: UsuarioInput, caller: GestionUsuariosComponent) {
+  agregarUsuario(usuario: UsuarioInput, action: number, listener: ResultListener) {
     this.apollo.mutate({
       mutation: RegistrarUsuario,
       variables: {
@@ -44,19 +44,19 @@ export class UsersService {
     }).subscribe(({data}) => {
       if (data != null && data['registrarUsuario'] != null) {
         if (data['registrarUsuario'].status == "ok") {
-          caller.terminarAgregarUsuario(true, "");
+          listener.handleResult(true, "", action, 0);
         } else {
-          caller.terminarAgregarUsuario(false, "Ha ocurrido un error.");
+          listener.handleResult(false, "Ha ocurrido un error.", action, 0);
         }
        } else {
-        caller.terminarAgregarUsuario(false, "Ha ocurrido un error.");
+        listener.handleResult(false, "Ha ocurrido un error.", action, 0);
       }
     }, (error) => {
       this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
-  cambiarRol(usuario_id: number, rol_id: number, caller: GestionUsuariosComponent) {
+  cambiarRol(usuario_id: number, rol_id: number, action: number, listener: ResultListener) {
     this.apollo.mutate({
       mutation: CambiarRol,
       variables: {
@@ -66,19 +66,19 @@ export class UsersService {
     }).subscribe(({data}) => {
       if (data != null && data['cambiarRol'] != null) {
         if (data['cambiarRol'].status == "ok") {
-          caller.terminarCambiarRol(true, "");
+          listener.handleResult(true, "", action, 0);
         } else {
-          caller.terminarCambiarRol(false, "Ha ocurrido un error.");
+          listener.handleResult(false, "Ha ocurrido un error.", action, 0);
         }
        } else {
-        caller.terminarCambiarRol(false, "Ha ocurrido un error.");
+        listener.handleResult(false, "Ha ocurrido un error.", action, 0);
       }
     }, (error) => {
       this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
-  editarUsuario(usuario: User, caller: GestionUsuariosComponent) {
+  editarUsuario(usuario: User, action: number, listener: ResultListener) {
     this.apollo.mutate({
       mutation: EditarUsuario,
       variables: {
@@ -94,12 +94,12 @@ export class UsersService {
     }).subscribe(({data}) => {
       if (data != null && data['editarUsuario'] != null) {
         if (data['editarUsuario'].status == "ok") {
-          caller.terminarEditarUsuario(true, "");
+          listener.handleResult(true, "", action, 0);
         } else {
-          caller.terminarEditarUsuario(false, "Ha ocurrido un error.");
+          listener.handleResult(false, "Ha ocurrido un error.", action, 0);
         }
        } else {
-        caller.terminarEditarUsuario(false, "Ha ocurrido un error.");
+        listener.handleResult(false, "Ha ocurrido un error.", action, 0);
       }
     }, (error) => {
       this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
