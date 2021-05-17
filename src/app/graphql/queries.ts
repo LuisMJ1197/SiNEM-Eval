@@ -509,3 +509,13 @@ export const DarDeBaja = gql`
         }
     }
 `;
+
+export const EditarCurso = gql`
+    mutation EditarCurso ($curso: CursoEditInput!) {
+        editarCurso(curso: $curso) {
+            status
+            resultData
+            errorNumber
+        }
+    }
+`;

@@ -1,18 +1,26 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { diasSemana, Estudiante, meses, tiposEstilos } from 'src/app/graphql/models';
+import { Curso, diasSemana, Estudiante, meses, tipos, tiposEstilos } from 'src/app/graphql/models';
+import { EditarCurso } from 'src/app/graphql/queries';
+import { ResultListener } from 'src/app/interfaces/result-listener';
 import { GestionCursosService } from 'src/app/services/gestion-cursos.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-gestion-curso-especifico',
   templateUrl: './gestion-curso-especifico.component.html',
   styleUrls: ['./gestion-curso-especifico.component.scss']
 })
-export class GestionCursoEspecificoComponent implements OnInit {
+export class GestionCursoEspecificoComponent implements OnInit, ResultListener {
+  private FINALIZAR_CURSO = 0;
+  private EDITAR_CURSO = 1;
+
   @ViewChild("dismissConfirm", {static: true}) private dismissConfirm: any;
   @ViewChild("dismissAddEstudiantes", {static: true}) private dismissAddEstudiantes: any;
   @ViewChild("dismissDarbaja", {static: true}) private dismissDarbaja: any;
+  @ViewChild("displayErrorHorario", {static: true}) private displayErrorHorario: any;
+  @ViewChild("dismissAgregarCurso", {static: true}) private dismissAgregarCurso: any;
 
   meses = meses;
   tiposEstilos = tiposEstilos;
@@ -20,7 +28,46 @@ export class GestionCursoEspecificoComponent implements OnInit {
   selected_all = false;
   estudianteDeBaja: Estudiante = null;
 
-  constructor(private router: Router, public gcService: GestionCursosService, private toast: ToastrService) { }
+  tipos = tipos;
+  dias = diasSemana;
+
+  errorHorarioMsg = "";
+  tipoSelected: number = 1;
+  modalidadSelected: number = 1;
+  instrumentoSelected: number = 1;
+  profesorAsignado: number = 1;
+  periodoSelected: string = "";
+  horarios: any[] = [];
+  nuevoHorario = {
+    dia: 2,
+    hora_inicio: "",
+    hora_fin: ""
+  }
+  filter_text = "";
+  
+  setEditCurso() {
+    this.tipoSelected = this.gcService.cursoEspecifico.tipo_curso.tipo_id;
+    this.modalidadSelected = this.gcService.cursoEspecifico.modalidad.modalidad_id;
+    this.profesorAsignado = this.gcService.cursoEspecifico.profesor_asignado.profesor_id;
+    this.periodoSelected = this.gcService.cursoEspecifico.anno_periodo.toString().concat("-", 
+      this.gcService.cursoEspecifico.mes_periodo < 10 ? "0".concat(this.gcService.cursoEspecifico.mes_periodo.toString()) : this.gcService.cursoEspecifico.mes_periodo.toString());
+    this.horarios = this.gcService.cursoEspecifico.horario;
+    this.instrumentoSelected = -1;
+    this.instrumentoSelected = this.uService.modalidades.filter(elem => elem.modalidad_id == this.modalidadSelected)[0]
+      .instrumentos.filter(elem => elem.instrumento_name == this.gcService.cursoEspecifico.modalidad.instrumento_name)[0];
+  }
+
+  constructor(private router: Router, public gcService: GestionCursosService, private toast: ToastrService, public uService: UtilsService) { }
+
+  filterStudents() {
+    if (this.filter_text == "") {
+      this.gcService.todosEstudiantesFiltered = JSON.parse(JSON.stringify(this.gcService.todosEstudiantes));
+    } else {
+      this.gcService.todosEstudiantesFiltered = this.gcService.todosEstudiantes.filter(std => {
+        return std.apellido1.concat(" ", std.apellido2, " ", std.nombre).toLowerCase().includes(this.filter_text.toLowerCase());
+      });
+    }
+  }
 
   ngOnInit(): void {
     if (this.gcService.cursoEspecifico.curso_id == 0) {
@@ -161,18 +208,7 @@ export class GestionCursoEspecificoComponent implements OnInit {
    * Establece el estado del curso como finalizado.
    */
   finalizarCurso() {
-    this.gcService.finalizarCurso(this.gcService.cursoEspecifico.curso_id)
-      .subscribe(({data}) => {
-        if (data != null && data['finalizarCurso'] != null) {
-          if (data['finalizarCurso'].status == "ok") {
-            this.gcService.cursoEspecifico.isActivo = false;
-            this.dismissConfirm.nativeElement.click();
-            this.toast.success("El curso ha sido finalizado.", "", {positionClass: "toast-top-center"});
-          }
-        } else {
-          this.toast.error("Ha ocurrido un error.", "", {positionClass: "toast-top-center"});
-        }
-      });
+    this.gcService.finalizarCurso(this.gcService.cursoEspecifico.curso_id, this.FINALIZAR_CURSO, this);
   }
 
   /**
@@ -194,6 +230,75 @@ export class GestionCursoEspecificoComponent implements OnInit {
       this.toast.success("El estudiante ha sido dado de baja.", "", {positionClass: "toast-top-center"});
     } else {
       this.toast.error(msg, "", {positionClass: "toast-top-center"});
+    }
+  }
+
+  editarCurso() {
+    let curso = {
+      curso_id: this.gcService.cursoEspecifico.curso_id,
+      sede_id: 1,
+      rubrica_id: 1,
+      profesor_id: Number(this.profesorAsignado),
+      modalidad_id: Number(this.modalidadSelected),
+      instrumento_id: Number(this.instrumentoSelected),
+      tipo_id: Number(this.tipoSelected),
+      anno_periodo: this.periodoSelected.split("-")[0],
+      mes_periodo: Number(this.periodoSelected.split("-")[1]),
+      horario: this.horarios
+    };
+    if (this.periodoSelected != "") {
+      if (this.horarios.length > 0) {
+        this.horarios.forEach(horario => horario.dia = Number(horario.dia));
+        this.gcService.editarCurso(curso, this, this.EDITAR_CURSO);
+      } else {
+        this.errorHorarioMsg = "Debe seleccionar al menos un horario.";
+        this.displayErrorHorario.nativeElement.click();
+      }
+    } else {
+      this.errorHorarioMsg = "Debe seleccionar un período.";
+      this.displayErrorHorario.nativeElement.click();
+    }
+  }
+
+  agregarHorario() {
+    let ok = true;
+    if (this.horarios.filter(horario => horario.dia == this.nuevoHorario.dia).length > 0) {
+      this.errorHorarioMsg = "Ya hay un horario para este día.";
+      this.displayErrorHorario.nativeElement.click();
+    } else if (this.nuevoHorario.hora_fin == "" || this.nuevoHorario.hora_inicio == "") {
+      this.errorHorarioMsg = "Debe indicar los horarios de inicio y fin.";
+      this.displayErrorHorario.nativeElement.click();
+    } else if (this.nuevoHorario.hora_fin <= this.nuevoHorario.hora_inicio) {
+      this.errorHorarioMsg = "La hora de fin no puede ser mayor o igual a la hora de inicio";
+      this.displayErrorHorario.nativeElement.click();
+    }else {
+      this.horarios.push(JSON.parse(JSON.stringify(this.nuevoHorario)));
+      this.nuevoHorario = {
+        dia: 2,
+        hora_inicio: "",
+        hora_fin: ""
+      };
+    }
+  }
+
+  eliminarHorario(horariop) {
+    this.horarios = this.horarios.filter(horario => horario != horariop);
+  }
+
+  handleResult(result: boolean, msg: string, action: number, resultData: number) {
+    switch(action) {
+      case this.FINALIZAR_CURSO: {
+
+      }
+      case this.EDITAR_CURSO: {
+        if (result) {
+          this.toast.success("Información actualizada.", "", {positionClass: "toast-top-center"});
+          this.dismissAgregarCurso.nativeElement.click();
+          this.gcService.cargarCurso(this.gcService.cursoEspecifico.curso_id);
+        } else {
+          this.toast.error(msg, "", {positionClass: "toast-top-center"});
+        }
+      }
     }
   }
 }

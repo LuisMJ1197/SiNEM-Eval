@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { tipos, tiposEstilos, meses, diasSemana} from 'src/app/graphql/models';
+import { ResultListener } from 'src/app/interfaces/result-listener';
 import { GestionCursosService } from 'src/app/services/gestion-cursos.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -9,7 +10,7 @@ import { UtilsService } from 'src/app/services/utils.service';
   templateUrl: './gestion-cursos.component.html',
   styleUrls: ['./gestion-cursos.component.scss']
 })
-export class GestionCursosComponent implements OnInit {
+export class GestionCursosComponent implements OnInit, ResultListener {
   @ViewChild("displayErrorHorario", {static: true}) private displayErrorHorario: any;
   @ViewChild("dismissAgregarCurso", {static: true}) private dismissAgregarCurso: any;
   tipos = tipos;
@@ -76,7 +77,7 @@ export class GestionCursosComponent implements OnInit {
     if (this.periodoSelected != "") {
       if (this.horarios.length > 0) {
         this.horarios.forEach(horario => horario.dia = Number(horario.dia));
-        this.gcService.agregarCurso(curso, this)
+        this.gcService.agregarCurso(curso, this, 0)
       } else {
         this.errorHorarioMsg = "Debe seleccionar al menos un horario.";
         this.displayErrorHorario.nativeElement.click();
@@ -119,6 +120,16 @@ export class GestionCursosComponent implements OnInit {
   }
 
   eliminarHorario(horariop) {
-    this.horarios = this.horarios.filter(horario => horario == horariop);
+    this.horarios = this.horarios.filter(horario => horario != horariop);
+  }
+
+  handleResult(result: boolean, msg: string, action: number, resultData: number) {
+    switch(action) {
+      case 0: {
+        if (result) {
+          
+        }
+      }
+    }
   }
 }
