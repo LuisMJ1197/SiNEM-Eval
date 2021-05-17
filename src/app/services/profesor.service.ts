@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { ToastrService } from 'ngx-toastr';
 import { Curso, Estudiante, RegistroDeAsistencia, Rubrica, Rubro } from '../graphql/models';
 import { AgregarAsignacionARubro, AgregarRegistroDeNotaPorAsignacion, AgregarRegistroDeNotaPorRubro, EditarRegistroDeAsistencia, EliminarAsignaciones, EliminarRegistroDeAsistencia, FinalizarCurso, ModificarValorDeAsignaciones, ObtenerCursosDeProfesor, ObtenerEstudiantesPorCurso, ObtenerInfoRegistroDeAsistencia, ObtenerNotas, ObtenerRegistrosDeAsistenciaPorCurso, ObtenerRubrica } from '../graphql/queries';
-import { ResultHandler } from '../interfaces/result-handler';
+import { ResultListener } from '../interfaces/result-listener';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -155,12 +155,25 @@ export class ProfesorService {
     });
   }
 
-  finalizarCurso(curso_id: number) {
-    return this.apollo.mutate({
+  finalizarCurso(curso_id: number, action: number, listener: ResultListener) {
+    this.apollo.mutate({
       mutation: FinalizarCurso,
       variables: {
         curso_id: curso_id 
+      },
+      fetchPolicy: "no-cache"
+    }).subscribe(({data}) => {
+      if (data != null && data['finalizarCurso'] != null) {
+        if (data['finalizarCurso'].status == "ok") {
+          listener.handleResult(true, "", action, 0);
+        } else {
+          this.toast.error("Ha ocurrido un error", "", {positionClass: "toast-top-center"});  
+        }
+      } else {
+        this.toast.error("Ha ocurrido un error", "", {positionClass: "toast-top-center"});
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
@@ -181,6 +194,8 @@ export class ProfesorService {
         this.toast.error("Hubo un error al obtener la rúbrica del curso. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.rubricaCurso = null;
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
@@ -206,6 +221,8 @@ export class ProfesorService {
         this.toast.error("Hubo un error al obtener las notas del curso. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.rubricaCurso = null;
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
@@ -223,10 +240,12 @@ export class ProfesorService {
         this.toast.error("Hubo un error al obtener las notas del curso. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.notasCurso = null;
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
-  agregarAsignacion(asignacion, caller: ResultHandler, action: number) {
+  agregarAsignacion(asignacion, caller: ResultListener, action: number) {
     this.apollo.mutate({
       mutation: AgregarAsignacionARubro,
       variables: {
@@ -244,10 +263,12 @@ export class ProfesorService {
       } else {
         caller.handleResult(false, "Ha ocurrido un error.", action, -1);
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
-  public guardarDistribucion(asignaciones, asignacionesToDelete, caller: ResultHandler, action: number) {
+  public guardarDistribucion(asignaciones, asignacionesToDelete, caller: ResultListener, action: number) {
     this.apollo.mutate({
       mutation: ModificarValorDeAsignaciones,
       variables: {
@@ -263,6 +284,8 @@ export class ProfesorService {
       } else {
         caller.handleResult(false, "Ha ocurrido un error.", action, -1);
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
   
@@ -283,6 +306,8 @@ export class ProfesorService {
       } else {
         caller.handleResult(false, "Ha ocurrido un error.", action, -1);
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
@@ -305,10 +330,12 @@ export class ProfesorService {
       } else {
         caller.handleResult(false, "Ha ocurrido un error.", action, -1);
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
-  guardarNotaRubro(estudiante_id, curso_id, rubro_id, nota, caller: ResultHandler, action) {
+  guardarNotaRubro(estudiante_id, curso_id, rubro_id, nota, caller: ResultListener, action) {
     this.apollo.mutate({
       mutation: AgregarRegistroDeNotaPorRubro,
       variables: {
@@ -327,10 +354,12 @@ export class ProfesorService {
       } else {
         caller.handleResult(false, "Ha ocurrido un error.", action, -1);
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
-  guardarCambiosRegistroDeAsistencia(registros_input: any[], caller: ResultHandler, action: number) {
+  guardarCambiosRegistroDeAsistencia(registros_input: any[], caller: ResultListener, action: number) {
     this.apollo.mutate({
       mutation: EditarRegistroDeAsistencia,
       variables: {
@@ -340,17 +369,18 @@ export class ProfesorService {
       if (data != null && data['editarRegistroDeAsistencia'] != null) {
         if (data['editarRegistroDeAsistencia'].status == "error") {
           caller.handleResult(false, "Ha ocurrido un error.", action, null);
-          // alert("Ha ocurrido un error" + data['editarRegistroDeAsistencia'].errorNumber);
         } else {
           caller.handleResult(true, "", action, null);
         }
       } else {
         caller.handleResult(false, "Ha ocurrido un error.", action, null);
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
   
-  eliminarRegistroDeAsistencia(caller: ResultHandler, action: number) {
+  eliminarRegistroDeAsistencia(caller: ResultListener, action: number) {
     this.apollo.mutate({
       mutation: EliminarRegistroDeAsistencia,
       variables: {
@@ -368,6 +398,8 @@ export class ProfesorService {
       } else {
         caller.handleResult(false, "Ha ocurrido un error.", action, null);
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 }

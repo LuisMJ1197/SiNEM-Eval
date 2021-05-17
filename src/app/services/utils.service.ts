@@ -37,7 +37,8 @@ export class UtilsService {
 
   obtenerProfesores(){
     this.apollo.query({
-      query: ObtenerUsuarios
+      query: ObtenerUsuarios,
+      fetchPolicy: "network-only"
     }).subscribe(({data}) => {
       if (data != null && data['obtenerUsuarios'] != null) {
         this.profesores = JSON.parse(JSON.stringify(data['obtenerUsuarios']));

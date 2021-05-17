@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { ToastrService } from 'ngx-toastr';
 import { Curso, Estudiante, RegistroDeAsistencia } from '../graphql/models';
-import { AgregarCurso, AgregarEstudiantesACurso, DarDeBaja, FinalizarCurso, ObtenerCursos, ObtenerEstudiantes, ObtenerEstudiantesPorCurso } from '../graphql/queries';
-import { ResultHandler } from '../interfaces/result-handler';
+import { AgregarCurso, AgregarEstudiantesACurso, DarDeBaja, EditarCurso, FinalizarCurso, ObtenerCursos, ObtenerEstudiantes, ObtenerEstudiantesPorCurso } from '../graphql/queries';
+import { ResultListener } from '../interfaces/result-listener';
 import { GestionCursoEspecificoComponent } from '../pages/gestion-curso-especifico/gestion-curso-especifico.component';
 import { GestionCursosComponent } from '../pages/gestion-cursos/gestion-cursos.component';
 
@@ -47,6 +47,7 @@ export class GestionCursosService {
   listaEstudiantes: Estudiante[] = [];
 
   todosEstudiantes: Estudiante[] = [];
+  todosEstudiantesFiltered: Estudiante[] = [];
 
   constructor(private apollo: Apollo, private toast: ToastrService) { 
     this.cargarCursos();
@@ -63,6 +64,8 @@ export class GestionCursosService {
         this.toast.error("Hubo un error al cargar la información de los cursos. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.cursos = [];
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
@@ -84,6 +87,8 @@ export class GestionCursosService {
         this.toast.error("Hubo un error al cargar la información del curso. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.cursos = [];
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
@@ -94,10 +99,14 @@ export class GestionCursosService {
     }).subscribe(({data}) => {
       if (data != null && data['obtenerEstudiantes'] != null) {
         this.todosEstudiantes = JSON.parse(JSON.stringify(data['obtenerEstudiantes'])) as Estudiante[];
+        this.todosEstudiantesFiltered = JSON.parse(JSON.stringify(data['obtenerEstudiantes'])) as Estudiante[];
       } else {
         this.toast.error("Hubo un error al cargar la lista de estudiantes. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.todosEstudiantes = [];
+        this.todosEstudiantesFiltered = [];
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
@@ -115,20 +124,32 @@ export class GestionCursosService {
         this.toast.error("Hubo un error al cargar la lista de estudiantes del curso. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.listaEstudiantes = [];
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
-  finalizarCurso(curso_id: number) {
-    return this.apollo.mutate({
+  finalizarCurso(curso_id: number, action: number, listener: ResultListener) {
+    this.apollo.mutate({
       mutation: FinalizarCurso,
       variables: {
         curso_id: curso_id 
       },
       fetchPolicy: "no-cache"
+    }).subscribe(({data}) => {
+      if (data != null && data['finalizarCurso'] != null) {
+        if (data['finalizarCurso'].status == "ok") {
+          listener.handleResult(true, "", action, 0);
+        } else {
+          this.toast.error("Ha ocurrido un error", "", {positionClass: "toast-top-center"});  
+        }
+      } else {
+        this.toast.error("Ha ocurrido un error", "", {positionClass: "toast-top-center"});
+      }
     });
   }
 
-  agregarCurso(curso, caller: GestionCursosComponent) {
+  agregarCurso(curso, listener: ResultListener, action: number) {
     this.apollo.mutate({
       mutation: AgregarCurso,
       variables: {
@@ -138,13 +159,37 @@ export class GestionCursosService {
     }).subscribe(({data}) => {
       if (data != null && data['agregarCurso'] != null) {
         if(data['agregarCurso'].status == "ok") {
-          caller.finalizarAgregarCurso(true, "");
+          listener.handleResult(true, "", action, -1);
         } else {
-          caller.finalizarAgregarCurso(false, "Ha ocurrido un error.");
+          this.toast.error("Ha ocurrido un error", "", {positionClass: "toast-top-center"});  
         }
       } else {
-        caller.finalizarAgregarCurso(false, "Ha ocurrido un error.");
+        this.toast.error("Ha ocurrido un error", "", {positionClass: "toast-top-center"});  
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
+    });
+  }
+
+  editarCurso(curso, listener: ResultListener, action: number) {
+    this.apollo.mutate({
+      mutation: EditarCurso,
+      variables: {
+        curso: curso
+      },
+      fetchPolicy: "no-cache"
+    }).subscribe(({data}) => {
+      if (data != null && data['editarCurso'] != null) {
+        if(data['editarCurso'].status == "ok") {
+          listener.handleResult(true, "", action, -1);
+        } else {
+          this.toast.error("Ha ocurrido un error", "", {positionClass: "toast-top-center"});  
+        }
+      } else {
+        this.toast.error("Ha ocurrido un error", "", {positionClass: "toast-top-center"});  
+      }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
@@ -165,6 +210,8 @@ export class GestionCursosService {
       } else {
         caller.terminarAgregarEstudiantesACurso(false, "Ha ocurrido un error.");
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 
@@ -186,6 +233,8 @@ export class GestionCursosService {
       } else {
         caller.terminarDarDebaja(false, "Ha ocurrido un error.");
       }
+    }, (error) => {
+      this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
 }

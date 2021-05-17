@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Estudiante, EstudianteInput } from 'src/app/graphql/models';
+import { ResultListener } from 'src/app/interfaces/result-listener';
 import { AuthService } from 'src/app/services/auth.service';
 import { StudentsService } from 'src/app/services/students.service';
 
@@ -9,9 +10,12 @@ import { StudentsService } from 'src/app/services/students.service';
   templateUrl: './gestion-estudiantes.component.html',
   styleUrls: ['./gestion-estudiantes.component.scss']
 })
-export class GestionEstudiantesComponent implements OnInit {
+export class GestionEstudiantesComponent implements OnInit, ResultListener {
   @ViewChild ('dissmissAddBtn', {static: true}) public dissmissAddBtn: any;
   @ViewChild ('dissmissEditBtn', {static: true}) public dissmissEditBtn: any;
+  private AGREGAR_ESTUDIANTE = 0;
+  private EDITAR_ESTUDIANTE = 1;
+
   estudiante_nuevo: EstudianteInput = {
     sede_id: 1,
     cedula: "",
@@ -52,8 +56,19 @@ export class GestionEstudiantesComponent implements OnInit {
       this.cedula_repeated = "Ya hay un usuario registrado con este número de cédula."
     } else {
       this.estudiante_nuevo.cedula = this.estudiante_nuevo.cedula.toLowerCase();
-      this.eService.agregarEstudiante(this.estudiante_nuevo, this);
+      this.eService.agregarEstudiante(this.estudiante_nuevo, this.AGREGAR_ESTUDIANTE, this);
     } 
+  }
+
+  handleResult(result: boolean, msg: string, action: number, resultData: number) {
+    switch(action) {
+      case this.AGREGAR_ESTUDIANTE: {
+        this.terminarAgregarEstudiante(result, msg);
+      }
+      case this.EDITAR_ESTUDIANTE: {
+        this.terminarEditarEstudiante(result, msg)
+      }
+    }
   }
 
   terminarAgregarEstudiante(result: boolean, msg: string) {
@@ -75,7 +90,6 @@ export class GestionEstudiantesComponent implements OnInit {
       this.toast.error(msg, "", {positionClass: "toast-top-center"});
     }
   }
-  
 
   validateAddForm() {
     var form = document.getElementById('addEstudianteForm') as HTMLFormElement;
@@ -121,7 +135,7 @@ export class GestionEstudiantesComponent implements OnInit {
   }
 
   editarEstudiante() {
-    this.eService.editarEstudiante(this.estudiante_edit, this);
+    this.eService.editarEstudiante(this.estudiante_edit, this.EDITAR_ESTUDIANTE, this);
   }
 
   terminarEditarEstudiante(result: boolean, msg: string) {
