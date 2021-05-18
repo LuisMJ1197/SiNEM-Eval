@@ -126,7 +126,19 @@
                 </button>
             </div>
             <div class="modal-body mb-0">
-                <!--input type="text" id="stdFilter" (change)="filterStudents()" [(ngModel)]="filter_text"-->
+                <div style="display: flex; flex-direction: row;">
+                    <div class="form-group radio-b">
+                        <input type="radio" name="nombreRB" id="nombreRB" [value]="0" [(ngModel)]="tipoFilter">
+                        <label for="nombreRB">Filtrar por nombre</label>
+                    </div>
+                    <div class="form-group radio-b">
+                        <input type="radio" name="cedulaRB" id="cedulaRB" [value]="1" [(ngModel)]="tipoFilter">
+                        <label for="cedulaRB">Filtrar por cédula</label>
+                    </div>
+                </div>
+                <div class="form-group form-sm">
+                    <input type="text" id="stdFilter" class="form-control" (input)="filterStudents()" [(ngModel)]="filter_text">
+                </div>
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>

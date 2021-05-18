@@ -38,7 +38,7 @@
                         <td>{{estudiante.telefono}}</td>
                         <td>{{estudiante.nombre_encargado}}</td>
                         <td>
-                            <a href="#" class="edit" title="Editar" data-target="#editStudent" data-toggle="modal" (click)="estudiante_edit = estudiante">
+                            <a href="#" class="edit" title="Editar" data-target="#editStudent" data-toggle="modal" (click)="setEstudianteEdit(estudiante)">
                                 <i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
@@ -158,7 +158,7 @@
                         <input id="editStudentCedula" 
                             onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' name="editStudentCedula" 
                             class="form-control" type="text" placeholder="Ingrese la cédula" pattern="[0-9]{9}"
-                            [(ngModel)]="estudiante_edit.cedula" required>
+                            [(ngModel)]="estudiante_edit.cedula" required disabled>
                         <div class="invalid-feedback">
                             Ingrese un número de cédula válido
                         </div>

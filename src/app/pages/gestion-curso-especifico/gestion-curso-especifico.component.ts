@@ -27,7 +27,7 @@ export class GestionCursoEspecificoComponent implements OnInit, ResultListener {
   selected_ids = [];
   selected_all = false;
   estudianteDeBaja: Estudiante = null;
-
+  tipoFilter = 0;
   tipos = tipos;
   dias = diasSemana;
 
@@ -63,9 +63,15 @@ export class GestionCursoEspecificoComponent implements OnInit, ResultListener {
     if (this.filter_text == "") {
       this.gcService.todosEstudiantesFiltered = JSON.parse(JSON.stringify(this.gcService.todosEstudiantes));
     } else {
-      this.gcService.todosEstudiantesFiltered = this.gcService.todosEstudiantes.filter(std => {
-        return std.apellido1.concat(" ", std.apellido2, " ", std.nombre).toLowerCase().includes(this.filter_text.toLowerCase());
-      });
+      if (this.tipoFilter == 0) {
+        this.gcService.todosEstudiantesFiltered = this.gcService.todosEstudiantes.filter(std => {
+          return std.apellido1.concat(" ", std.apellido2, " ", std.nombre).toLowerCase().includes(this.filter_text.toLowerCase());
+        });
+      } else {
+        this.gcService.todosEstudiantesFiltered = this.gcService.todosEstudiantes.filter(std => {
+          return std.cedula.includes(this.filter_text.toLowerCase());
+        });
+      }
     }
   }
 
