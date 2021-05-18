@@ -34,9 +34,7 @@ export class MisCursosComponent implements OnInit {
   constructor(private router: Router, public pService: ProfesorService) { }
 
   ngOnInit(): void {
-    if (this.pService.misCursos == []) {
-      this.pService.cargarCursosDeProfesor();
-    }
+    this.pService.cargarCursosDeProfesor();
   }
 
   getClass(tipo: string) {

@@ -64,7 +64,7 @@ export class RegistroAsistenciaEditComponent implements OnInit, ResultListener {
 
   eliminarRegistro() {
     this.deleting = true;
-    
+    this.pService.eliminarRegistroDeAsistencia(this, this.ELIMINAR_REGISTRO);
   }
 
   handleResult(result: boolean, msg: string, action: number, resultData: number) {

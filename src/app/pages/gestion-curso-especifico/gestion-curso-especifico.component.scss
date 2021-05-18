@@ -139,3 +139,15 @@ table thead tr th {
 .horario i:hover {
     font-size: 1.1rem;
 }
+
+.radio-b {
+    margin: 0;
+}
+
+.radio-b label {
+    margin-left: 0.5rem;
+}
+
+.radio-b ~ .radio-b {
+    margin-left: 1rem;
+}

@@ -179,4 +179,11 @@ export class GestionUsuariosComponent implements OnInit, ResultListener {
     }
   }
 
+  setUsuarioEdit(usuario) {
+    this.usuario_edit = JSON.parse(JSON.stringify(usuario));
+  }
+
+  setUsuarioCambiar(usuario) {
+    this.usuario_cambiar = JSON.parse(JSON.stringify(usuario));
+  }
 }

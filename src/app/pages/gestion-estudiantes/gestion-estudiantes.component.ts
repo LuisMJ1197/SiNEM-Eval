@@ -148,6 +148,10 @@ export class GestionEstudiantesComponent implements OnInit, ResultListener {
     }
   }
 
+  setEstudianteEdit(estudiante) {
+    this.estudiante_edit = JSON.parse(JSON.stringify(estudiante));
+  }
+
   filtrarPorNombre(nombre) {
     this.eService.estudiantes_filtrados = this.eService.estudiantes.filter(est => est.nombre.concat(" ", est.apellido1, " ", est.apellido2).toLowerCase().includes(nombre.toLowerCase() || nombre == ""));
   }
