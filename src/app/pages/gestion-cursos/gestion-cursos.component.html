@@ -11,13 +11,26 @@
     </div>
     <div class="container-body">
         <div class="info-header">
-            <h6>{{gcService.cursos.length}} cursos</h6>
+            <h6 style="margin-right: 1rem;">{{gcService.cursos_filtrados.length}} {{gcService.cursos_filtrados.length == 1 ? 'curso' : 'cursos'}}</h6>
+            <p style="text-align: center; vertical-align: middle; margin: 0;" class="separator">|</p>
             <div class="filter-buttons">
-                <button class="filter-option button btn button-yellow" (click)="gcService.cargarCursos()">Ver todos</button>
+                <div class="filter-option select">
+                    <label for="tipoSelec">Filtrar por tipo:</label>
+                    <select id="tipoSelec" class="form-control" [(ngModel)]="tipo_selec" name="tipoSelec"
+                        (change)="filtrarPorTipo(tipo_selec);">
+                        <option value="Todos" selected>Todos</option>
+                        <option value="Redonda">Redonda</option>
+                        <option value="Blanca">Blanca</option>
+                        <option value="Negra">Negra</option>
+                        <option value="Corchea">Corchea</option>
+                        <option value="Semicorchea">Semicorchea</option>
+                        <option value="Egresado">Egresado</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="grid-div">
-            <div class="grid-element course" *ngFor="let curso of gcService.cursos" (click)="goCourse(curso)">
+            <div class="grid-element course" *ngFor="let curso of gcService.cursos_filtrados" (click)="goCourse(curso)">
                 <div class="element-info">
                     <div class="info-line">
                         <strong>{{curso.tipo_curso.tipo_name}}</strong><i [ngClass]="getClass(curso.tipo_curso.tipo_name)"></i>
@@ -26,7 +39,9 @@
                         {{curso.profesor_asignado.profesor_name}}
                     </div>
                     <div class="info-line">
-                        {{meses[curso.mes_periodo - 1]}} del {{curso.anno_periodo}}
+                        {{meses[curso.mes_periodo - 1]}} del {{curso.anno_periodo}} - 
+                        <span style="font-size: 1rem;"
+                        [ngClass]="curso.isActivo ? 'active' : 'non-active'">{{curso.isActivo ? ' Activo' : ' Finalizado'}}</span>
                     </div>
                 </div>
                 <div class="element-go">

@@ -51,3 +51,59 @@
 .horario i:hover {
     font-size: 1.1rem;
 }
+
+.active {
+    color: var(--dark-sea-green);
+}
+
+.non-active {
+    color: var(--beauty-orange);
+}
+
+.info-header .filter-buttons {
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.filter-option.select {
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter-buttons .filter-option {
+    height: 2.5rem;
+    float: left;
+}
+
+.filter-option ~ .filter-option {
+    margin-left: 1rem;
+}
+
+.search-option input, .search-option button {
+    height: 2rem;
+}
+
+.filter-buttons {
+    margin-left: 0.5rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.filter-option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
+    margin-right: 1rem;
+}
+
+.filter-option label {
+    min-width: fit-content;
+    margin: 0 1rem;
+    margin-left: 0;
+}

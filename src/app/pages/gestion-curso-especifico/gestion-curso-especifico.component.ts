@@ -294,12 +294,15 @@ export class GestionCursoEspecificoComponent implements OnInit, ResultListener {
   handleResult(result: boolean, msg: string, action: number, resultData: number) {
     switch(action) {
       case this.FINALIZAR_CURSO: {
-
+        this.dismissConfirm.nativeElement.click();
+        if (result) {
+          this.gcService.cursoEspecifico.isActivo = false;
+        }
       }
       case this.EDITAR_CURSO: {
+        this.dismissAgregarCurso.nativeElement.click();
         if (result) {
           this.toast.success("Información actualizada.", "", {positionClass: "toast-top-center"});
-          this.dismissAgregarCurso.nativeElement.click();
           this.gcService.cargarCurso(this.gcService.cursoEspecifico.curso_id);
         } else {
           this.toast.error(msg, "", {positionClass: "toast-top-center"});

@@ -33,6 +33,7 @@ export class GestionCursosComponent implements OnInit, ResultListener {
     hora_inicio: "",
     hora_fin: ""
   }
+  tipo_selec = "Todos";
 
   constructor(private router: Router, public gcService: GestionCursosService, public uService: UtilsService) { }
 
@@ -127,9 +128,21 @@ export class GestionCursosComponent implements OnInit, ResultListener {
     switch(action) {
       case 0: {
         if (result) {
-          
+          this.dismissAgregarCurso.nativeElement.click();
         }
       }
+    }
+  }
+
+  filtrarTodos() {
+    this.gcService.cursos_filtrados = JSON.parse(JSON.stringify(this.gcService.cursos));
+  }
+
+  filtrarPorTipo(tipo) {
+    if (tipo == "Todos") {
+      this.filtrarTodos();
+    } else {
+      this.gcService.cursos_filtrados = this.gcService.cursos.filter(curso => curso.tipo_curso.tipo_name == tipo);
     }
   }
 }

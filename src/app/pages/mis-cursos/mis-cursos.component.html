@@ -38,7 +38,9 @@
                         {{curso.profesor_asignado.profesor_name}}
                     </div>
                     <div class="info-line">
-                        {{meses[curso.mes_periodo - 1]}} del {{curso.anno_periodo}}
+                        {{meses[curso.mes_periodo - 1]}} del {{curso.anno_periodo}} - 
+                        <span style="font-size: 1rem;"
+                        [ngClass]="curso.isActivo ? 'active' : 'non-active'">{{curso.isActivo ? ' Activo' : ' Finalizado'}}</span>
                     </div>
                 </div>
                 <div class="element-go">

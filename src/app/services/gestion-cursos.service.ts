@@ -16,6 +16,7 @@ import { GestionCursosComponent } from '../pages/gestion-cursos/gestion-cursos.c
  */
 export class GestionCursosService {
   cursos: Curso[] = [];
+  cursos_filtrados: Curso[] = [];
   cursoEspecifico: Curso = {
     curso_id: 0,
     tipo_curso: {
@@ -59,10 +60,12 @@ export class GestionCursosService {
       fetchPolicy: "network-only"
     }).subscribe(({data}) => {
       if (data != null && data['obtenerCursos'] != null) {
-        this.cursos = data['obtenerCursos'];
+        this.cursos = JSON.parse(JSON.stringify(data['obtenerCursos']));
+        this.cursos_filtrados = JSON.parse(JSON.stringify(data['obtenerCursos']));
       } else {
         this.toast.error("Hubo un error al cargar la información de los cursos. Recargue la página.", "" , {positionClass: "toast-top-center"});
         this.cursos = [];
+        this.cursos_filtrados = [];
       }
     }, (error) => {
       this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
@@ -141,7 +144,7 @@ export class GestionCursosService {
         if (data['finalizarCurso'].status == "ok") {
           listener.handleResult(true, "", action, 0);
         } else {
-          this.toast.error("Ha ocurrido un error", "", {positionClass: "toast-top-center"});  
+          this.toast.error("Ha ocurrido un error", "", {positionClass: "toast-top-center"});
         }
       } else {
         this.toast.error("Ha ocurrido un error", "", {positionClass: "toast-top-center"});
@@ -160,6 +163,7 @@ export class GestionCursosService {
       if (data != null && data['agregarCurso'] != null) {
         if(data['agregarCurso'].status == "ok") {
           listener.handleResult(true, "", action, -1);
+          this.toast.success("Curso agregado con éxito.", "", {positionClass: "toast-top-center"}); 
         } else {
           this.toast.error("Ha ocurrido un error", "", {positionClass: "toast-top-center"});  
         }
