@@ -139,11 +139,14 @@ export class MatrizEvaluacionRubroComponent implements OnInit, ResultListener {
         if (!result) {
           this.toast.error(msg, "", {positionClass: "toast-top-center"});
         }
+        break;
       }
       case this.AGREGAR_ASIGNACION: {
         if (!result) {
           this.toast.error(msg, "", {positionClass: "toast-top-center"});
         }
+        this.nuevaAsig = "";
+        break;
       }
     }
   }
@@ -198,5 +201,14 @@ export class MatrizEvaluacionRubroComponent implements OnInit, ResultListener {
   guardarNotaAsignacion(std, numero_asignacion, nota) {
     this.pService.guardarNotaAsignacion(std.estudiante_id, this.pService.miCurso.curso_id, numero_asignacion, nota, this, this.GUARDAR_NOTA_ASIGNACION);
   }
+
+  sortByName(lista) {
+    return lista.sort((a, b) => {
+      let nombreA = a.estudiante_nombre;
+      let nombreB = a.estudiante_nombre;
+      return nombreA > nombreB ? 1 : nombreA === nombreB ? 0 : -1;
+    });
+  }
+
   
 }

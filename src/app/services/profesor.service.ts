@@ -251,7 +251,7 @@ export class ProfesorService {
       variables: {
         curso_id: asignacion.curso_id,
         rubro_id: asignacion.rubro_id,
-        nombre_asignacion: asignacion.nuevaAsig
+        nombre_asignacion: asignacion.nombre_asignacion
       }
     }).subscribe(({data}) => {
       if (data != null && data['agregarAsignacionARubro'] != null) {

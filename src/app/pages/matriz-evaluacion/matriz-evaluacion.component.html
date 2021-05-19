@@ -22,20 +22,20 @@
                         <tr class="header-lvl1">
                             <th rowspan="2" class="center-text">Nombre</th>
                             <th rowspan="2" colspan="2" class="dom-socio center-text">{{getDominioSocioafectivo().nombre_dominio}}<br>{{getDominioSocioafectivo().valor}}%</th>
-                            <th [attr.colspan]="domC_expanded? 6 : 1" class="domC">{{getDominioCognitivo().nombre_dominio}}<br>{{getDominioCognitivo().valor}}%</th>
-                            <th [attr.colspan]="domP_expanded? 6 : 1" class="domP">{{getDominioPsicomotor().nombre_dominio}}<br>{{getDominioPsicomotor().valor}}%</th>
+                            <th [attr.colspan]="domC_expanded? 6 : 1" class="domC expandable" (click)="domC_expanded = !domC_expanded">{{getDominioCognitivo().nombre_dominio}}<br>{{getDominioCognitivo().valor}}%</th>
+                            <th [attr.colspan]="domP_expanded? 6 : 1" class="domP expandable" (click)="domP_expanded = !domP_expanded">{{getDominioPsicomotor().nombre_dominio}}<br>{{getDominioPsicomotor().valor}}%</th>
                             <th rowspan="2" class="total head center-text">Total</th>
                         </tr>
                         <tr  class="header-lvl2">
                             <th colspan="2" class="not-total" *ngIf="domC_expanded">{{getRubro(getDominioCognitivo(), PORTAFOLIO).nombre}}<br>{{getRubro(getDominioCognitivo(), PORTAFOLIO).valor}}%</th>
                             <th colspan="1" class="not-total expandable parcial" *ngIf="domC_expanded" (click)="goRubro(PRUEBA_PARCIAL_C)">{{getRubro(getDominioCognitivo(), PRUEBA_PARCIAL_C).nombre}}<br>{{getRubro(getDominioCognitivo(), PRUEBA_PARCIAL_C).valor}}%</th>
                             <th colspan="2" class="not-total" *ngIf="domC_expanded">{{getRubro(getDominioCognitivo(), PRUEBA_FINAL_C).nombre}}<br>{{getRubro(getDominioCognitivo(), PRUEBA_FINAL_C).valor}}%</th>
-                            <th class="total expandable" (click)="domC_expanded = !domC_expanded">Total<br>{{getDominioCognitivo().valor}}%</th>
+                            <th class="total">Total<br>{{getDominioCognitivo().valor}}%</th>
                             <th class="not-total expandable" *ngIf="domP_expanded" (click)="goRubro(TAREAS)">{{getRubro(getDominioPsicomotor(), TAREAS).nombre}}<br>{{getRubro(getDominioPsicomotor(), TAREAS).valor}}%</th>
                             <th class="not-total expandable" *ngIf="domP_expanded" (click)="goRubro(PRACTICAS)">{{getRubro(getDominioPsicomotor(), PRACTICAS).nombre}}<br>{{getRubro(getDominioPsicomotor(), PRACTICAS).valor}}%</th>
                             <th colspan="1" class="not-total expandable parcial" *ngIf="domP_expanded"  (click)="goRubro(PRUEBA_PARCIAL_P)">{{getRubro(getDominioPsicomotor(), PRUEBA_PARCIAL_P).nombre}}<br>{{getRubro(getDominioPsicomotor(), PRUEBA_PARCIAL_P).valor}}%</th>
                             <th colspan="2" class="not-total" *ngIf="domP_expanded">{{getRubro(getDominioPsicomotor(), PRUEBA_FINAL_P).nombre}}<br>{{getRubro(getDominioPsicomotor(), PRUEBA_FINAL_P).valor}}%</th>
-                            <th class="total expandable" (click)="domP_expanded = !domP_expanded">Total<br>{{getDominioPsicomotor().valor}}%</th>
+                            <th class="total">Total<br>{{getDominioPsicomotor().valor}}%</th>
                         </tr>
                     </thead>
                     <tbody>

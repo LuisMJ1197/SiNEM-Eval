@@ -64,9 +64,11 @@ export class GestionEstudiantesComponent implements OnInit, ResultListener {
     switch(action) {
       case this.AGREGAR_ESTUDIANTE: {
         this.terminarAgregarEstudiante(result, msg);
+        break;
       }
       case this.EDITAR_ESTUDIANTE: {
         this.terminarEditarEstudiante(result, msg)
+        break;
       }
     }
   }

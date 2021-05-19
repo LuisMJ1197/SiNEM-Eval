@@ -83,6 +83,7 @@ export class MiCursoEspecificoComponent implements OnInit, ResultListener {
         this.pService.miCurso.isActivo = false;
         this.confirmFinalizar.nativeElement.click();
         this.toast.success("El curso ha sido finalizado.", "", {positionClass: "toast-top-center"});
+        break;
       }
     }
   }

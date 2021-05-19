@@ -153,6 +153,7 @@ export class MatrizEvaluacionComponent implements OnInit, ResultListener {
         if (!result) {
           this.toast.error("Hubo un error al guardar la información.", "" , {positionClass: "toast-top-center"});
         }
+        break;
       }
     }
   }

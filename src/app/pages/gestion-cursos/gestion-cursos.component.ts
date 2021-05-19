@@ -129,6 +129,7 @@ export class GestionCursosComponent implements OnInit, ResultListener {
       case 0: {
         if (result) {
           this.dismissAgregarCurso.nativeElement.click();
+          break;
         }
       }
     }
@@ -144,5 +145,21 @@ export class GestionCursosComponent implements OnInit, ResultListener {
     } else {
       this.gcService.cursos_filtrados = this.gcService.cursos.filter(curso => curso.tipo_curso.tipo_name == tipo);
     }
+  }
+
+  tConvert (time) {
+    // Check correct time format and split into components
+    time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+  
+    if (time.length > 1) { // If time format correct
+      time = time.slice (1);  // Remove full string match value
+      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join (''); // return adjusted time or original string
+  }
+  
+  get12Hour(hour) {
+    return this.tConvert(hour);
   }
 }

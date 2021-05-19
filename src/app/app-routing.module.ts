@@ -15,7 +15,6 @@ import { MiCursoEspecificoComponent } from './pages/mi-curso-especifico/mi-curso
 import { MisCursosComponent } from './pages/mis-cursos/mis-cursos.component';
 import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 import { RegistroAsistenciaEditComponent } from './pages/registro-asistencia-edit/registro-asistencia-edit.component';
-import { RegistroAsistenciaComponent } from './pages/registro-asistencia/registro-asistencia.component';
 import { RegistrosAsistenciaComponent } from './pages/registros-asistencia/registros-asistencia.component';
 
 const routes: Routes = [
@@ -55,10 +54,6 @@ const routes: Routes = [
       {
         path: 'my-courses/:curso-info/registros-asistencia',
         component: RegistrosAsistenciaComponent
-      },
-      {
-        path: 'my-courses/:curso-info/registros-asistencia/crear-registro',
-        component: RegistroAsistenciaComponent
       },
       {
         path: 'my-courses/:curso-info/registros-asistencia/:registro-info',
