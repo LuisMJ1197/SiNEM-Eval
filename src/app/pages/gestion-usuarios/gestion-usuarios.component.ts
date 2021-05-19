@@ -169,12 +169,15 @@ export class GestionUsuariosComponent implements OnInit, ResultListener {
     switch(action) {
       case this.AGREGAR_USUARIO: {
         this.terminarAgregarUsuario(result, msg);
+        break;
       }
       case this.EDITAR_USUARIO: {
         this.terminarEditarUsuario(result, msg);
+        break;
       }
       case this.CAMBIAR_ROL: {
         this.terminarCambiarRol(result, msg);
+        break;
       }
     }
   }

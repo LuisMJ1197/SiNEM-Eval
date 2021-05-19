@@ -204,10 +204,26 @@ export class GestionCursoEspecificoComponent implements OnInit, ResultListener {
     let res = "";
     if (this.gcService.cursoEspecifico != null) {
       this.gcService.cursoEspecifico.horario.forEach(element => {
-        res += diasSemana[element.dia - 1].concat(": ", element.hora_inicio, " - ", element.hora_fin, "<br>");
+        res += diasSemana[element.dia - 1].concat(": ", this.get12Hour(element.hora_inicio), " - ", this.get12Hour(element.hora_fin), "<br>");
       });
     }
     return res;
+  }
+
+  tConvert (time) {
+    // Check correct time format and split into components
+    time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+  
+    if (time.length > 1) { // If time format correct
+      time = time.slice (1);  // Remove full string match value
+      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join (''); // return adjusted time or original string
+  }
+  
+  get12Hour(hour) {
+    return this.tConvert(hour);
   }
 
   /**
@@ -298,6 +314,7 @@ export class GestionCursoEspecificoComponent implements OnInit, ResultListener {
         if (result) {
           this.gcService.cursoEspecifico.isActivo = false;
         }
+        break;
       }
       case this.EDITAR_CURSO: {
         this.dismissAgregarCurso.nativeElement.click();
@@ -307,6 +324,7 @@ export class GestionCursoEspecificoComponent implements OnInit, ResultListener {
         } else {
           this.toast.error(msg, "", {positionClass: "toast-top-center"});
         }
+        break;
       }
     }
   }

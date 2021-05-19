@@ -18,7 +18,6 @@ import { MiCursoEspecificoComponent } from './pages/mi-curso-especifico/mi-curso
 import { ListaEstudiantesComponent } from './pages/lista-estudiantes/lista-estudiantes.component';
 import { GestionCursoEspecificoComponent } from './pages/gestion-curso-especifico/gestion-curso-especifico.component';
 import { RegistrosAsistenciaComponent } from './pages/registros-asistencia/registros-asistencia.component';
-import { RegistroAsistenciaComponent } from './pages/registro-asistencia/registro-asistencia.component';
 import { RegistroAsistenciaEditComponent } from './pages/registro-asistencia-edit/registro-asistencia-edit.component';
 import { MatrizEvaluacionComponent } from './pages/matriz-evaluacion/matriz-evaluacion.component';
 import { MatrizEvaluacionRubroComponent } from './pages/matriz-evaluacion-rubro/matriz-evaluacion-rubro.component';
@@ -43,7 +42,6 @@ import { ToastrModule } from 'ngx-toastr';
     ListaEstudiantesComponent,
     GestionCursoEspecificoComponent,
     RegistrosAsistenciaComponent,
-    RegistroAsistenciaComponent,
     RegistroAsistenciaEditComponent,
     MatrizEvaluacionComponent,
     MatrizEvaluacionRubroComponent

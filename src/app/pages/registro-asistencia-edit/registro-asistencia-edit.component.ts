@@ -76,6 +76,7 @@ export class RegistroAsistenciaEditComponent implements OnInit, ResultListener {
           this.toast.error(msg, "", {positionClass: "toast-top-center"});
         }
         this.saving = false;
+        break;
       }
       case this.ELIMINAR_REGISTRO: {
         if (result) {
@@ -85,6 +86,7 @@ export class RegistroAsistenciaEditComponent implements OnInit, ResultListener {
           this.toast.error(msg, "", {positionClass: "toast-top-center"});
         }
         this.deleting = false;
+        break;
       }
     }
   }

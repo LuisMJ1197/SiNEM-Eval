@@ -37,6 +37,7 @@ export class LoginPageComponent implements OnInit, ResultListener {
         } else {
           this.error = true;
         }
+        break;
       }
     }
   }
