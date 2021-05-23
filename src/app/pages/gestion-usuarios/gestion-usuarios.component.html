@@ -99,8 +99,8 @@
                     <div class="form-group form-sm select">
                         <label for="tipo">Rol</label>
                         <select id="addUserRol" name="addUserRol" class="form-control" [(ngModel)]="usuario_nuevo.rol_id">
-                            <option value="1" [selected]="usuario_nuevo.rol_id == 1">Profesor</option>
-                            <option value="2" [selected]="usuario_nuevo.rol_id == 2">Administrativo</option>
+                            <option [value]="1" selected>Profesor</option>
+                            <option [value]="2">Administrativo</option>
                         </select>
                     </div>
                 </div>

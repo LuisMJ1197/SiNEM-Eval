@@ -94,6 +94,7 @@ export class GestionUsuariosComponent implements OnInit, ResultListener {
       this.email_repeated = "Ya hay un usuario registrado con este correo."
     } else {
       this.usuario_nuevo.email = this.usuario_nuevo.email.toLowerCase();
+      this.usuario_nuevo.rol_id = Number(this.usuario_nuevo.rol_id);
       this.uService.agregarUsuario(this.usuario_nuevo, this.AGREGAR_USUARIO, this);
     } 
   }
@@ -136,6 +137,7 @@ export class GestionUsuariosComponent implements OnInit, ResultListener {
   }
 
   editarUsuario() {
+    this.usuario_edit.rol.rol_id = Number(this.usuario_edit.rol.rol_id);
     this.uService.editarUsuario(this.usuario_edit, this.EDITAR_USUARIO, this);
   }
 
