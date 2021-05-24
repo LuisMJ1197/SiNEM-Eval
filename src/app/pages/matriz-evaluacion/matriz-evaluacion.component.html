@@ -7,11 +7,11 @@
         <div class="info-header">
             <h6>{{pService.miCurso.tipo_curso.tipo_name}} - {{meses[pService.miCurso.mes_periodo - 1]}} {{pService.miCurso.anno_periodo}}</h6>
         </div>
-        <div class="row-element option" (click)="showing_fsttable = !showing_fsttable">
-            <div class="option-wrap" *ngIf="showing_fsttable">
+        <div class="row-element option">
+            <div class="option-wrap" (click)="showing_fsttable = !showing_fsttable" *ngIf="showing_fsttable">
                 <i class="fas fa-clipboard-list"></i>Ver resumen
             </div>
-            <div class="option-wrap" *ngIf="!showing_fsttable">
+            <div class="option-wrap" (click)="showing_fsttable = !showing_fsttable" *ngIf="!showing_fsttable">
                 <i class="fas fa-table"></i>Ver completo
             </div>
         </div>

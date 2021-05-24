@@ -187,7 +187,6 @@ export class ProfesorService {
     }).subscribe(({data}) => {
       if (data != null && data['obtenerRubrica'] != null) {
         this.rubricaCurso = null;
-        this.notasCurso = null;
         this.rubricaCurso = data['obtenerRubrica'];
         this.obtenerNotas(curso_id);
       } else {
@@ -222,6 +221,7 @@ export class ProfesorService {
         this.rubricaCurso = null;
       }
     }, (error) => {
+      this.rubricaCurso = null;
       this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }
@@ -241,6 +241,7 @@ export class ProfesorService {
         this.notasCurso = null;
       }
     }, (error) => {
+      this.notasCurso = null;
       this.toast.error("Ha ocurrido un error. Inténtelo de nuevo.", "", {positionClass: "toast-top-center"});
     });
   }

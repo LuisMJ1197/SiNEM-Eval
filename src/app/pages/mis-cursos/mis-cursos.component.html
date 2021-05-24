@@ -35,6 +35,10 @@
                         <strong>{{curso.tipo_curso.tipo_name}}</strong><i [ngClass]="getClass(curso.tipo_curso.tipo_name)"></i>
                     </div>
                     <div class="info-line">
+                        {{curso.modalidad.modalidad_name}}{{curso.modalidad.modalidad_id
+                            != 1 ? " - " + curso.modalidad.instrumento_name : ""}}
+                    </div>
+                    <div class="info-line">
                         {{curso.profesor_asignado.profesor_name}}
                     </div>
                     <div class="info-line">
