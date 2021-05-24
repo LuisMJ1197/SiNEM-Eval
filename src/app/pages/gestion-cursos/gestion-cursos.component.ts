@@ -38,15 +38,9 @@ export class GestionCursosComponent implements OnInit, ResultListener {
   constructor(private router: Router, public gcService: GestionCursosService, public uService: UtilsService) { }
 
   ngOnInit(): void {
-    if (this.gcService.cursos == []) {
-      this.gcService.cargarCursos();
-    }
-    if(this.uService.modalidades == []) {
-      this.uService.obtenerModalidades();
-    }
-    if(this.uService.profesores == []) {
-      this.uService.obtenerProfesores();
-    }
+    this.gcService.cargarCursos();
+    this.uService.obtenerModalidades();
+    this.uService.obtenerProfesores();
   }
 
   modalidadInstrumento() {
@@ -93,6 +87,7 @@ export class GestionCursosComponent implements OnInit, ResultListener {
     if (result) {
       this.gcService.cargarCursos();
       this.dismissAgregarCurso.nativeElement.click();
+      this.gcService.cargarCursos();
     } else {
       this.errorHorarioMsg = msg;
       this.displayErrorHorario.nativeElement.click();
