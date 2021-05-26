@@ -59,7 +59,7 @@ export class GestionCursosComponent implements OnInit, ResultListener {
   }
 
   agregarCurso() {
-    if(this.uService.profesores != []) {
+    if(this.profesorAsignado > 1) {
       let curso = {
         sede_id: 1,
         rubrica_id: 1,
@@ -84,7 +84,7 @@ export class GestionCursosComponent implements OnInit, ResultListener {
         this.displayErrorHorario.nativeElement.click();
       }
     } else {
-      this.toast.error("No hay profesores para asignar.", "", {positionClass: "toast-top-center"});
+      this.toast.error("Debe seleccionar a un profesor.", "", {positionClass: "toast-top-center"});
     }
   }
 
