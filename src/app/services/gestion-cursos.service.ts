@@ -157,8 +157,7 @@ export class GestionCursosService {
       mutation: AgregarCurso,
       variables: {
         curso: curso
-      },
-      fetchPolicy: "no-cache"
+      }
     }).subscribe(({data}) => {
       if (data != null && data['agregarCurso'] != null) {
         if(data['agregarCurso'].status == "ok") {
@@ -180,8 +179,7 @@ export class GestionCursosService {
       mutation: EditarCurso,
       variables: {
         curso: curso
-      },
-      fetchPolicy: "no-cache"
+      }
     }).subscribe(({data}) => {
       if (data != null && data['editarCurso'] != null) {
         if(data['editarCurso'].status == "ok") {
