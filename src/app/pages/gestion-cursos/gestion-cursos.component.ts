@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { tipos, tiposEstilos, meses, diasSemana} from 'src/app/graphql/models';
 import { ResultListener } from 'src/app/interfaces/result-listener';
 import { GestionCursosService } from 'src/app/services/gestion-cursos.service';
@@ -35,7 +36,7 @@ export class GestionCursosComponent implements OnInit, ResultListener {
   }
   tipo_selec = "Todos";
 
-  constructor(private router: Router, public gcService: GestionCursosService, public uService: UtilsService) { }
+  constructor(private router: Router, public gcService: GestionCursosService, public uService: UtilsService, private toast: ToastrService) { }
 
   ngOnInit(): void {
     this.gcService.cargarCursos();
@@ -58,28 +59,32 @@ export class GestionCursosComponent implements OnInit, ResultListener {
   }
 
   agregarCurso() {
-    let curso = {
-      sede_id: 1,
-      rubrica_id: 1,
-      profesor_id: Number(this.profesorAsignado),
-      modalidad_id: Number(this.modalidadSelected),
-      instrumento_id: Number(this.instrumentoSelected),
-      tipo_id: Number(this.tipoSelected),
-      anno_periodo: this.periodoSelected.split("-")[0],
-      mes_periodo: Number(this.periodoSelected.split("-")[1]),
-      horario: this.horarios
-    };
-    if (this.periodoSelected != "") {
-      if (this.horarios.length > 0) {
-        this.horarios.forEach(horario => horario.dia = Number(horario.dia));
-        this.gcService.agregarCurso(curso, this, 0)
+    if(this.uService.profesores != []) {
+      let curso = {
+        sede_id: 1,
+        rubrica_id: 1,
+        profesor_id: Number(this.profesorAsignado),
+        modalidad_id: Number(this.modalidadSelected),
+        instrumento_id: Number(this.instrumentoSelected),
+        tipo_id: Number(this.tipoSelected),
+        anno_periodo: this.periodoSelected.split("-")[0],
+        mes_periodo: Number(this.periodoSelected.split("-")[1]),
+        horario: this.horarios
+      };
+      if (this.periodoSelected != "") {
+        if (this.horarios.length > 0) {
+          this.horarios.forEach(horario => horario.dia = Number(horario.dia));
+          this.gcService.agregarCurso(curso, this, 0)
+        } else {
+          this.errorHorarioMsg = "Debe seleccionar al menos un horario.";
+          this.displayErrorHorario.nativeElement.click();
+        }
       } else {
-        this.errorHorarioMsg = "Debe seleccionar al menos un horario.";
+        this.errorHorarioMsg = "Debe seleccionar un período.";
         this.displayErrorHorario.nativeElement.click();
       }
     } else {
-      this.errorHorarioMsg = "Debe seleccionar un período.";
-      this.displayErrorHorario.nativeElement.click();
+      this.toast.error("No hay profesores para asignar.", "", {positionClass: "toast-top-center"});
     }
   }
 
@@ -87,7 +92,6 @@ export class GestionCursosComponent implements OnInit, ResultListener {
     if (result) {
       this.gcService.cargarCursos();
       this.dismissAgregarCurso.nativeElement.click();
-      this.gcService.cargarCursos();
     } else {
       this.errorHorarioMsg = msg;
       this.displayErrorHorario.nativeElement.click();
@@ -122,10 +126,8 @@ export class GestionCursosComponent implements OnInit, ResultListener {
   handleResult(result: boolean, msg: string, action: number, resultData: number) {
     switch(action) {
       case 0: {
-        if (result) {
-          this.dismissAgregarCurso.nativeElement.click();
-          break;
-        }
+        this.finalizarAgregarCurso(result, msg);
+        break;
       }
     }
   }
