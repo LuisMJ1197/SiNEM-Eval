@@ -15,7 +15,7 @@
             <div class="filter-buttons">
                 <div class="filter-option">
                     <label for="nombreFiltro">Filtrar por nombre:</label>
-                    <input name="nombreFiltro" type="text" id="nombreFiltro" [(ngModel)]="filtroNombre" class="form-control" (change)="filtrarPorNombre(filtroNombre)">
+                    <input name="nombreFiltro" type="text" id="nombreFiltro" [(ngModel)]="filtroNombre" class="form-control" (input)="filtrarPorNombre(filtroNombre)">
                 </div>
                 <button class="filter-option button btn button-yellow" (click)="filtrarTodos()">Ver todos</button>
             </div>
@@ -25,7 +25,7 @@
                 <thead>
                     <tr>
                         <th><i class="fas fa-user-alt"></i>Nombre</th>
-                        <th><i class="fas fa-at"></i>Cédula</th>
+                        <th><i class="fas fa-id-card"></i>Cédula</th>
                         <th><i class="fas fa-phone-alt"></i>Teléfono</th>
                         <th><i class="fas fa-user"></i>Nombre encargado</th>
                         <th><i class="fas fa-cog"></i>Acción</th>

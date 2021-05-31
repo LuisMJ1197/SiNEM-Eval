@@ -1,8 +1,10 @@
 import { Location } from '@angular/common';
+import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import { meses, RegistroDeAsistencia } from 'src/app/graphql/models';
 import { AgregarRegistroDeAsistencia } from 'src/app/graphql/queries';
 import { ProfesorService } from 'src/app/services/profesor.service';
@@ -13,15 +15,15 @@ import { ProfesorService } from 'src/app/services/profesor.service';
   styleUrls: ['./registros-asistencia.component.scss']
 })
 export class RegistrosAsistenciaComponent implements OnInit {
+  @ViewChild ('dissmissAdd', {static: true}) public dissmissAdd: any;
+  
   meses = meses;
   fecha: Date = new Date();
   estado_fecha: boolean = true;
   estado_msg = "";
   fechaFiltro: Date = new Date();
   
-  constructor(private router: Router, public pService: ProfesorService, private apollo: Apollo) {
-    this.fechaFiltro.setDate(this.fechaFiltro.getDate() - 1);
-    this.fecha.setDate(this.fecha.getDate() - 1);
+  constructor(private router: Router, public pService: ProfesorService, private apollo: Apollo, private toast: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -40,6 +42,9 @@ export class RegistrosAsistenciaComponent implements OnInit {
   setFechaActual() {
     this.fecha = new Date();
     this.fecha.setDate(this.fecha.getDate() - 1);
+    this.fechaFiltro = new Date();
+    this.fechaFiltro.setDate(this.fechaFiltro.getDate() - 1);
+    console.log(new Date())
   }
 
   goRegistro(registro: RegistroDeAsistencia) {
@@ -47,22 +52,25 @@ export class RegistrosAsistenciaComponent implements OnInit {
   }
 
   validarFecha(fecha: Date) {
-    if (fecha > new Date()) {
+    this.estado_fecha = true;
+    this.estado_msg = "";
+    let nfecha = new Date(fecha);
+    nfecha.setDate(nfecha.getDate() + 1);
+    if (nfecha > new Date()) {
       this.estado_fecha = false;
       this.estado_msg = "La fecha no puede ser mayor al día de hoy.";
     } else {
-      this.estado_fecha = true;
-      this.pService.registrosDeAsistencia.forEach(fecha => {
-        if (new Date(fecha.fecha) == this.fecha) {
+      for(let i = 0; i < this.pService.registrosDeAsistencia.length; i++) {
+        let fechaP = this.pService.registrosDeAsistencia[i];
+        let fechaParts = fechaP.fecha.split("/");
+        if (new Date(Number(fechaParts[2]), Number(fechaParts[1]) - 1, Number(fechaParts[0])).toDateString() == nfecha.toDateString()) {
           this.estado_fecha = false;
           this.estado_msg = "Ya hay un registro de asistencia con esta fecha."
         }
-      });
-      if (this.estado_fecha) {
-        this.estado_msg = "";
       }
     }
   }
+
   agregarRegistro() {
     this.validarFecha(this.fecha);
     if (this.estado_fecha) {
@@ -73,20 +81,21 @@ export class RegistrosAsistenciaComponent implements OnInit {
             curso_id: this.pService.miCurso.curso_id,
             anno: this.fecha.getFullYear(),
             mes: this.fecha.getMonth() + 1,
-            dia: this.fecha.getDate()
+            dia: this.fecha.getDate() + 1
           }
         }
       }).subscribe(({data}) => {
         if (data != null && data['agregarRegistroDeAsistencia'] != null) {
           if (data['agregarRegistroDeAsistencia'].status == "error") {
-            alert("Ha ocurrido un error. ");
+            this.toast.error("Ha ocurrido un error.", "", {positionClass: "toast-top-center"});
           } else {
             let numero_registro = data['agregarRegistroDeAsistencia'].resultData;
+            this.dissmissAdd.nativeElement.click();
             // this.pService.cargarRegistrosDeAsistencia(this.pService.miCurso.curso_id);
             this.router.navigate([this.router.url.concat("/".concat(numero_registro.toString()))]);
           }
         } else {
-          alert("Ha ocurrido un error. ");
+          this.toast.error("Ha ocurrido un error.", "", {positionClass: "toast-top-center"});
         }
       });
     }
@@ -97,15 +106,17 @@ export class RegistrosAsistenciaComponent implements OnInit {
   }
 
   filtrarPorFecha(fechaFiltro: Date) {
+    let nfecha = new Date(fechaFiltro);
+    nfecha.setDate(nfecha.getDate() + 1);
     this.pService.registrosFiltrados = this.pService.registrosDeAsistencia.filter(registro => {
-      let fe = new Date(fechaFiltro);
-      fe.setDate(fe.getDate() + 1);
-      return this.getFecha(registro.fecha) == fe.toLocaleDateString();
+      let fechaParts = registro.fecha.split("/");
+      let daten = new Date(Number(fechaParts[2]), Number(fechaParts[1]) - 1, Number(fechaParts[0]));
+      return daten.toDateString() == nfecha.toDateString();
     });
   }
 
   getFecha(fecha: string) {
     let fechaParts = fecha.split("/");
-    return fechaParts[1] + "/" + fechaParts[0] + "/" + fechaParts[2];
+    return fechaParts[0] + "/" + fechaParts[1] + "/" + fechaParts[2];
   }
 }

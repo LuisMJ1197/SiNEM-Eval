@@ -53,7 +53,7 @@ export class GestionEstudiantesComponent implements OnInit, ResultListener {
 
   agregarEstudiante() {
     if (this.eService.estudiantes.filter(estudiante => estudiante.cedula.toLowerCase() == this.estudiante_nuevo.cedula.toLowerCase()).length > 0) {
-      this.cedula_repeated = "Ya hay un usuario registrado con este número de cédula."
+      this.toast.error("Ya hay un usuario registrado con este número de cédula.", "", {positionClass: "toast-top-center"});
     } else {
       this.estudiante_nuevo.cedula = this.estudiante_nuevo.cedula.toLowerCase();
       this.eService.agregarEstudiante(this.estudiante_nuevo, this.AGREGAR_ESTUDIANTE, this);
